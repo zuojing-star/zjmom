@@ -32,10 +32,13 @@ export default {
     homeRoute: {},
     local: localRead('local'),
     errorList: [],
-    hasReadErrorPage: false
+    hasReadErrorPage: false,
+    loading_state: true,
+    count: 999
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    menuList: (state, getters, rootState) =>
+      getMenuByRouter(routers, rootState.user.access),
     errorCount: state => state.errorList.length
   },
   mutations: {
@@ -89,8 +92,12 @@ export default {
   },
   actions: {
     addErrorLog ({ commit, rootState }, info) {
-      if (!window.location.href.includes('error_logger_page')) commit('setHasReadErrorLoggerStatus', false)
-      const { user: { token, userId, userName } } = rootState
+      if (!window.location.href.includes('error_logger_page')) {
+        commit('setHasReadErrorLoggerStatus', false)
+      }
+      const {
+        user: { token, userId, userName }
+      } = rootState
       let data = {
         ...info,
         time: Date.parse(new Date()),

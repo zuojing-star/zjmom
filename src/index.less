@@ -1,5 +1,25 @@
-@import '~iview/src/styles/index.less';
+@import "~iview/src/styles/index.less";
 
-@menu-dark-title: #001529;
-@menu-dark-active-bg: #000c17;
-@layout-sider-background: #001529;
+// @menu-dark-title: #001529;
+// @menu-dark-active-bg: #000c17;
+// @layout-sider-background: #001529;
+
+@menu-dark-title: SlateGray;
+@menu-dark-active-bg: SlateGray;
+@layout-sider-background: SlateGray;
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active,
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+  background: DimGray !important;
+}
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu),
+.ivu-menu-dark.ivu-menu-vertical
+  .ivu-menu-submenu-title-active:not(.ivu-menu-submenu) {
+  background: DimGray !important;
+}
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu),
+.ivu-menu-dark.ivu-menu-vertical
+  .ivu-menu-submenu-title-active:not(.ivu-menu-submenu) {
+  color: #ffffff !important;
+}
