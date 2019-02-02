@@ -30,24 +30,24 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 export default {
   components: {},
-  computed: mapState(["canAddCompany", "departmentArray"]),
+  computed: mapState(['canAddCompany', 'departmentArray']),
   methods: {
-    empMsgClick() {
-      let departmentArray = this.departmentArray;
+    empMsgClick () {
+      let departmentArray = this.departmentArray
 
       if (departmentArray.length == 1) {
         this.$router.push({
-          path: "/components/tables_page/employee"
-        });
+          path: '/components/tables_page/employee'
+        })
       } else {
-        alert("至少选择一个公司");
+        alert('至少选择一个公司')
       }
     }
   }
-};
+}
 </script>
 <style>
 .page-title {

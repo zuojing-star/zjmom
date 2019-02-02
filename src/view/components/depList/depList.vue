@@ -14,101 +14,101 @@
   </div>
 </template>
 <script>
-import urls from "@/urls.js";
-import axios from "axios";
-import { mapState, mapMutations } from "vuex";
-import qs from "qs";
+import urls from '@/urls.js'
+import axios from 'axios'
+import { mapState, mapMutations } from 'vuex'
+import qs from 'qs'
 
 export default {
-  data() {
+  data () {
     return {
       columns: [
         {
-          type: "selection",
+          type: 'selection',
           width: 60,
-          align: "center"
+          align: 'center'
         },
         {
-          title: "部门",
-          key: "name"
+          title: '部门',
+          key: 'name'
         },
         {
-          title: "地址",
-          key: "address"
+          title: '地址',
+          key: 'address'
         },
         {
-          title: "所有者",
-          key: "owner"
+          title: '所有者',
+          key: 'owner'
         },
         {
-          title: "责任人",
-          key: "responsible"
+          title: '责任人',
+          key: 'responsible'
         },
         {
-          title: "修改人",
-          key: "modifer"
+          title: '修改人',
+          key: 'modifer'
         },
         {
-          title: "创建时间",
-          key: "createdate"
+          title: '创建时间',
+          key: 'createdate'
         },
         {
-          title: "修改时间",
-          key: "modifydate"
+          title: '修改时间',
+          key: 'modifydate'
         },
         {
-          title: "所属公司",
-          key: "companycode"
+          title: '所属公司',
+          key: 'companycode'
         }
       ],
       PcDepartment: []
-    };
+    }
   },
-  computed: mapState(["companyArray", "departmentArray"]),
+  computed: mapState(['companyArray', 'departmentArray']),
   methods: {
-    ...mapMutations(["choosedDepartmentArray"]),
-    selectOne() {},
-    selectChange(selection) {
-      this.choosedDepartmentArray(selection);
+    ...mapMutations(['choosedDepartmentArray']),
+    selectOne () {},
+    selectChange (selection) {
+      this.choosedDepartmentArray(selection)
     },
 
-    getCompanyName(company) {
-      return company[0].name;
+    getCompanyName (company) {
+      return company[0].name
     },
-    async getPcDepartment() {
-      let url = urls.department.getPcDepartment;
+    async getPcDepartment () {
+      let url = urls.department.getPcDepartment
       let data = {
         comp: this.getCompanyName(this.companyArray)
-      };
+      }
 
       let jsondata = await axios({
         url,
-        method: "post",
+        method: 'post',
         data: qs.stringify(data),
         headers: {
-          "Content-Type": " application/x-www-form-urlencoded"
+          'Content-Type': ' application/x-www-form-urlencoded'
         }
-      });
+      })
 
       if (this.departmentArray.length > 0) {
-        let name = this.departmentArray[0].name;
+        let name = this.departmentArray[0].name
         this.PcDepartment = jsondata.data.meseage.map(item => {
           if (item.name == name) {
-            item._checked = true;
+            item._checked = true
           } else {
-            item._checked = false;
+            item._checked = false
           }
-          return item;
-        });
+          return item
+        })
       } else {
-        this.PcDepartment = jsondata.data.meseage;
+        this.PcDepartment = jsondata.data.meseage
       }
     }
   },
-  mounted() {
-    this.getPcDepartment();
+  mounted () {
+    this.getPcDepartment()
   }
-};
+}
 </script>
 <style>
 .ivu-page {
