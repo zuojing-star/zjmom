@@ -4,9 +4,10 @@
 
 <script>
 import Icons from '_c/icons'
+
 export default {
   name: 'CommonIcon',
-  components: {Icons},
+  components: { Icons },
   props: {
     type: {
       type: String,
@@ -20,7 +21,9 @@ export default {
       return this.type.indexOf('_') === 0 ? 'Icons' : 'Icon'
     },
     iconName () {
-      return this.iconType === 'Icons' ? this.getCustomIconName(this.type) : this.type
+      return this.iconType === 'Icons'
+        ? this.getCustomIconName(this.type)
+        : this.type
     },
     iconSize () {
       return this.size || (this.iconType === 'Icons' ? 12 : undefined)
@@ -38,5 +41,4 @@ export default {
 </script>
 
 <style>
-
 </style>

@@ -1,151 +1,119 @@
 <template>
   <div class="liketable">
-    <dl class="table-heade">
-      <dd class="table-head-col">部门列表</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-    </dl>
-
     <div class="table-item-wrap">
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >
-          11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >
-          11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
+      <Table
+        border
+        ref="selection"
+        :columns="columns"
+        :data="PcDepartment"
+        @on-select="selectOne"
+        @on-selection-change="selectChange"
+      ></Table>
       <Page :total="100"/>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import urls from "@/urls.js";
+import axios from "axios";
+import { mapState, mapMutations } from "vuex";
+import qs from "qs";
+
+export default {
+  data() {
+    return {
+      columns: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center"
+        },
+        {
+          title: "部门",
+          key: "name"
+        },
+        {
+          title: "地址",
+          key: "address"
+        },
+        {
+          title: "所有者",
+          key: "owner"
+        },
+        {
+          title: "责任人",
+          key: "responsible"
+        },
+        {
+          title: "修改人",
+          key: "modifer"
+        },
+        {
+          title: "创建时间",
+          key: "createdate"
+        },
+        {
+          title: "修改时间",
+          key: "modifydate"
+        },
+        {
+          title: "所属公司",
+          key: "companycode"
+        }
+      ],
+      PcDepartment: []
+    };
+  },
+  computed: mapState(["companyArray", "departmentArray"]),
+  methods: {
+    ...mapMutations(["choosedDepartmentArray"]),
+    selectOne() {},
+    selectChange(selection) {
+      this.choosedDepartmentArray(selection);
+    },
+
+    getCompanyName(company) {
+      return company[0].name;
+    },
+    async getPcDepartment() {
+      let url = urls.department.getPcDepartment;
+      let data = {
+        comp: this.getCompanyName(this.companyArray)
+      };
+
+      let jsondata = await axios({
+        url,
+        method: "post",
+        data: qs.stringify(data),
+        headers: {
+          "Content-Type": " application/x-www-form-urlencoded"
+        }
+      });
+
+      if (this.departmentArray.length > 0) {
+        let name = this.departmentArray[0].name;
+        this.PcDepartment = jsondata.data.meseage.map(item => {
+          if (item.name == name) {
+            item._checked = true;
+          } else {
+            item._checked = false;
+          }
+          return item;
+        });
+      } else {
+        this.PcDepartment = jsondata.data.meseage;
+      }
+    }
+  },
+  mounted() {
+    this.getPcDepartment();
+  }
+};
 </script>
 <style>
+.ivu-page {
+  margin-top: 20px;
+}
 .page-title {
   display: inline-block;
 }

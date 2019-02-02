@@ -41,10 +41,12 @@ export default {
         yAxis: {
           type: 'value'
         },
-        series: [{
-          data: seriesData,
-          type: 'bar'
-        }]
+        series: [
+          {
+            data: seriesData,
+            type: 'bar'
+          }
+        ]
       }
       this.dom = echarts.init(this.$refs.dom, 'tdTheme')
       this.dom.setOption(option)

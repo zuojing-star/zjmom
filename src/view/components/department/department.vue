@@ -16,7 +16,8 @@
             <router-link to="/components/tables_page/company">公司信息</router-link>
           </DropdownItem>
           <DropdownItem>
-            <router-link to="/components/tables_page/employee">员工信息</router-link>
+            <span class="emp-msg-button" @click="empMsgClick">员工信息</span>
+            <!-- <router-link to="/components/tables_page/employee">员工信息</router-link> -->
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -29,7 +30,24 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+  components: {},
+  computed: mapState(["canAddCompany", "departmentArray"]),
+  methods: {
+    empMsgClick() {
+      let departmentArray = this.departmentArray;
+
+      if (departmentArray.length == 1) {
+        this.$router.push({
+          path: "/components/tables_page/employee"
+        });
+      } else {
+        alert("至少选择一个公司");
+      }
+    }
+  }
+};
 </script>
 <style>
 .page-title {

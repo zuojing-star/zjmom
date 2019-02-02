@@ -82,7 +82,11 @@ export default {
           password
         })
           .then(res => {
+            console.log('resdata:', res.data)
+            console.log('commit:', commit)
+
             const data = res.data
+
             commit('setToken', data.token)
             resolve()
           })

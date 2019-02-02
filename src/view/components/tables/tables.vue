@@ -19,10 +19,7 @@
 import Tables from '_c/tables'
 // import { getTableData } from '@/api/data'
 import ajax from '@/ajax.js'
-import config from '@/urls.js'
-
-import $ from 'jquery'
-
+import urls from '@/urls.js'
 import axios from 'axios'
 
 export default {
@@ -96,13 +93,6 @@ export default {
     }
   },
   mounted () {
-    // this.findAllPcMaterial();
-
-    console.log('init tables', config.url.PcMaterialFindAll)
-
-    $.post(config.url.PcMaterialFindAll, function (res) {
-      console.log(res)
-    })
 
     // axios({
     //   method: "post",

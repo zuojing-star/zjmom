@@ -23,7 +23,7 @@ export default [
     name: "login",
     meta: {
       title: "Login - 登录",
-      hideInMenu: true
+      hideInMenu: true //是否在  左边菜单栏显示
     },
     component: () => import("@/view/login/login.vue")
   },
@@ -50,34 +50,6 @@ export default [
       }
     ]
   },
-  // {
-  //   path: "",
-  //   name: "doc",
-  //   meta: {
-  //     title: "文档",
-  //     href: "https://lison16.github.io/iview-admin-doc/#/",
-  //     icon: "ios-book"
-  //   }
-  // },
-  // {
-  //   path: '/join',
-  //   name: 'join',
-  //   component: Main,
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   children: [
-  //     {
-  //       path: 'join_page',
-  //       name: 'join_page',
-  //       meta: {
-  //         icon: '_qq',
-  //         title: 'QQ群'
-  //       },
-  //       component: () => import('@/view/join-page.vue')
-  //     }
-  //   ]
-  // },
   {
     path: "/message",
     name: "message",
@@ -176,6 +148,12 @@ export default [
         redirect: "/components/tables_page/company",
         component: () => import("@/view/components/tables/tables.vue"),
         children: [
+          {
+            path: "addCompany",
+            name: "addCompany",
+            component: () =>
+              import("@/view/components/companyAdd/companyAdd.vue")
+          },
           {
             path: "company",
             name: "company",
@@ -373,64 +351,6 @@ export default [
       }
     ]
   },
-  // {
-  //   path: "/tools_methods",
-  //   name: "tools_methods",
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: "tools_methods_page",
-  //       name: "tools_methods_page",
-  //       meta: {
-  //         icon: "ios-hammer",
-  //         title: "工具方法",
-  //         beforeCloseName: "before_close_normal"
-  //       },
-  //       component: () => import("@/view/tools-methods/tools-methods.vue")
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/i18n",
-  //   name: "i18n",
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: "i18n_page",
-  //       name: "i18n_page",
-  //       meta: {
-  //         icon: "md-planet",
-  //         title: "i18n - {{ i18n_page }}"
-  //       },
-  //       component: () => import("@/view/i18n/i18n-page.vue")
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/error_store",
-  //   name: "error_store",
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: "error_store_page",
-  //       name: "error_store_page",
-  //       meta: {
-  //         icon: "ios-bug",
-  //         title: "错误收集"
-  //       },
-  //       component: () => import("@/view/error-store/error-store.vue")
-  //     }
-  //   ]
-  // },
   {
     path: "/error_logger",
     name: "error_logger",

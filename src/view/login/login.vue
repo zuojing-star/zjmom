@@ -66,10 +66,23 @@ export default {
     //     }
     //   }
     // }
+
     ...mapActions(['handleLogin', 'getUserInfo']),
+
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
+          console.log('userInfo:', res)
+          /*
+            {
+              name: "super_admin",
+              user_id: "1",
+              access: Array(2),
+              token: "super_admin",
+              avator: "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png"
+            }
+          */
+
           this.$router.push({
             name: this.$config.homeName
           })

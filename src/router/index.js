@@ -5,9 +5,11 @@ import store from '@/store'
 import iView from 'iview'
 import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
 import config from '@/config'
+
 const { homeName } = config
 
 Vue.use(Router)
+
 const router = new Router({
   routes,
   mode: 'history'
@@ -22,8 +24,14 @@ const turnTo = (to, access, next) => {
 }
 
 router.beforeEach((to, from, next) => {
+  console.log('to:', to)
+  console.log('from:', from)
+
   iView.LoadingBar.start()
+
   const token = getToken()
+  console.log('token:', token)
+
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     console.log('aa')
@@ -41,23 +49,23 @@ router.beforeEach((to, from, next) => {
       name: homeName // 跳转到homeName页
     })
   } else {
-    // if (store.state.user.hasGetInfo) {
-    //   console.log("dd");
-    //   turnTo(to, store.state.user.access, next);
-    // } else {
-    store
-      .dispatch('getUserInfo')
-      .then(user => {
-        // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
-        turnTo(to, user.access, next)
-      })
-      .catch(() => {
-        setToken('')
-        next({
-          name: 'login'
+    if (store.state.user.hasGetInfo) {
+      console.log('dd')
+      turnTo(to, store.state.user.access, next)
+    } else {
+      store
+        .dispatch('getUserInfo')
+        .then(user => {
+          // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+          turnTo(to, user.access, next)
         })
-      })
-    // }
+        .catch(() => {
+          setToken('')
+          next({
+            name: 'login'
+          })
+        })
+    }
   }
 })
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-company-wrap">
     <div class="page-title-wrap">
       <div class="page-title">公司信息</div>
       <Dropdown trigger="click" style="margin-left: 20px;margin-right:10px;">
@@ -8,16 +8,20 @@
         </a>
         <DropdownMenu slot="list">
           <DropdownItem>
-            <div @click="addCompany">添加</div>
-            <!-- <router-link to="/components/tables_page/company/companyadd" @click="addOne">添加</router-link> -->
-          </DropdownItem>
-          <DropdownItem>删除</DropdownItem>
-          <DropdownItem>修改</DropdownItem>
-          <DropdownItem>
-            <router-link to="/components/tables_page/department">部门信息</router-link>
+            <div @click="addCompany" class="dep-msg-button">添加</div>
           </DropdownItem>
           <DropdownItem>
-            <router-link to="/components/tables_page/employee">员工信息</router-link>
+            <div class="dep-msg-button">删除</div>
+          </DropdownItem>
+          <DropdownItem>
+            <div class="dep-msg-button">修改</div>
+          </DropdownItem>
+          <DropdownItem>
+            <div class="dep-msg-button" @click="depMsgClick">部门信息</div>
+          </DropdownItem>
+          <DropdownItem>
+            <div class="dep-msg-button">员工信息</div>
+            <!-- <router-link to="/components/tables_page/employee">员工信息</router-link> -->
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -25,27 +29,37 @@
         <Icon type="ios-search" slot="suffix"/>
       </Input>
     </div>
-
+    <!-- <testc/> -->
     <router-view></router-view>
   </div>
 </template>
 <script>
+import testc from "@/view/testc.vue";
+import { mapState } from "vuex";
+
 export default {
-  computed: {
-    canAddCompany() {
-      return this.$store.state.canAddCompany;
-    }
+  components: {
+    testc
   },
+  computed: mapState(["canAddCompany", "companyArray"]),
   methods: {
-    addCompany() {
-      console.log(this.canAddCompany);
-      if (this.canAddCompany) {
+    depMsgClick() {
+      let companyArray = this.companyArray;
+
+      if (companyArray.length == 1) {
         this.$router.push({
-          path: "/components/tables_page/company/companyadd"
+          path: "/components/tables_page/department"
         });
       } else {
-        alert("选择一条记录");
+        this.$Modal.error({
+          title: "至少选择一个公司"
+        });
       }
+    },
+    addCompany() {
+      this.$router.push({
+        path: "/components/tables_page/addCompany"
+      });
     }
   }
 };
@@ -138,5 +152,14 @@ export default {
 }
 .btn-submit {
   width: 162px !important;
+}
+.dep-msg-button {
+  height: 26px;
+  line-height: 30px;
+  padding-left: 18px;
+}
+.ivu-dropdown-item {
+  height: 30px;
+  padding: 0;
 }
 </style>

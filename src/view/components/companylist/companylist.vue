@@ -1,229 +1,150 @@
 <template>
-  <div>
+  <div class="table-wrap">
     <Table
       border
       ref="selection"
-      :columns="columns4"
-      :data="data1"
-      height="200"
+      :columns="columns"
+      :data="Pccompany"
       @on-select="selectOne"
+      @on-selection-change="selectChange"
     ></Table>
-    {{ aaa }}
     <Page :total="100" class="pagesplit"/>
   </div>
-
-  <!-- <div class="liketable">
-    <dl class="table-heade">
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-      <dd class="table-head-col">11111</dd>
-    </dl>
-
-    <div class="table-item-wrap">
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >
-          11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >
-          11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-      <ul class="table-item">
-        <li class="table-item-col">
-          <img
-            class="tag-icon"
-            src="http://static-cdn.ceair.com/resource/images/AirlineLogo/mu.png"
-          >11111
-        </li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-        <li class="table-item-col">11111</li>
-      </ul>
-
-      <Page :total="100"/>
-    </div>
-  </div>-->
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import urls from "@/urls.js";
+import axios from "axios";
+import qs from "qs";
 
 export default {
+  props: ["zjtitle"],
   data() {
     return {
-      columns4: [
+      columns: [
         {
           type: "selection",
           width: 60,
           align: "center"
         },
         {
-          title: "Name",
+          title: "公司",
           key: "name"
         },
         {
-          title: "Age",
-          key: "age"
+          title: "地址",
+          key: "address"
         },
         {
-          title: "Address",
-          key: "address"
+          title: "所有者",
+          key: "owner"
+        },
+        {
+          title: "责任人",
+          key: "responsible"
+        },
+        {
+          title: "修改人",
+          key: "modifer"
+        },
+        {
+          title: "创建时间",
+          key: "createdate"
+        },
+        {
+          title: "修改时间",
+          key: "modifydate"
+        },
+        {
+          title: "Action",
+          key: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
         }
       ],
-      data1: [
-        {
-          name: "John Brown",
-          age: 18,
-          address: "New York No. 1 Lake Park",
-          date: "2016-10-03"
-        },
-        {
-          name: "Jim Green",
-          age: 24,
-          address: "London No. 1 Lake Park",
-          date: "2016-10-01"
-        },
-        {
-          name: "Joe Black",
-          age: 30,
-          address: "Sydney No. 1 Lake Park",
-          date: "2016-10-02"
-        },
-        {
-          name: "Jon Snow",
-          age: 26,
-          address: "Ottawa No. 2 Lake Park",
-          date: "2016-10-04"
-        }
-      ]
+      Pccompany: []
     };
   },
-  computed: {
-    aaa() {
-      return this.$store.state.canAddCompany;
-    }
-  },
+  computed: mapState(["companyArray"]),
   methods: {
-    ...mapMutations({
-      chooseOneCompany: "chooseOneCompany"
-    }),
+    async delPccompany(code) {
+      let url = urls.company.delPccompnay;
+      let data = qs.stringify({ code });
+      let jsondata = await axios.post(url, data, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      });
+      if (jsondata.data.msgId == 200) {
+        this.getPccompany();
+        this.$Message.info("删除成功");
+      } else {
+        this.$Message.info("删除失败");
+      }
+    },
+    async getPccompany() {
+      let url = urls.company.getPccompany;
+      let jsondata = await axios.post(url);
+      if (jsondata.status == 200) {
+        if (this.companyArray.length > 0) {
+          let name = this.companyArray[0].name;
+          this.Pccompany = jsondata.data.data.map(item => {
+            if (item.name == name) {
+              item._checked = true;
+            } else {
+              item._checked = false;
+            }
+            return item;
+          });
+        } else {
+          this.Pccompany = jsondata.data.data;
+        }
+      }
+    },
+    ...mapMutations([
+      "chooseOneCompany",
+      "choosedCompany",
+      "choosedCompanyArray"
+    ]),
+    selectChange(selection) {
+      this.choosedCompanyArray(selection);
+    },
     selectOne(selection, row) {
-      console.log("选中的一行", row);
-      console.log("选中的数组", selection);
-      console.log("selectOne", this.$refs.selection);
-      this.chooseOneCompany();
+      // console.log("选中的一行", row);
+      // console.log("选中的数组", selection);
+      // console.log("selectOne", this.$refs.selection);
+      // this.chooseOneCompany();
       // this.$store.commit("chooseOneCompany");
     }
+  },
+  mounted() {
+    this.getPccompany();
   }
 };
 </script>
@@ -231,6 +152,10 @@ export default {
 .pagesplit {
   max-width: 431px;
   margin: 10px auto;
+  /* position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -188px; */
 }
 .page-title {
   display: inline-block;
