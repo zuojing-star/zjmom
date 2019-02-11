@@ -1,6 +1,6 @@
 <template>
-  <div class="liketable">
-    <div class="table-item-wrap">
+  <div>
+    <div>
       <Table
         border
         ref="selection"
@@ -14,97 +14,145 @@
   </div>
 </template>
 <script>
-import urls from '@/urls.js'
-import axios from 'axios'
-import { mapState, mapMutations } from 'vuex'
-import qs from 'qs'
+import urls from "@/urls.js";
+import axios from "axios";
+import { mapState, mapMutations } from "vuex";
+import qs from "qs";
 
 export default {
-  data () {
+  data() {
     return {
       columns: [
         {
-          type: 'selection',
+          type: "selection",
           width: 60,
-          align: 'center'
+          align: "center"
         },
         {
-          title: '员工',
-          key: 'username'
+          title: "员工",
+          key: "username"
         },
         {
-          title: '所属部门',
-          key: 'deptcode'
+          title: "所属部门",
+          key: "deptcode"
         },
         {
-          title: '地址',
-          key: 'address'
+          title: "地址",
+          key: "address"
         },
         {
-          title: '所有者',
-          key: 'owner'
+          title: "所有者",
+          key: "owner"
         },
         {
-          title: '联系方式',
-          key: 'tellphone'
+          title: "联系方式",
+          key: "tellphone"
         },
         {
-          title: '修改人',
-          key: 'modifer'
+          title: "修改人",
+          key: "modifer"
         },
         {
-          title: '创建时间',
-          key: 'createdate'
+          title: "创建时间",
+          key: "createdate"
         },
         {
-          title: '修改时间',
-          key: 'modifydate'
+          title: "修改时间",
+          key: "modifydate"
         },
         {
-          title: '所属公司',
-          key: 'companycode'
+          title: "所属公司",
+          key: "companycode"
+        },
+        {
+          title: "Action",
+          key: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除部门么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPcPerson(params.row.usercode);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
         }
       ],
       PcEmployee: []
-    }
+    };
   },
-  computed: mapState(['departmentArray']),
+  computed: mapState(["departmentArray"]),
   methods: {
-    ...mapMutations(['choosedDepartmentArray']),
-    selectOne () {},
-    selectChange (selection) {
-      this.choosedDepartmentArray(selection)
+    ...mapMutations(["choosedDepartmentArray"]),
+    selectOne() {},
+    selectChange(selection) {
+      this.choosedDepartmentArray(selection);
     },
 
-    getDepartmentName (company) {
-      return company[0].name
+    getDepartmentName(company) {
+      return company[0].name;
     },
-    async getPcEmployee () {
-      console.log('emplist2:', this.departmentArray)
+    async delPcPerson(code) {
+      let url = urls.employee.delPcPerson;
+      let data = qs.stringify({ userCode: code });
+      console.log(data);
+      let jsondata = await axios.post(url, data, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      });
+      if (jsondata.data.msgId == 200) {
+        this.getPcDepartment();
+        this.$Message.info("删除部门成功");
+      } else {
+        this.$Message.info("删除部门失败");
+      }
+    },
+    async getPcEmployee() {
+      console.log("emplist2:", this.departmentArray);
 
-      let url = urls.employee.getPcEmployee
+      let url = urls.employee.getPcEmployee;
       let data = {
         dept: this.getDepartmentName(this.departmentArray)
-      }
+      };
 
       let jsondata = await axios({
         url,
-        method: 'post',
+        method: "post",
         data: qs.stringify(data),
         headers: {
-          'Content-Type': ' application/x-www-form-urlencoded'
+          "Content-Type": " application/x-www-form-urlencoded"
         }
-      })
+      });
 
       if (jsondata.status == 200) {
-        this.PcEmployee = jsondata.data.meseage
+        this.PcEmployee = jsondata.data.meseage;
       }
     }
   },
-  mounted () {
-    this.getPcEmployee()
+  mounted() {
+    this.getPcEmployee();
   }
-}
+};
 </script>
 <style>
 .page-title {

@@ -25,44 +25,46 @@
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Input placeholder="Enter text" style="width: auto">
-        <Icon type="ios-search" slot="suffix"/>
-      </Input>
+      <Input placeholder="Enter text" style="width: auto"></Input>
+      <Input placeholder="Enter text" style="width: auto"></Input>
+      <Input placeholder="Enter text" style="width: auto"></Input>
+      <Button type="info">搜索</Button>
+      <!-- <Icon type="ios-search" slot="suffix"/> -->
     </div>
     <!-- <testc/> -->
     <router-view></router-view>
   </div>
 </template>
 <script>
-import testc from '@/view/testc.vue'
-import { mapState } from 'vuex'
+import testc from "@/view/testc.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
     testc
   },
-  computed: mapState(['canAddCompany', 'companyArray']),
+  computed: mapState(["canAddCompany", "companyArray"]),
   methods: {
-    depMsgClick () {
-      let companyArray = this.companyArray
+    depMsgClick() {
+      let companyArray = this.companyArray;
 
       if (companyArray.length == 1) {
         this.$router.push({
-          path: '/components/tables_page/department'
-        })
+          path: "/components/tables_page/department"
+        });
       } else {
         this.$Modal.error({
-          title: '至少选择一个公司'
-        })
+          title: "至少选择一个公司"
+        });
       }
     },
-    addCompany () {
+    addCompany() {
       this.$router.push({
-        path: '/components/tables_page/addCompany'
-      })
+        path: "/components/tables_page/addCompany"
+      });
     }
   }
-}
+};
 </script>
 <style>
 .page-title {

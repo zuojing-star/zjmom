@@ -8,16 +8,20 @@
         </a>
         <DropdownMenu slot="list">
           <DropdownItem>
-            <router-link to="/components/tables_page/company/companyadd">添加</router-link>
+            <div @click="addCompany" class="emp-msg-button">添加</div>
+            <!-- <router-link to="/components/tables_page/company/companyadd">添加</router-link> -->
           </DropdownItem>
-          <DropdownItem>删除</DropdownItem>
-          <DropdownItem>修改</DropdownItem>
           <DropdownItem>
-            <router-link to="/components/tables_page/company">公司信息</router-link>
+            <div class="emp-msg-button">删除</div>
+          </DropdownItem>
+          <DropdownItem>
+            <div class="emp-msg-button">修改</div>
+          </DropdownItem>
+          <DropdownItem>
+            <span class="emp-msg-button" @click="companyMsgClick">公司信息</span>
           </DropdownItem>
           <DropdownItem>
             <span class="emp-msg-button" @click="empMsgClick">员工信息</span>
-            <!-- <router-link to="/components/tables_page/employee">员工信息</router-link> -->
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -30,24 +34,31 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
   components: {},
-  computed: mapState(['canAddCompany', 'departmentArray']),
+  computed: mapState(["canAddCompany", "departmentArray"]),
   methods: {
-    empMsgClick () {
-      let departmentArray = this.departmentArray
+    companyMsgClick() {
+      this.$router.push({
+        path: "/components/tables_page/company"
+      });
+    },
+    empMsgClick() {
+      let departmentArray = this.departmentArray;
 
       if (departmentArray.length == 1) {
         this.$router.push({
-          path: '/components/tables_page/employee'
-        })
+          path: "/components/tables_page/employee"
+        });
       } else {
-        alert('至少选择一个公司')
+        this.$Modal.error({
+          title: "至少选择一个部门"
+        });
       }
     }
   }
-}
+};
 </script>
 <style>
 .page-title {
@@ -137,5 +148,10 @@ export default {
 }
 .btn-submit {
   width: 162px !important;
+}
+.emp-msg-button {
+  height: 26px;
+  line-height: 30px;
+  padding-left: 18px;
 }
 </style>

@@ -158,7 +158,7 @@ export default [
             path: "company",
             name: "company",
             meta: {
-              hideInMenu: true,
+              hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
               title: "公司信息",
               notCache: true,
               icon: "md-home"
@@ -170,26 +170,26 @@ export default [
                 path: "companylist",
                 name: "companylist",
                 meta: {
-                  hideInMenu: true,
+                  hideInMenu: false,
                   title: "公司信息列表",
                   notCache: true,
                   icon: "md-home"
                 },
                 component: () =>
                   import("@/view/components/companylist/companylist.vue")
-              },
-              {
-                path: "companyadd",
-                name: "companyadd",
-                meta: {
-                  hideInMenu: true,
-                  title: "添加公司信息",
-                  notCache: true,
-                  icon: "md-home"
-                },
-                component: () =>
-                  import("@/view/components/companyAdd/companyAdd.vue")
               }
+              // {
+              //   path: "companyadd",
+              //   name: "companyadd",
+              //   meta: {
+              //     hideInMenu: true,
+              //     title: "添加公司信息",
+              //     notCache: true,
+              //     icon: "md-home"
+              //   },
+              //   component: () =>
+              //     import("@/view/components/companyAdd/companyAdd.vue")
+              // }
             ]
           },
           {
