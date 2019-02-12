@@ -80,15 +80,6 @@ export default [
     component: Main,
     children: [
       {
-        path: "count_to_page",
-        name: "count_to_page",
-        meta: {
-          icon: "md-trending-up",
-          title: "数字渐变2"
-        },
-        component: () => import("@/view/components/count-to/count-to.vue")
-      },
-      {
         path: "drag_list_page",
         name: "drag_list_page",
         meta: {
@@ -148,17 +139,22 @@ export default [
         redirect: "/components/tables_page/company",
         component: () => import("@/view/components/tables/tables.vue"),
         children: [
-          {
-            path: "addCompany",
-            name: "addCompany",
-            component: () =>
-              import("@/view/components/companyAdd/companyAdd.vue")
-          },
+          // {
+          //   path: "addCompany",
+          //   name: "addCompany2",
+          //   meta: {
+          //     hideInMenu: false,
+          //     title: "公司信息222",
+          //     icon: "md-home"
+          //   },
+          //   component: () =>
+          //     import("@/view/components/companyAdd/companyAdd.vue")
+          // },
           {
             path: "company",
-            name: "company",
+            name: "公司管理",
             meta: {
-              hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
+              // hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
               title: "公司信息",
               notCache: true,
               icon: "md-home"
@@ -177,6 +173,17 @@ export default [
                 },
                 component: () =>
                   import("@/view/components/companylist/companylist.vue")
+              },
+              {
+                path: "addCompany",
+                name: "addCompany2",
+                meta: {
+                  hideInMenu: false,
+                  title: "公司信息222",
+                  icon: "md-home"
+                },
+                component: () =>
+                  import("@/view/components/companyAdd/companyAdd.vue")
               }
               // {
               //   path: "companyadd",
@@ -246,6 +253,15 @@ export default [
         ]
       },
       {
+        path: "count_to_page",
+        name: "count_to_page",
+        meta: {
+          icon: "md-trending-up",
+          title: "数字渐变2"
+        },
+        component: () => import("@/view/components/count-to/count-to.vue")
+      },
+      {
         path: "split_pane_page",
         name: "split_pane_page",
         meta: {
@@ -254,6 +270,7 @@ export default [
         },
         component: () => import("@/view/components/split-pane/split-pane.vue")
       },
+
       {
         path: "markdown_page",
         name: "markdown_page",
@@ -273,6 +290,60 @@ export default [
         component: () => import("@/view/components/editor/editor.vue")
       },
       {
+        path: "b",
+        name: "b",
+        meta: {
+          icon: "md-pause",
+          title: "生产工序"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
+        path: "c",
+        name: "c",
+        meta: {
+          icon: "md-pause",
+          title: "功能菜单"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
+        path: "d",
+        name: "d",
+        meta: {
+          icon: "md-pause",
+          title: "操作角色"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
+        path: "e",
+        name: "e",
+        meta: {
+          icon: "md-pause",
+          title: "菜单授权"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
+        path: "f",
+        name: "f",
+        meta: {
+          icon: "md-pause",
+          title: "堆场管理"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
+        path: "g",
+        name: "g",
+        meta: {
+          icon: "md-pause",
+          title: "编码维护"
+        },
+        component: () => import("@/view/components/split-pane/split-pane.vue")
+      },
+      {
         path: "icons_page",
         name: "icons_page",
         meta: {
@@ -289,7 +360,7 @@ export default [
     name: "update",
     meta: {
       icon: "md-cloud-upload",
-      title: "业务板块"
+      title: "市场营销"
     },
     component: Main,
     children: [
@@ -318,7 +389,7 @@ export default [
     name: "excel",
     meta: {
       icon: "ios-stats",
-      title: "EXCEL导入导出"
+      title: "项目配置"
     },
     component: Main,
     children: [
@@ -327,7 +398,7 @@ export default [
         name: "upload-excel",
         meta: {
           icon: "md-add",
-          title: "导入EXCEL"
+          title: "合同范围"
         },
         component: () => import("@/view/excel/upload-excel.vue")
       },
@@ -336,7 +407,7 @@ export default [
         name: "export-excel",
         meta: {
           icon: "md-download",
-          title: "导出EXCEL"
+          title: "单价维护"
         },
         component: () => import("@/view/excel/export-excel.vue")
       },
@@ -345,7 +416,34 @@ export default [
         name: "cad-update",
         meta: {
           icon: "md-download",
-          title: "cad变更"
+          title: "项目资料"
+        },
+        component: () => import("@/view/excel/export-excel.vue")
+      },
+      {
+        path: "aa",
+        name: "aa",
+        meta: {
+          icon: "md-download",
+          title: "信息完善"
+        },
+        component: () => import("@/view/excel/export-excel.vue")
+      },
+      {
+        path: "bb",
+        name: "bb",
+        meta: {
+          icon: "md-download",
+          title: "项目成员"
+        },
+        component: () => import("@/view/excel/export-excel.vue")
+      },
+      {
+        path: "cc",
+        name: "cc",
+        meta: {
+          icon: "md-download",
+          title: "模具维护"
         },
         component: () => import("@/view/excel/export-excel.vue")
       }
@@ -444,6 +542,42 @@ export default [
       {
         path: "level_2_3",
         name: "level_2_3",
+        meta: {
+          icon: "md-funnel",
+          title: "二级-3"
+        },
+        component: () => import("@/view/multilevel/level-2-3.vue")
+      },
+      {
+        path: "aaa",
+        name: "aaa",
+        meta: {
+          icon: "md-funnel",
+          title: "二级-3"
+        },
+        component: () => import("@/view/multilevel/level-2-3.vue")
+      },
+      {
+        path: "bbb",
+        name: "bbb",
+        meta: {
+          icon: "md-funnel",
+          title: "二级-3"
+        },
+        component: () => import("@/view/multilevel/level-2-3.vue")
+      },
+      {
+        path: "ccc",
+        name: "ccc",
+        meta: {
+          icon: "md-funnel",
+          title: "二级-3"
+        },
+        component: () => import("@/view/multilevel/level-2-3.vue")
+      },
+      {
+        path: "ddd",
+        name: "ddd",
         meta: {
           icon: "md-funnel",
           title: "二级-3"
