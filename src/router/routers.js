@@ -139,32 +139,55 @@ export default [
         redirect: "/components/tables_page/company",
         component: () => import("@/view/components/tables/tables.vue"),
         children: [
-          // {
-          //   path: "addCompany",
-          //   name: "addCompany2",
-          //   meta: {
-          //     hideInMenu: false,
-          //     title: "公司信息222",
-          //     icon: "md-home"
-          //   },
-          //   component: () =>
-          //     import("@/view/components/companyAdd/companyAdd.vue")
-          // },
+          {
+            path: "addCompany",
+            name: "添加公司",
+            meta: {
+              hideInMenu: true,
+              title: "添加公司",
+              icon: "md-home"
+            },
+            component: () => import("@/view/components/company/companyAdd.vue")
+          },
+          {
+            path: "depAdd",
+            name: "depAdd",
+            meta: {
+              hideInMenu: true,
+              title: "添加部门",
+              notCache: true,
+              icon: "md-home"
+            },
+            component: () =>
+              import("@/view/components/department/departmentAdd.vue")
+          },
+          {
+            path: "empAdd",
+            name: "empAdd",
+            meta: {
+              hideInMenu: true,
+              title: "添加员工",
+              notCache: true,
+              icon: "md-home"
+            },
+            component: () => import("@/view/components/employee/empAdd.vue")
+          },
           {
             path: "company",
-            name: "公司管理",
+            name: "公司信息",
             meta: {
               // hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
               title: "公司信息",
               notCache: true,
               icon: "md-home"
             },
-            component: () => import("@/view/components/company/company.vue"),
+            component: () =>
+              import("@/view/components/company/companyMain.vue"),
             redirect: "/components/tables_page/company/companylist",
             children: [
               {
                 path: "companylist",
-                name: "companylist",
+                name: "公司信息列表",
                 meta: {
                   hideInMenu: false,
                   title: "公司信息列表",
@@ -172,31 +195,8 @@ export default [
                   icon: "md-home"
                 },
                 component: () =>
-                  import("@/view/components/companylist/companylist.vue")
-              },
-              {
-                path: "addCompany",
-                name: "addCompany2",
-                meta: {
-                  hideInMenu: false,
-                  title: "公司信息222",
-                  icon: "md-home"
-                },
-                component: () =>
-                  import("@/view/components/companyAdd/companyAdd.vue")
+                  import("@/view/components/company/companyList.vue")
               }
-              // {
-              //   path: "companyadd",
-              //   name: "companyadd",
-              //   meta: {
-              //     hideInMenu: true,
-              //     title: "添加公司信息",
-              //     notCache: true,
-              //     icon: "md-home"
-              //   },
-              //   component: () =>
-              //     import("@/view/components/companyAdd/companyAdd.vue")
-              // }
             ]
           },
           {
@@ -210,7 +210,7 @@ export default [
             },
             redirect: "/components/tables_page/department/depList",
             component: () =>
-              import("@/view/components/department/department.vue"),
+              import("@/view/components/department/departmentMain.vue"),
             children: [
               {
                 path: "deplist",
@@ -221,7 +221,8 @@ export default [
                   notCache: true,
                   icon: "md-home"
                 },
-                component: () => import("@/view/components/depList/depList.vue")
+                component: () =>
+                  import("@/view/components/department/depList.vue")
               }
             ]
           },
@@ -235,7 +236,8 @@ export default [
               icon: "md-home"
             },
             redirect: "/components/tables_page/employee/empList",
-            component: () => import("@/view/components/employee/employee.vue"),
+            component: () =>
+              import("@/view/components/employee/employeeMain.vue"),
             children: [
               {
                 path: "emplist",
@@ -246,7 +248,8 @@ export default [
                   notCache: true,
                   icon: "md-home"
                 },
-                component: () => import("@/view/components/empList/empList.vue")
+                component: () =>
+                  import("@/view/components/employee/empList.vue")
               }
             ]
           }

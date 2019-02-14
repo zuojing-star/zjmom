@@ -5,11 +5,11 @@
         border
         ref="selection"
         :columns="columns"
-        :data="PcDepartment"
+        :data="PcEmployee"
         @on-select="selectOne"
         @on-selection-change="selectChange"
       ></Table>
-      <Page :total="100"/>
+      <Page :total="100" class="pagesplit"/>
     </div>
   </div>
 </template>
@@ -29,8 +29,12 @@ export default {
           align: "center"
         },
         {
-          title: "部门",
-          key: "name"
+          title: "员工",
+          key: "username"
+        },
+        {
+          title: "所属部门",
+          key: "deptcode"
         },
         {
           title: "地址",
@@ -41,8 +45,8 @@ export default {
           key: "owner"
         },
         {
-          title: "责任人",
-          key: "responsible"
+          title: "联系方式",
+          key: "tellphone"
         },
         {
           title: "修改人",
@@ -71,6 +75,33 @@ export default {
                 "Button",
                 {
                   props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除部门么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPcPerson(params.row.usercode);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "修改"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
                     type: "error",
                     size: "small"
                   },
@@ -82,7 +113,7 @@ export default {
                         title: "确定删除部门么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPcDepartment(params.row.code);
+                          this.delPcPerson(params.row.usercode);
                         },
                         onCancel: () => {}
                       });
@@ -95,10 +126,10 @@ export default {
           }
         }
       ],
-      PcDepartment: []
+      PcEmployee: []
     };
   },
-  computed: mapState(["companyArray", "departmentArray"]),
+  computed: mapState(["departmentArray", "companyArray"]),
   methods: {
     ...mapMutations(["choosedDepartmentArray"]),
     selectOne() {},
@@ -106,61 +137,63 @@ export default {
       this.choosedDepartmentArray(selection);
     },
 
-    getCompanyName(company) {
+    getDepartmentName(company) {
       return company[0].name;
     },
-    async delPcDepartment(code) {
-      let url = urls.department.delPcDepartment;
-      let data = qs.stringify({ code });
+    async delPcPerson(code) {
+      let url = urls.employee.delPcPerson;
+      let data = qs.stringify({ userCode: code });
+      console.log(data);
       let jsondata = await axios.post(url, data, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       });
       if (jsondata.data.msgId == 200) {
-        this.getPcDepartment();
-        this.$Message.info("删除部门成功");
+        if (this.departmentArray.length == 1) {
+          this.getPcEmployee(urls.employee.getPcPersonListByUserNameD, {
+            deptCode: this.departmentArray[0].code
+          });
+        } else {
+          this.getPcEmployee(urls.employee.getPcPersonListByUserNameC, {
+            companyCode: this.companyArray[0].code
+          });
+        }
+        this.$Message.info("删除员工成功");
       } else {
-        this.$Message.info("删除部门失败");
+        this.$Message.info("删除员工失败");
       }
     },
-    async getPcDepartment() {
-      let url = urls.department.getPcDepartment;
-      let data = {
-        comp: this.getCompanyName(this.companyArray)
-      };
 
+    async getPcEmployee(url, params) {
       let jsondata = await axios({
         url,
-        method: "post",
-        data: qs.stringify(data),
+        method: "get",
+        params,
         headers: {
           "Content-Type": " application/x-www-form-urlencoded"
         }
       });
 
-      if (this.departmentArray.length > 0) {
-        let name = this.departmentArray[0].name;
-        this.PcDepartment = jsondata.data.meseage.map(item => {
-          if (item.name == name) {
-            item._checked = true;
-          } else {
-            item._checked = false;
-          }
-          return item;
-        });
-      } else {
-        this.PcDepartment = jsondata.data.meseage;
+      if (jsondata.status == 200) {
+        this.PcEmployee = jsondata.data.data;
       }
     }
   },
   mounted() {
-    this.getPcDepartment();
+    if (this.departmentArray.length == 1) {
+      console.log("部门查询");
+      this.getPcEmployee(urls.employee.getPcPersonListByUserNameD, {
+        deptCode: this.departmentArray[0].code
+      });
+    } else {
+      console.log("公司查询");
+      this.getPcEmployee(urls.employee.getPcPersonListByUserNameC, {
+        companyCode: this.companyArray[0].code
+      });
+    }
   }
 };
 </script>
 <style>
-.ivu-page {
-  margin-top: 20px;
-}
 .page-title {
   display: inline-block;
 }
@@ -169,9 +202,10 @@ export default {
 }
 
 .liketable {
+  border: 1px solid #dbdbdb;
   overflow: hidden;
   color: #666;
-  /* padding: 20px; */
+  padding: 20px;
   border-radius: 4px;
 }
 .table-heade {
@@ -184,7 +218,7 @@ export default {
   flex: 1;
 }
 .table-item-wrap {
-  /* padding: 0 20px; */
+  padding: 0 20px;
 
   /* height: 200px;
   overflow-y: scroll; */
@@ -247,5 +281,9 @@ export default {
 }
 .btn-submit {
   width: 162px !important;
+}
+.pagesplit {
+  max-width: 431px;
+  margin: 10px auto;
 }
 </style>

@@ -1,6 +1,6 @@
-<template>
-  <div>
-    <div>添加公司</div>
+<template class="addcompany">
+  <div class="addtemp">
+    <h1>添加公司</h1>
     <div class="from-wrap">
       <div class="form-line">
         <label>公司名称:</label>
@@ -67,21 +67,35 @@ export default {
         return;
       }
 
-      let data = {
-        name,
-        address,
-        code,
-        modifer,
-        owner,
-        responsible
-      };
+      //前端发送 请求格式
+      // let webData = {
+      //   obj: {
+      //     name,
+      //     address,
+      //     code,
+      //     modifer,
+      //     owner,
+      //     responsible
+      //   },
 
-      let url = urls.company.addPccompany;
+      //   list: [{}, {}],
+
+      //   str: "aaaa,bbbb,cccc"
+      // };
+
+      //后台返回格式
+      // {
+      //   type:200,
+      //   size:0,
+      //   jsonData:[]
+      // }
+
+      let url = urls.company.addPcCompany;
 
       let jsondata = await axios({
         url,
         method: "post",
-        data,
+        data: data111,
         headers: {
           "Content-Type": " application/json"
         }
@@ -102,6 +116,10 @@ export default {
 </script>
 
 <style>
+h1 {
+  text-align: center;
+  padding: 10px;
+}
 .btn-submit {
   margin-right: 10px;
 }
@@ -109,6 +127,14 @@ export default {
   width: 100%;
   height: 100%;
   display: inline-block;
+  color: #fff;
+}
+.form-line {
+  text-align: center;
+}
+.from-wrap {
+  margin: 0 auto;
+  width: 633px;
 }
 </style>
 

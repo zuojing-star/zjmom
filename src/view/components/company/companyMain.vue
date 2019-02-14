@@ -1,61 +1,78 @@
 <template>
-  <div>
+  <div class="main-company-wrap">
     <div class="page-title-wrap">
-      <div class="page-title">部门信息</div>
+      <div class="page-title">公司信息</div>
       <Dropdown trigger="click" style="margin-left: 20px;margin-right:10px;">
-        <a href="javascript:void(0)">menu
+        <a href="javascript:void(0)">操作
           <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
-          <DropdownItem>
-            <div @click="addCompany" class="emp-msg-button">添加</div>
-            <!-- <router-link to="/components/tables_page/company/companyadd">添加</router-link> -->
+          <DropdownItem class="border">
+            <div @click="addCompany" class="dep-msg-button">添加公司</div>
+          </DropdownItem>
+          <DropdownItem class="border">
+            <div class="dep-msg-button" @click="depMsgClick">部门信息</div>
           </DropdownItem>
           <DropdownItem>
-            <div class="emp-msg-button">删除</div>
-          </DropdownItem>
-          <DropdownItem>
-            <div class="emp-msg-button">修改</div>
-          </DropdownItem>
-          <DropdownItem>
-            <span class="emp-msg-button" @click="companyMsgClick">公司信息</span>
-          </DropdownItem>
-          <DropdownItem>
-            <span class="emp-msg-button" @click="empMsgClick">员工信息</span>
+            <div class="dep-msg-button" @click="empMsgClick">员工信息</div>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Input placeholder="Enter text" style="width: auto">
-        <Icon type="ios-search" slot="suffix"/>
-      </Input>
+      <Input placeholder="公司搜索" style="width: auto"></Input>
+      <Input placeholder="地址搜索" style="width: auto"></Input>
+      <Input placeholder="责任人搜索" style="width: auto"></Input>
+      <Button type="info">搜索</Button>
     </div>
-
-    <router-view></router-view>
+    <router-view class="router-wrappppppp"></router-view>
   </div>
 </template>
 <script>
+import testc from "@/view/testc.vue";
 import { mapState } from "vuex";
-export default {
-  components: {},
-  computed: mapState(["canAddCompany", "departmentArray"]),
-  methods: {
-    companyMsgClick() {
-      this.$router.push({
-        path: "/components/tables_page/company"
-      });
-    },
-    empMsgClick() {
-      let departmentArray = this.departmentArray;
+import urls from "@/urls.js";
+import axios from "axios";
 
-      if (departmentArray.length == 1) {
+export default {
+  components: {
+    testc
+  },
+  computed: mapState(["canAddCompany", "companyArray"]),
+  methods: {
+    empMsgClick() {
+      let companyArray = this.companyArray;
+
+      if (companyArray.length == 1) {
         this.$router.push({
-          path: "/components/tables_page/employee"
+          path: `/components/tables_page/employee/empList?code=${
+            companyArray[0].code
+          }`
         });
       } else {
         this.$Modal.error({
-          title: "至少选择一个部门"
+          title: "至少选择一个公司"
         });
       }
+    },
+    depMsgClick() {
+      let companyArray = this.companyArray;
+
+      if (companyArray.length == 1) {
+        console.log("companyArray:", companyArray[0]);
+        this.$router.push({
+          path: `/components/tables_page/department?code=${
+            companyArray[0].code
+          }`
+        });
+      } else {
+        this.$Modal.error({
+          title: "至少选择一个公司"
+        });
+      }
+    },
+    addCompany() {
+      this.$router.push({
+        path: "/components/tables_page/addCompany"
+      });
     }
   }
 };
@@ -149,9 +166,16 @@ export default {
 .btn-submit {
   width: 162px !important;
 }
-.emp-msg-button {
+.dep-msg-button {
   height: 26px;
   line-height: 30px;
   padding-left: 18px;
+}
+.ivu-dropdown-item {
+  height: 30px;
+  padding: 0;
+}
+.border {
+  border-bottom: 1px solid #dcdee2;
 }
 </style>
