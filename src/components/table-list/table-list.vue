@@ -1,80 +1,60 @@
 <template>
   <div class="table-wrap">
-    <Table border ref="selection" :columns="columns" :data="Pccompany" @on-select="selectOne"></Table>
+    <Table
+      border
+      ref="selection"
+      :columns="columns"
+      :data="data"
+      @on-select="selectOne"
+      @on-selection-change="selectChange"
+    ></Table>
     <Page :total="100" class="pagesplit"/>
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
-import urls from '@/urls.js'
-import axios from 'axios'
+import { mapMutations } from "vuex";
+import urls from "@/urls.js";
+import axios from "axios";
 
 export default {
-  data () {
-    return {
-      columns: [
-        {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
-          title: '公司',
-          key: 'name'
-        },
-        {
-          title: '地址',
-          key: 'address'
-        },
-        {
-          title: '所有者',
-          key: 'owner'
-        },
-        {
-          title: '责任人',
-          key: 'responsible'
-        },
-        {
-          title: '修改人',
-          key: 'modifer'
-        },
-        {
-          title: '创建时间',
-          key: 'createdate'
-        },
-        {
-          title: '修改时间',
-          key: 'modifydate'
-        }
-      ],
-      Pccompany: []
-    }
+  props: {
+    columns: Array,
+    data: Array,
+    checkedSource: String
   },
   methods: {
-    async getPccompany () {
-      let url = urls.company.getPccompany
-      let jsondata = await axios.post(url)
+    async getPccompany() {
+      let url = urls.company.getPccompany;
+      let jsondata = await axios.post(url);
       if (jsondata.status == 200) {
-        this.Pccompany = jsondata.data.data
+        this.Pccompany = jsondata.data.data;
       }
     },
-    ...mapMutations({
-      chooseOneCompany: 'chooseOneCompany'
-    }),
-    selectOne (selection, row) {
-      if (row) {
+    ...mapMutations([
+      "chooseOneCompany",
+      "choosedCompany",
+      "choosedCompanyArray",
+      "choosedDepartmentArray"
+    ]),
+    selectChange(selection) {
+      switch (this.checkedSource) {
+        case "company":
+          this.choosedCompanyArray(selection);
+          break;
+        case "department":
+          this.choosedDepartmentArray(selection);
+          break;
       }
-      console.log('选中的一行', row)
-      console.log('选中的数组', selection)
-      console.log('selectOne', this.$refs.selection)
-      this.chooseOneCompany()
+    },
+    selectOne(selection, row) {
+      // console.log("选中的一行", row);
+      // console.log("选中的数组", selection);
+      // console.log("selectOne", this.$refs.selection);
+      // this.chooseOneCompany();
       // this.$store.commit("chooseOneCompany");
     }
-  },
-  mounted () {
-    this.getPccompany()
   }
-}
+};
 </script>
 <style>
 .pagesplit {
@@ -171,6 +151,5 @@ export default {
   margin-bottom: 20px;
 }
 .btn-submit {
-  width: 162px !important;
 }
 </style>

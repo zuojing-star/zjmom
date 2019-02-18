@@ -18,34 +18,179 @@
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Input placeholder="公司搜索" style="width: auto"></Input>
-      <Input placeholder="地址搜索" style="width: auto"></Input>
-      <Input placeholder="责任人搜索" style="width: auto"></Input>
+      <Input placeholder="公司搜索" style="width: auto"/>
+      <Input placeholder="地址搜索" style="width: auto"/>
+      <Input placeholder="责任人搜索" style="width: auto"/>
       <Button type="info">搜索</Button>
     </div>
-    <router-view class="router-wrappppppp"></router-view>
+    <TableList :columns="columns" :data="data" checkedSource="company"/>
   </div>
 </template>
 <script>
-import testc from "@/view/testc.vue";
+import TableList from "@/components/table-list/table-list.vue";
 import { mapState } from "vuex";
 import urls from "@/urls.js";
-import axios from "axios";
+import ajax from "@/ajax.js";
+
+import "./companyMain.css";
+import mixin from "@/view/service-mixin.js";
 
 export default {
-  components: {
-    testc
+  //初始化
+  mounted() {
+    this.getPccompany();
   },
-  computed: mapState(["canAddCompany", "companyArray"]),
+
+  //mixin
+  mixins: [mixin],
+
+  //组件注册
+  components: {
+    TableList
+  },
+
+  //数据
+  data() {
+    return {
+      columns: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center"
+        },
+        {
+          title: "公司333444",
+          key: "name"
+        },
+        {
+          title: "地址333",
+          key: "address"
+        },
+        {
+          title: "所有者333",
+          key: "owner"
+        },
+        {
+          title: "责任人",
+          key: "responsible"
+        },
+        {
+          title: "修改人",
+          key: "modifer"
+        },
+        {
+          title: "创建时间",
+          key: "createdate"
+        },
+        {
+          title: "修改时间",
+          key: "modifydate"
+        },
+        {
+          title: "操作",
+          key: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "修改"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        }
+      ]
+    };
+  },
+
+  //计算属性
+  computed: mapState(["companyArray"]),
+
+  //接口
   methods: {
+    //删除公司
+    async delPccompany(code) {
+      let url = urls.company.delPccompnay;
+      let data = {
+        str: code
+      };
+      let result = await ajax.post(url, data);
+      this.delResponse(result);
+    },
+
+    //删除公司 回调
+    delResponse(result) {
+      if (result.data.type == 200) {
+        this.getPccompany();
+        this.$Message.info("删除成功");
+      } else {
+        this.$Message.info("删除失败");
+      }
+    },
+
+    //获取公司数据
+    async getPccompany() {
+      let url = urls.company.getPccompany;
+      let result = await ajax.post(url);
+      this.getResponse(result, this.companyArray);
+    },
+
+    //页面跳转
     empMsgClick() {
       let companyArray = this.companyArray;
 
       if (companyArray.length == 1) {
         this.$router.push({
-          path: `/components/tables_page/employee/empList?code=${
-            companyArray[0].code
-          }`
+          path: `/components/tables_page/employee`
         });
       } else {
         this.$Modal.error({
@@ -57,11 +202,8 @@ export default {
       let companyArray = this.companyArray;
 
       if (companyArray.length == 1) {
-        console.log("companyArray:", companyArray[0]);
         this.$router.push({
-          path: `/components/tables_page/department?code=${
-            companyArray[0].code
-          }`
+          path: "/components/tables_page/department"
         });
       } else {
         this.$Modal.error({
@@ -78,104 +220,4 @@ export default {
 };
 </script>
 <style>
-.page-title {
-  display: inline-block;
-}
-.page-title-wrap {
-  padding: 0 0 20px 0;
-}
-
-.liketable {
-  border: 1px solid #dbdbdb;
-  overflow: hidden;
-  color: #666;
-  padding: 20px;
-  border-radius: 4px;
-}
-.table-heade {
-  display: flex;
-  text-align: center;
-  padding: 5px 20px;
-  padding-right: 22px;
-}
-.table-head-col {
-  flex: 1;
-}
-.table-item-wrap {
-  padding: 0 20px;
-
-  /* height: 200px;
-  overflow-y: scroll; */
-}
-.table-item {
-  color: #1c1c1c;
-  overflow: hidden;
-  list-style: none;
-  border: 1px solid #dbdbdb;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
-  display: flex;
-}
-.table-item-col {
-  flex: 1;
-  height: 38px;
-  line-height: 38px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  float: left;
-  text-align: center;
-  color: #1c1c1c;
-  letter-spacing: -0.14px;
-  padding-top: 0;
-  margin-right: 2px;
-}
-.tag-icon {
-  width: 14px;
-  margin-right: 3px;
-  /* vertical-align: middle; */
-}
-.button {
-  margin-right: 10px;
-  width: 100px;
-}
-.button-wrap {
-  margin-bottom: 16px;
-}
-.form-line > label {
-  display: inline-block;
-  margin-right: 10px;
-  width: 80px;
-  text-align: right;
-}
-.ivu-checkbox-group {
-  display: inline-block !important;
-}
-.ivu-row {
-  display: inline-block !important;
-}
-.from-wrap {
-  border: 1px solid #dbdbdb;
-  border-radius: 4px;
-  padding: 50px;
-}
-.form-line {
-  margin-bottom: 20px;
-}
-.btn-submit {
-  width: 162px !important;
-}
-.dep-msg-button {
-  height: 26px;
-  line-height: 30px;
-  padding-left: 18px;
-}
-.ivu-dropdown-item {
-  height: 30px;
-  padding: 0;
-}
-.border {
-  border-bottom: 1px solid #dcdee2;
-}
 </style>

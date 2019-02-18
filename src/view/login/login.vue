@@ -34,17 +34,17 @@
 </template>
 
 <script>
-import LoginForm from '_c/login-form'
-import { mapActions } from 'vuex'
+import LoginForm from "_c/login-form";
+import { mapActions } from "vuex";
 // import ajax from "@/ajax";
 // import urls from "@/urls";
 
 export default {
-  data () {
+  data() {
     return {
-      username: '',
-      password: ''
-    }
+      username: "",
+      password: ""
+    };
   },
   components: {
     LoginForm
@@ -67,12 +67,12 @@ export default {
     //   }
     // }
 
-    ...mapActions(['handleLogin', 'getUserInfo']),
+    ...mapActions(["handleLogin", "getUserInfo"]),
 
-    handleSubmit ({ userName, password }) {
+    handleSubmit({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
-          console.log('userInfo:', res)
+          console.log("userInfo:", res);
           /*
             {
               name: "super_admin",
@@ -85,18 +85,18 @@ export default {
 
           this.$router.push({
             name: this.$config.homeName
-          })
-        })
-      })
+          });
+        });
+      });
     }
   },
   computed: {
-    loading_state () {
-      console.log(this.$store.state.abcd)
-      return this.$store.state.abcd
+    loading_state() {
+      console.log(this.$store.state.abcd);
+      return this.$store.state.abcd;
     }
   }
-}
+};
 </script>
 
 <style>
@@ -129,5 +129,8 @@ body {
 .title-wrap {
   height: 66px !important;
   font-size: 18px;
+}
+.login-con {
+  top: 66%;
 }
 </style>

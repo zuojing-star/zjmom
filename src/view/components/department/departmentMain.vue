@@ -18,24 +18,146 @@
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Input placeholder="公司搜索" style="width: auto"></Input>
-      <Input placeholder="地址搜索" style="width: auto"></Input>
-      <Input placeholder="责任人搜索" style="width: auto"></Input>
+      <Input placeholder="公司搜索" style="width: auto"/>
+      <Input placeholder="地址搜索" style="width: auto"/>
+      <Input placeholder="责任人搜索" style="width: auto"/>
       <Button type="info">搜索</Button>
     </div>
-
-    <router-view></router-view>
+    <TableList :columns="columns" :data="data" checkedSource="department"/>
   </div>
 </template>
-<script>
-import { mapState } from "vuex";
-export default {
-  components: {},
-  computed: mapState(["canAddCompany", "departmentArray"]),
-  methods: {
-    addDepartment() {
-      console.log("addDepartment");
 
+<script>
+import TableList from "@/components/table-list/table-list.vue";
+import { mapState } from "vuex";
+import urls from "@/urls.js";
+import ajax from "@/ajax.js";
+import mixin from "@/view/service-mixin.js";
+
+export default {
+  mixins: [mixin],
+  data() {
+    return {
+      columns: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center"
+        },
+        {
+          title: "部门",
+          key: "name"
+        },
+        {
+          title: "地址",
+          key: "address"
+        },
+        {
+          title: "所有者",
+          key: "owner"
+        },
+        {
+          title: "责任人",
+          key: "responsible"
+        },
+        {
+          title: "修改人",
+          key: "modifer"
+        },
+        {
+          title: "创建时间",
+          key: "createdate"
+        },
+        {
+          title: "修改时间",
+          key: "modifydate"
+        },
+        {
+          title: "所属公司",
+          key: "companycode"
+        },
+        {
+          title: "Action",
+          key: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "修改"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除部门么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPcDepartment(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        }
+      ]
+    };
+  },
+  components: { TableList },
+  computed: mapState(["departmentArray", "companyArray"]),
+  methods: {
+    delResponse(result) {
+      if (result.data.type == 200) {
+        this.getPcDepartment(this.getCompanyCode(this.companyArray));
+        this.$Message.info("删除部门成功");
+      } else {
+        this.$Message.info("删除部门失败");
+      }
+    },
+    async delPcDepartment(code) {
+      let url = urls.department.delPcDepartment;
+      let data = { str: code };
+      let result = await ajax.post(url, data);
+      this.delResponse(result);
+    },
+    addDepartment() {
       this.$router.push({
         path: "/components/tables_page/depAdd"
       });
@@ -58,13 +180,28 @@ export default {
           title: "至少选择一个部门"
         });
       }
+    },
+    //获取数据
+    async getPcDepartment(code) {
+      let url = urls.department.getPcDepartmentListByName;
+      let data = {
+        str: code
+      };
+
+      let result = await ajax.post(url, data);
+      this.getResponse(result, this.departmentArray);
+    },
+    //获取公司名字
+    getCompanyCode(companyArray) {
+      return companyArray[0].code;
     }
   },
   mounted() {
-    console.dir(this.$route.query.code);
+    this.getPcDepartment(this.getCompanyCode(this.companyArray));
   }
 };
 </script>
+
 <style>
 .page-title {
   display: inline-block;
@@ -152,7 +289,6 @@ export default {
   margin-bottom: 20px;
 }
 .btn-submit {
-  width: 162px !important;
 }
 .emp-msg-button {
   height: 26px;

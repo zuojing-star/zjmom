@@ -181,23 +181,7 @@ export default [
               notCache: true,
               icon: "md-home"
             },
-            component: () =>
-              import("@/view/components/company/companyMain.vue"),
-            redirect: "/components/tables_page/company/companylist",
-            children: [
-              {
-                path: "companylist",
-                name: "公司信息列表",
-                meta: {
-                  hideInMenu: false,
-                  title: "公司信息列表",
-                  notCache: true,
-                  icon: "md-home"
-                },
-                component: () =>
-                  import("@/view/components/company/companyList.vue")
-              }
-            ]
+            component: () => import("@/view/components/company/companyMain.vue")
           },
           {
             path: "department",
@@ -208,23 +192,8 @@ export default [
               notCache: true,
               icon: "md-home"
             },
-            redirect: "/components/tables_page/department/depList",
             component: () =>
-              import("@/view/components/department/departmentMain.vue"),
-            children: [
-              {
-                path: "deplist",
-                name: "deplist",
-                meta: {
-                  hideInMenu: true,
-                  title: "部门信息列表",
-                  notCache: true,
-                  icon: "md-home"
-                },
-                component: () =>
-                  import("@/view/components/department/depList.vue")
-              }
-            ]
+              import("@/view/components/department/departmentMain.vue")
           },
           {
             path: "employee",
@@ -235,23 +204,8 @@ export default [
               notCache: true,
               icon: "md-home"
             },
-            redirect: "/components/tables_page/employee/empList",
             component: () =>
-              import("@/view/components/employee/employeeMain.vue"),
-            children: [
-              {
-                path: "emplist",
-                name: "emplist",
-                meta: {
-                  hideInMenu: true,
-                  title: "员工信息列表",
-                  notCache: true,
-                  icon: "md-home"
-                },
-                component: () =>
-                  import("@/view/components/employee/empList.vue")
-              }
-            ]
+              import("@/view/components/employee/employeeMain.vue")
           }
         ]
       },

@@ -1,32 +1,33 @@
 <template>
   <div>
-    <div>添加部门</div>
+    <h1 class="add-title">添加部门</h1>
     <div class="from-wrap">
       <div class="form-line">
         <label>部门名称:</label>
-        <Input style="width: 300px" v-model="name"/>
+        <Input class="add-input" v-model="name"/>
+        <span class="require-column">必填</span>
       </div>
 
       <div class="form-line">
         <label>地址:</label>
-        <Input style="width: 300px" v-model="address"/>
+        <Input class="add-input" v-model="address"/>
       </div>
       <div class="form-line">
         <label>修改人:</label>
-        <Input style="width: 300px" v-model="modifer"/>
+        <Input class="add-input" v-model="modifer"/>
       </div>
       <div class="form-line">
         <label>所有者:</label>
-        <Input style="width: 300px" v-model="owner"/>
+        <Input class="add-input" v-model="owner"/>
       </div>
       <div class="form-line">
         <label>责任人:</label>
-        <Input style="width: 300px" v-model="responsible"/>
+        <Input class="add-input" v-model="responsible"/>
       </div>
       <div class="form-line">
         <label>code:</label>
-        <Input style="width: 300px" v-model="code"/>
-        <span>必填</span>
+        <Input class="add-input" v-model="code"/>
+        <span class="require-column">必填</span>
       </div>
 
       <div class="form-line">
@@ -41,6 +42,7 @@
 <script>
 import urls from "@/urls.js";
 import axios from "axios";
+import ajax from "@/ajax.js";
 
 import { mapState } from "vuex";
 
@@ -57,9 +59,7 @@ export default {
   },
   computed: mapState(["companyArray"]),
   methods: {
-    async addDepartment() {
-      console.log("addDepartment");
-
+    getParams() {
       let name = this.name;
       let address = this.address;
       let code = this.code;
@@ -67,41 +67,62 @@ export default {
       let owner = this.owner;
       let responsible = this.responsible;
 
+      if (name == "") {
+        this.$Message.info("部门名称必须填写");
+        return;
+      }
+
       if (code == "") {
         this.$Message.info("code必须填写");
         return;
       }
 
       let data = {
-        name,
-        address,
-        code,
-        modifer,
-        owner,
-        responsible,
-        companycode: this.companyArray[0].code
+        obj: {
+          name,
+          address,
+          code: code,
+          modifer,
+          owner,
+          responsible,
+          companycode: this.companyArray[0].code
+        }
       };
 
-      let url = urls.department.addPcDepartment;
-
-      let jsondata = await axios({
-        url,
-        method: "post",
-        data,
-        headers: {
-          "Content-Type": " application/json"
-        }
-      });
-
-      if (jsondata.status == 200) {
-        if (jsondata.data.msgId == 200) {
-          this.$Message.info("添加部门成功");
+      return data;
+    },
+    cleanForm() {
+      this.name = "";
+      this.address = "";
+      this.code = "";
+      this.modifer = "";
+      this.owner = "";
+      this.responsible = "";
+    },
+    addResponse(result) {
+      if (result.status == 200) {
+        if (result.data.type == 200) {
+          this.$Modal.confirm({
+            title: "添加部门成功",
+            content: "<p>是否继续添加</p>",
+            onOk: () => {
+              this.cleanForm();
+            },
+            onCancel: () => {
+              this.$router.push({ path: "/components/tables_page/department" });
+            }
+          });
         } else {
           this.$Message.info("添加部门失败");
         }
       } else {
         this.$Message.info("添加部门失败");
       }
+    },
+    async addDepartment() {
+      let url = urls.department.addPcDepartment;
+      let result = await ajax.post(url, this.getParams());
+      this.addResponse(result);
     }
   }
 };
@@ -116,6 +137,25 @@ export default {
   height: 100%;
   display: inline-block;
   color: #fff;
+}
+.add-title {
+  padding: 10px;
+}
+
+.btn-submit {
+  margin-right: 10px;
+  width: 261px !important;
+  height: 40px;
+}
+
+.from-wrap {
+  width: 684px;
+}
+.require-column {
+  color: red;
+}
+.add-input {
+  width: 436px !important;
 }
 </style>
 
