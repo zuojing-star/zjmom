@@ -30,6 +30,16 @@ export default {
     getResponse(result, array) {
       if (result.status == 200) this.renderData(array, result);
       else alert("接口调用失败!");
+    },
+    //表单 必填 验证
+    requireForm(columns) {
+      for (var i = 0; i < columns.length; i++) {
+        if (columns[i].require && columns[i].value == "") {
+          this.$Message.info(`${columns[i].text}必须填写`);
+          return false;
+        }
+      }
+      return true;
     }
   }
 };

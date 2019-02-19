@@ -1,8 +1,8 @@
 export default {
   home: "首页",
   components: "配置管理", /// //////////////////
-  count_to_page: "工厂维护",
-  tables_page: "公司管理",
+  factory_maintain: "工厂维护",
+  company_manngement: "公司管理",
   split_pane_page: "类型维护",
   markdown_page: "工厂物料",
   editor_page: "质检工艺",

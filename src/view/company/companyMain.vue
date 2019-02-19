@@ -1,5 +1,5 @@
 <template>
-  <div class="main-company-wrap">
+  <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <div class="page-title-wrap">
       <div class="page-title">公司信息</div>
       <Dropdown trigger="click" style="margin-left: 20px;margin-right:10px;">
@@ -32,7 +32,7 @@ import { mapState } from "vuex";
 import urls from "@/urls.js";
 import ajax from "@/ajax.js";
 
-import "./companyMain.css";
+import "@/assets/styles/common-main.css";
 import mixin from "@/view/service-mixin.js";
 
 export default {
@@ -213,7 +213,7 @@ export default {
     },
     addCompany() {
       this.$router.push({
-        path: "/components/tables_page/addCompany"
+        path: "/components/addCompany"
       });
     }
   }

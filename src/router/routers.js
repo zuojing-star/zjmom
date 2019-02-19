@@ -129,94 +129,124 @@ export default [
         },
         component: () => import("@/view/components/cropper/cropper.vue")
       },
+
+      // {
+      //   path: "tables_page",
+      //   name: "tables_page",
+      //   meta: {
+      //     icon: "md-grid",
+      //     title: "多功能表格"
+      //   },
+      //   redirect: "/components/tables_page/company",
+      //   component: () => import("@/view/components/tables/tables.vue"),
+      //   children: [
+      //     {
+      //       path: "addCompany",
+      //       name: "添加公司",
+      //       meta: {
+      //         hideInMenu: true,
+      //         title: "添加公司",
+      //         icon: "md-home"
+      //       },
+      //       component: () => import("@/view/components/company/companyAdd.vue")
+      //     },
+      //     {
+      //       path: "depAdd",
+      //       name: "depAdd",
+      //       meta: {
+      //         hideInMenu: true,
+      //         title: "添加部门",
+      //         notCache: true,
+      //         icon: "md-home"
+      //       },
+      //       component: () =>
+      //         import("@/view/components/department/departmentAdd.vue")
+      //     },
+      //     {
+      //       path: "empAdd",
+      //       name: "empAdd",
+      //       meta: {
+      //         hideInMenu: true,
+      //         title: "添加员工",
+      //         notCache: true,
+      //         icon: "md-home"
+      //       },
+      //       component: () => import("@/view/components/employee/empAdd.vue")
+      //     },
+      //     {
+      //       path: "company",
+      //       name: "公司信息",
+      //       meta: {
+      //         // hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
+      //         title: "公司信息",
+      //         notCache: true,
+      //         icon: "md-home"
+      //       },
+      //       component: () => import("@/view/components/company/companyMain.vue")
+      //     },
+      //     {
+      //       path: "department",
+      //       name: "department",
+      //       meta: {
+      //         hideInMenu: true,
+      //         title: "部门信息",
+      //         notCache: true,
+      //         icon: "md-home"
+      //       },
+      //       component: () =>
+      //         import("@/view/components/department/departmentMain.vue")
+      //     },
+      //     {
+      //       path: "employee",
+      //       name: "employee",
+      //       meta: {
+      //         hideInMenu: true,
+      //         title: "员工信息",
+      //         notCache: true,
+      //         icon: "md-home"
+      //       },
+      //       component: () =>
+      //         import("@/view/components/employee/employeeMain.vue")
+      //     }
+      //   ]
+      // },
       {
-        path: "tables_page",
-        name: "tables_page",
-        meta: {
-          icon: "md-grid",
-          title: "多功能表格"
-        },
-        redirect: "/components/tables_page/company",
-        component: () => import("@/view/components/tables/tables.vue"),
-        children: [
-          {
-            path: "addCompany",
-            name: "添加公司",
-            meta: {
-              hideInMenu: true,
-              title: "添加公司",
-              icon: "md-home"
-            },
-            component: () => import("@/view/components/company/companyAdd.vue")
-          },
-          {
-            path: "depAdd",
-            name: "depAdd",
-            meta: {
-              hideInMenu: true,
-              title: "添加部门",
-              notCache: true,
-              icon: "md-home"
-            },
-            component: () =>
-              import("@/view/components/department/departmentAdd.vue")
-          },
-          {
-            path: "empAdd",
-            name: "empAdd",
-            meta: {
-              hideInMenu: true,
-              title: "添加员工",
-              notCache: true,
-              icon: "md-home"
-            },
-            component: () => import("@/view/components/employee/empAdd.vue")
-          },
-          {
-            path: "company",
-            name: "公司信息",
-            meta: {
-              // hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
-              title: "公司信息",
-              notCache: true,
-              icon: "md-home"
-            },
-            component: () => import("@/view/components/company/companyMain.vue")
-          },
-          {
-            path: "department",
-            name: "department",
-            meta: {
-              hideInMenu: true,
-              title: "部门信息",
-              notCache: true,
-              icon: "md-home"
-            },
-            component: () =>
-              import("@/view/components/department/departmentMain.vue")
-          },
-          {
-            path: "employee",
-            name: "employee",
-            meta: {
-              hideInMenu: true,
-              title: "员工信息",
-              notCache: true,
-              icon: "md-home"
-            },
-            component: () =>
-              import("@/view/components/employee/employeeMain.vue")
-          }
-        ]
-      },
-      {
-        path: "count_to_page",
-        name: "count_to_page",
+        path: "company_manngement",
+        name: "company_manngement",
         meta: {
           icon: "md-trending-up",
-          title: "数字渐变2"
+          title: "公司管理"
         },
-        component: () => import("@/view/components/count-to/count-to.vue")
+        component: () => import("@/view/company/companyMain.vue")
+      },
+      {
+        path: "addCompany",
+        name: "添加公司",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加公司"
+        },
+        component: () => import("@/view/company/companyAdd.vue")
+      },
+      {
+        path: "addFactory",
+        name: "addFactory",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加工厂"
+        },
+        component: () => import("@/view/factory/factoryAdd.vue")
+      },
+      {
+        path: "factory_maintain",
+        name: "factory_maintain",
+        meta: {
+          icon: "md-trending-up",
+          title: "工厂维护"
+        },
+        component: () => import("@/view/factory/factoryMain.vue")
       },
       {
         path: "split_pane_page",

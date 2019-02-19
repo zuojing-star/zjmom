@@ -148,9 +148,6 @@ export default {
   height: 40px;
 }
 
-.from-wrap {
-  width: 684px;
-}
 .require-column {
   color: red;
 }
