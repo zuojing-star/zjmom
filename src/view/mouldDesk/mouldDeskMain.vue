@@ -1,6 +1,6 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="产线信息" :operation="operation" @jumpTo="jumpTo($event,null,'产线')"/>
+    <PageTitle pagetitle="模台信息" :operation="operation" @jumpTo="jumpTo($event,null,'模台')"/>
     <TableList :columns="columns" :data="data" checkedSource="productLine"/>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.company,
+      operation: viewData.pagetitle.mouldDesk,
       columns: [
         {
           type: "selection",
@@ -41,32 +41,28 @@ export default {
           align: "center"
         },
         {
-          title: "公司333444",
+          title: "编号",
           key: "name"
         },
         {
-          title: "地址333",
-          key: "address"
+          title: "编码",
+          key: "code"
         },
         {
-          title: "所有者333",
-          key: "owner"
+          title: "工厂名称",
+          key: "facName"
         },
         {
-          title: "责任人",
-          key: "responsible"
+          title: "工厂代码",
+          key: "facCode"
         },
         {
-          title: "修改人",
-          key: "modifer"
+          title: "产线代码",
+          key: "lineCode"
         },
         {
-          title: "创建时间",
-          key: "createdate"
-        },
-        {
-          title: "修改时间",
-          key: "modifydate"
+          title: "产线名称",
+          key: "lineName"
         },
         {
           title: "操作",

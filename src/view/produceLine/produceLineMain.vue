@@ -33,7 +33,7 @@ export default {
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.factory,
+      operation: viewData.pagetitle.produceLine,
       columns: [
         {
           type: "selection",

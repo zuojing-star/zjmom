@@ -2,6 +2,7 @@ export default {
   home: "首页",
   components: "配置管理", /// //////////////////
   factory_maintain: "工厂维护",
+  storageYard: "堆场管理",
   company_manngement: "公司管理",
   split_pane_page: "类型维护",
   markdown_page: "工厂物料",
@@ -10,7 +11,7 @@ export default {
   c: "功能菜单",
   d: "操作角色",
   e: "菜单授权",
-  f: "堆场管理",
+
   g: "编码维护",
   update: "市场营销", /// //////////////////
   update_table_page: "项目信息",

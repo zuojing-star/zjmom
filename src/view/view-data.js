@@ -1,12 +1,37 @@
 export default {
-  // 添加 表单 页面数据
+  // 表单 数据
   add: {
     //公司
     addCompany: [
-      { text: "公司名字", value: "", type: "input", require: true }, //text：字段名字 value：字段值 type：输入框的类型 require：必填
-      { text: "公司地址", value: "", type: "input", require: false },
-      { text: "联系人", value: "", type: "input", require: false },
-      { text: "联系方式", value: "", type: "input", require: false }
+      //text：字段名字   value：字段值 type：输入框的类型 requestField:请求的字段名字 require：必填
+      {
+        text: "公司名字",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "公司地址",
+        value: "",
+        type: "input",
+        requestField: "address",
+        require: false
+      },
+      {
+        text: "联系人",
+        value: "",
+        type: "input",
+        requestField: "responsible",
+        require: false
+      },
+      {
+        text: "联系方式",
+        value: "",
+        type: "input",
+        requestField: "telphone",
+        require: false
+      }
     ],
     //工厂
     addFactory: [
@@ -85,7 +110,7 @@ export default {
       { text: "备注", value: "", type: "input", require: false }
     ]
   },
-  // main 页面 头部搜索 数据
+  //操作 数据
   pagetitle: {
     company: [
       { text: "添加公司", path: "/components/addCompany", require: false },
@@ -101,15 +126,67 @@ export default {
       }
     ],
     factory: [
-      { text: "添加工厂", path: "/components/addFactory", require: false },
+      { text: "新增工厂", path: "/components/addFactory", require: false },
+      { text: "批量删除", path: "/components/addFactory", require: false },
       {
-        text: "产线信息",
+        text: "产线管理",
         path: "/components/produceLine",
         require: false
       },
       {
-        text: "模台信息",
-        path: "/components/tables_page/department",
+        text: "模台管理",
+        path: "/components/mouldDesk",
+        require: false
+      },
+      {
+        text: "部门管理",
+        path: "/components/produceLine",
+        require: false
+      },
+      {
+        text: "员工管理",
+        path: "/components/produceLine",
+        require: false
+      },
+      {
+        text: "角色维护",
+        path: "/components/produceLine",
+        require: false
+      },
+      {
+        text: "工序维护",
+        path: "/components/produceLine",
+        require: false
+      },
+      {
+        text: "工艺维护",
+        path: "/components/produceLine",
+        require: false
+      },
+      {
+        text: "类型维护",
+        path: "/components/produceLine",
+        require: false
+      }
+    ],
+    produceLine: [
+      {
+        text: "新增产线",
+        path: "/components/addProduceLine",
+        require: false
+      }
+    ],
+    mouldDesk: [
+      {
+        text: "新增模台",
+        path: "/components/addMouldDesk",
+        require: false
+      }
+    ],
+    storageYard: [
+      {
+        text: "新增堆场",
+        path: "/components/addStorageYard",
         require: false
       }
     ]

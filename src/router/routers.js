@@ -284,7 +284,7 @@ export default [
         name: "storageYard",
         meta: {
           icon: "md-trending-up",
-          title: "堆场信息"
+          title: "堆场管理"
         },
         component: () => import("@/view/storageYard/storageYardMain.vue")
       },

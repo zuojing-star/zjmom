@@ -17,7 +17,7 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      data: viewData.add.addFactory,
+      data: viewData.add.addProduceLine,
       title: "添加产线",
       name: "",
       address: "",

@@ -32,7 +32,7 @@ export default {
       else alert("接口调用失败!");
     },
     //表单 必填 验证
-    requireForm(columns) {
+    validRequireForm(columns) {
       for (var i = 0; i < columns.length; i++) {
         if (columns[i].require && columns[i].value == "") {
           this.$Message.info(`${columns[i].text}必须填写`);
@@ -65,10 +65,19 @@ export default {
         }
       }
     },
+    //跳转页面
     jumpPage(path) {
       this.$router.push({
         path
       });
+    },
+    //获取请求参数
+    getRequestParams(data) {
+      let obj = {};
+      data.forEach(k => {
+        obj[k.requestField] = k.value;
+      });
+      return obj;
     }
   }
 };

@@ -32,8 +32,10 @@ export default {
     addSubmit() {
       console.log(this.data);
 
-      if (this.requireForm(this.data)) {
+      if (this.validRequireForm(this.data)) {
         console.log("提交数据");
+        let params = this.getRequestParams(this.data);
+        console.log(params);
       } else {
         console.log("不提交数据");
       }
