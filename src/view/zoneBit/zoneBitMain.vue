@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="公司信息" :operation="operation" @jumpTo="jumpTo($event,companyArray,'公司')"/>
-    <TableList :columns="columns" :data="data" checkedSource="company"/>
+    <PageTitle pagetitle="产线信息" :operation="operation" @jumpTo="jumpTo($event,null,'产线')"/>
+    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
   </div>
 </template>
 
@@ -41,24 +41,32 @@ export default {
           align: "center"
         },
         {
-          title: "名称",
+          title: "公司333444",
           key: "name"
         },
         {
-          title: "公司地址",
+          title: "地址333",
           key: "address"
         },
         {
-          title: "代码",
-          key: "code"
+          title: "所有者333",
+          key: "owner"
         },
         {
-          title: "联系人",
+          title: "责任人",
           key: "responsible"
         },
         {
-          title: "联系方式",
-          key: "telphone"
+          title: "修改人",
+          key: "modifer"
+        },
+        {
+          title: "创建时间",
+          key: "createdate"
+        },
+        {
+          title: "修改时间",
+          key: "modifydate"
         },
         {
           title: "操作",

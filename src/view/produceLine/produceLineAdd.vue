@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       data: viewData.add.addFactory,
-      title: "添加工厂",
+      title: "添加产线",
       name: "",
       address: "",
       responsible: "",

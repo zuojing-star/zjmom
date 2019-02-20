@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="公司信息" :operation="operation" @jumpTo="jumpTo($event,companyArray,'公司')"/>
-    <TableList :columns="columns" :data="data" checkedSource="company"/>
+    <PageTitle pagetitle="产线信息" :operation="operation" @jumpTo="jumpTo($event,null,'产线')"/>
+    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.company,
+      operation: viewData.pagetitle.factory,
       columns: [
         {
           type: "selection",
@@ -41,24 +41,44 @@ export default {
           align: "center"
         },
         {
-          title: "名称",
+          title: "工厂名称",
+          key: "facName"
+        },
+        {
+          title: "工厂代码",
+          key: "facCode"
+        },
+        {
+          title: "产线名称",
           key: "name"
         },
         {
-          title: "公司地址",
-          key: "address"
-        },
-        {
-          title: "代码",
+          title: "产线代码",
           key: "code"
         },
         {
-          title: "联系人",
+          title: "责任人",
           key: "responsible"
         },
         {
-          title: "联系方式",
+          title: "联系电话",
           key: "telphone"
+        },
+        {
+          title: "上班时间",
+          key: "startDate"
+        },
+        {
+          title: "下班时间",
+          key: "endDate"
+        },
+        {
+          title: "是否轮班",
+          key: "isRotate"
+        },
+        {
+          title: "模具总数",
+          key: "setNum"
         },
         {
           title: "操作",

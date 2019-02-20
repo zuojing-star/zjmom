@@ -1,28 +1,6 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <div class="page-title-wrap">
-      <div class="page-title">{{ factoryTemplateData.title }}</div>
-      <Dropdown trigger="click" style="margin-left: 20px;margin-right:10px;">
-        <a href="javascript:void(0)">操作
-          <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu slot="list">
-          <DropdownItem class="border">
-            <div @click="addMessage" class="dep-msg-button">{{ factoryTemplateData.add }}</div>
-          </DropdownItem>
-          <DropdownItem class="border">
-            <div class="dep-msg-button" @click="depMsgClick">{{ factoryTemplateData.son }}</div>
-          </DropdownItem>
-          <DropdownItem>
-            <div class="dep-msg-button" @click="empMsgClick">{{ factoryTemplateData.grandson }}</div>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <Input :placeholder="factoryTemplateData.search1" style="width: auto"/>
-      <Input :placeholder="factoryTemplateData.search2" style="width: auto"/>
-      <Input :placeholder="factoryTemplateData.search3" style="width: auto"/>
-      <Button type="info">搜索</Button>
-    </div>
+    <PageTitle pagetitle="工厂信息" :operation="operation" @jumpTo="jumpTo($event,null,'工厂')"/>
     <TableList :columns="columns" :data="data" checkedSource="factory"/>
   </div>
 </template>
@@ -32,19 +10,22 @@ import TableList from "@/components/table-list/table-list.vue";
 import { mapState } from "vuex";
 import urls from "@/urls.js";
 import ajax from "@/ajax.js";
-
 import mixin from "@/view/service-mixin.js";
 import "@/assets/styles/common-main.css";
 import routerPage from "@/view/router-page.js";
+import viewData from "@/view/view-data.js";
+import PageTitle from "_c/page-title/page-title.vue";
 
 export default {
   mixins: [mixin],
   components: {
-    TableList
+    TableList,
+    PageTitle
   },
 
   data() {
     return {
+      operation: viewData.pagetitle.factory,
       columns: [
         {
           type: "selection",
@@ -52,29 +33,35 @@ export default {
           align: "center"
         },
         {
-          title: "Name",
-          key: "name",
-          render: (h, params) => {
-            return h("div", [
-              h("Icon", {
-                props: {
-                  type: "person"
-                }
-              }),
-              h("strong", params.row.name)
-            ]);
-          }
+          title: "名称",
+          key: "name"
         },
         {
-          title: "Age",
-          key: "age"
+          title: "代码",
+          key: "code"
         },
         {
-          title: "Address",
-          key: "address"
+          title: "类型",
+          key: "type"
         },
         {
-          title: "Action",
+          title: "联系人",
+          key: "responsible"
+        },
+        {
+          title: "联系方式",
+          key: "telphone"
+        },
+        {
+          title: "地址",
+          key: "responsible"
+        },
+        {
+          title: "描述",
+          key: "responsible"
+        },
+        {
+          title: "操作",
           key: "action",
           width: 150,
           align: "center",
@@ -92,11 +79,20 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.show(params.index);
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
                     }
                   }
                 },
-                "View"
+                "修改"
               ),
               h(
                 "Button",
@@ -105,13 +101,23 @@ export default {
                     type: "error",
                     size: "small"
                   },
+
                   on: {
                     click: () => {
-                      this.remove(params.index);
+                      console.log(params);
+
+                      this.$Modal.confirm({
+                        title: "确定删除么？",
+                        content: "<p></p>",
+                        onOk: () => {
+                          this.delPccompany(params.row.code);
+                        },
+                        onCancel: () => {}
+                      });
                     }
                   }
                 },
-                "Delete"
+                "删除"
               )
             ]);
           }
@@ -138,16 +144,7 @@ export default {
           age: 26,
           address: "Ottawa No. 2 Lake Park"
         }
-      ],
-      factoryTemplateData: {
-        title: "工厂信息",
-        add: "添加工厂",
-        son: "产线信息",
-        grandson: "模台信息",
-        search1: "工厂搜索",
-        search2: "产线搜索",
-        search3: "模台搜索"
-      }
+      ]
     };
   },
   methods: {

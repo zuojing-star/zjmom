@@ -40,6 +40,35 @@ export default {
         }
       }
       return true;
+    },
+    //跳转页面
+    jumpTo(index, reqArray, errMsg) {
+      console.log("index:", index);
+      console.log("reqArray:", reqArray);
+      console.log("errMsg:", errMsg);
+
+      for (let i = 0; i < this.operation.length; i++) {
+        if (i == index) {
+          console.log("匹配的对象是：", this.operation[i]);
+          if (this.operation[i].require) {
+            if (reqArray.length == 1) {
+              this.jumpPage(this.operation[i].path);
+            } else {
+              this.$Modal.error({
+                title: `至少选择一个${reqArray}`
+              });
+            }
+          } else {
+            this.jumpPage(this.operation[i].path);
+          }
+          return;
+        }
+      }
+    },
+    jumpPage(path) {
+      this.$router.push({
+        path
+      });
     }
   }
 };

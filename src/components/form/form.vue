@@ -2,11 +2,24 @@
   <div class="add-wrap ivu-card ivu-card-bordered ivu-card-body">
     <h1 class="add-title">{{title}}</h1>
     <div class="from-wrap">
-      <div class="form-line" v-for="column in columns" :key="column.k">
-        <label>{{ column.text }}:</label>
-        <Input class="add-input" v-model="column.value"/>
-        <span v-if="column.require" class="require-column">{{txt1}}</span>
-      </div>
+      <template v-for="(column,index) in columns">
+        <div class="form-line" v-if="column.type=='input'" :key="index">
+          <label>{{ column.text }}:</label>
+          <Input class="add-input" v-model="column.value"/>
+          <span v-if="column.require" class="require-column">{{txt1}}</span>
+        </div>
+
+        <div class="form-line" :key="index" v-if="column.type=='select'">
+          <label>{{ column.text }}:</label>
+          <Select class="add-select" v-model="column.value">
+            <Option
+              v-for="item in column.selectData"
+              :value="item.value"
+              :key="item.value"
+            >{{ item.label }}</Option>
+          </Select>
+        </div>
+      </template>
 
       <div class="form-line submit-wrap">
         <Button type="primary" class="btn-submit" @click="$emit('addSubmit')">{{txt2}}</Button>

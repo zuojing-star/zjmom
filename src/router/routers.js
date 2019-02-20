@@ -240,6 +240,165 @@ export default [
         component: () => import("@/view/factory/factoryAdd.vue")
       },
       {
+        path: "addProduceLine",
+        name: "addProduceLine",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加产线"
+        },
+        component: () => import("@/view/produceLine/produceLineAdd.vue")
+      },
+      {
+        path: "addMouldDesk",
+        name: "addMouldDesk",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加模台"
+        },
+        component: () => import("@/view/mouldDesk/mouldDeskAdd.vue")
+      },
+      {
+        path: "mouldDesk",
+        name: "mouldDesk",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "模台信息"
+        },
+        component: () => import("@/view/mouldDesk/mouldDeskMain.vue")
+      },
+      {
+        path: "addStorageYard",
+        name: "addStorageYard",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加堆场"
+        },
+        component: () => import("@/view/storageYard/storageYardAdd.vue")
+      },
+      {
+        path: "storageYard",
+        name: "storageYard",
+        meta: {
+          icon: "md-trending-up",
+          title: "堆场信息"
+        },
+        component: () => import("@/view/storageYard/storageYardMain.vue")
+      },
+      {
+        path: "addZoneBit",
+        name: "addZoneBit",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加区位"
+        },
+        component: () => import("@/view/zoneBit/zoneBitAdd.vue")
+      },
+      {
+        path: "zoneBit",
+        name: "zoneBit",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "区位信息"
+        },
+        component: () => import("@/view/zoneBit/zoneBitMain.vue")
+      },
+      {
+        path: "addStorageRack",
+        name: "addStorageRack",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加货架"
+        },
+        component: () => import("@/view/storageRack/storageRackAdd.vue")
+      },
+      {
+        path: "produceType",
+        name: "produceType",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "生产类型信息"
+        },
+        component: () => import("@/view/produceType/produceTypeMain.vue")
+      },
+      {
+        path: "addProduceType",
+        name: "addProduceType",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加生产类型"
+        },
+        component: () => import("@/view/produceType/produceTypeAdd.vue")
+      },
+      {
+        path: "produceCraft",
+        name: "produceCraft",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "生产工艺信息"
+        },
+        component: () => import("@/view/produceCraft/produceCraftMain.vue")
+      },
+      {
+        path: "addProduceCraft",
+        name: "addProduceCraft",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加生产工艺"
+        },
+        component: () => import("@/view/produceCraft/produceCraftAdd.vue")
+      },
+      {
+        path: "produceProcess",
+        name: "produceProcess",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工序维护"
+        },
+        component: () => import("@/view/produceProcess/produceProcessMain.vue")
+      },
+      {
+        path: "addProduceProcess",
+        name: "addProduceProcess",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加工序"
+        },
+        component: () => import("@/view/produceProcess/produceProcessAdd.vue")
+      },
+      {
+        path: "storageRack",
+        name: "storageRack",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "货架信息"
+        },
+        component: () => import("@/view/storageRack/storageRackMain.vue")
+      },
+      {
+        path: "produceLine",
+        name: "produceLine",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "产线信息"
+        },
+        component: () => import("@/view/produceLine/produceLineMain.vue")
+      },
+      {
         path: "factory_maintain",
         name: "factory_maintain",
         meta: {
@@ -248,6 +407,7 @@ export default [
         },
         component: () => import("@/view/factory/factoryMain.vue")
       },
+
       {
         path: "split_pane_page",
         name: "split_pane_page",

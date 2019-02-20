@@ -1,34 +1,4 @@
 <template>
-  <!-- <div class="add-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <h1 class="add-title">添加公司</h1>
-    <div class="from-wrap">
-      <div class="form-line">
-        <label>公司名称:</label>
-        <Input class="add-input" v-model="name"/>
-        <span class="require-column">必填</span>
-      </div>
-
-      <div class="form-line">
-        <label>公司地址:</label>
-        <Input class="add-input" v-model="address"/>
-      </div>
-
-      <div class="form-line">
-        <label>联系人:</label>
-        <Input class="add-input" v-model="responsible"/>
-      </div>
-      <div class="form-line">
-        <label>联系方式:</label>
-        <Input class="add-input" v-model="telphone"/>
-      </div>
-      <div class="form-line">
-        <Button type="primary" class="btn-submit" @click="addCompany">确定</Button>
-        <Button type="warning" class="btn-submit">
-          <router-link to="/components/tables_page/company" class="routerlink">取消</router-link>
-        </Button>
-      </div>
-    </div>
-  </div>-->
   <Form :title="title" :columns="data" @addSubmit="addSubmit"/>
 </template>
 <script>
@@ -47,7 +17,7 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      data: viewData.addCompany,
+      data: viewData.add.addCompany,
       title: "添加公司",
       name: "",
       address: "",

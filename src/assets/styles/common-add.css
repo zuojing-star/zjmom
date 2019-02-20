@@ -30,3 +30,6 @@
   position: absolute;
   bottom: 0;
 }
+.add-select {
+  width: 436px !important;
+}
