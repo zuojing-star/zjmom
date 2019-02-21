@@ -17,8 +17,8 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      data: viewData.add.addCompany,
-      title: "添加公司",
+      data: viewData.add.addProduceProcess,
+      title: "添加工序",
       name: "",
       address: "",
       responsible: "",
@@ -32,10 +32,8 @@ export default {
     addSubmit() {
       console.log(this.data);
 
-      if (this.validRequireForm(this.data)) {
+      if (this.requireForm(this.data)) {
         console.log("提交数据");
-        let params = this.getRequestParams(this.data);
-        console.log(params);
       } else {
         console.log("不提交数据");
       }
@@ -97,5 +95,3 @@ export default {
   mounted() {}
 };
 </script>
-
-

@@ -9,13 +9,13 @@
       </a>
 
       <DropdownMenu slot="list">
-        <DropdownItem class="border" v-for="(o,i) in operation" :key="i">
+        <DropdownItem :class="o.border ? 'border':''" v-for="(o,i) in operation" :key="i">
           <div @click="$emit('jumpTo',i)" class="dep-msg-button">{{o.text}}</div>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
 
-    <Input :placeholder="`${o.text}搜索`" style="width: auto" v-for="(o,i) in operation" :key="i"/>
+    <Input :placeholder="`搜索`" style="width: auto"/>
     <Button type="info">{{txt2}}</Button>
   </div>
 </template>
@@ -34,4 +34,8 @@ export default {
   }
 };
 </script>
+
+
+
+
    

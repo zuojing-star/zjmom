@@ -2,18 +2,30 @@
 export default {
   data() {
     return {
+      page: 1,
+      totalPage: 0,
       data: []
     };
   },
 
   methods: {
     //渲染页面数据
-    renderData(choosedArray, result) {
+    renderData(choosedArray, result, page) {
       if (choosedArray.length > 0) {
         this.data = this.setChecked(choosedArray, result);
       } else {
         this.data = result.data.jsonData;
       }
+      this.setPage(result.data.size);
+      this.updatePage(page);
+    },
+    //设置分页
+    updatePage(nowpage) {
+      this.page = nowpage;
+    },
+    //设置分页
+    setPage(totalPage) {
+      this.totalPage = totalPage;
     },
     //保存选中的状态
     setChecked(choosedArray, result) {
@@ -27,8 +39,8 @@ export default {
       });
     },
     //处理 获取数据后的 响应
-    getResponse(result, array) {
-      if (result.status == 200) this.renderData(array, result);
+    getResponse(result, array, page) {
+      if (result.status == 200) this.renderData(array, result, page);
       else alert("接口调用失败!");
     },
     //表单 必填 验证
@@ -49,13 +61,12 @@ export default {
 
       for (let i = 0; i < this.operation.length; i++) {
         if (i == index) {
-          console.log("匹配的对象是：", this.operation[i]);
           if (this.operation[i].require) {
             if (reqArray.length == 1) {
               this.jumpPage(this.operation[i].path);
             } else {
               this.$Modal.error({
-                title: `至少选择一个${reqArray}`
+                title: `至少选择一个${errMsg}`
               });
             }
           } else {

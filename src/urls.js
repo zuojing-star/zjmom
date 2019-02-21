@@ -5,6 +5,7 @@ let env = host;
 
 export default {
   company: {
+    // getPccompany: `${env}/basic/PcCompany/getPcCompany`,
     getPccompany: `${env}/basic/PcCompany/getPcCompany`,
     delPccompnay: `${env}/basic/PcCompany/delPcCompanyByCode`, // code=0000002
     addPcCompany: `${env}/basic/PcCompany/addPcCompany`

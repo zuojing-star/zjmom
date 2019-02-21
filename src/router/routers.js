@@ -71,8 +71,8 @@ export default [
     ]
   },
   {
-    path: "/components",
-    name: "components",
+    path: "/basic",
+    name: "basic",
     meta: {
       icon: "logo-buffer",
       title: "基础板块"
@@ -129,95 +129,14 @@ export default [
         },
         component: () => import("@/view/components/cropper/cropper.vue")
       },
-
-      // {
-      //   path: "tables_page",
-      //   name: "tables_page",
-      //   meta: {
-      //     icon: "md-grid",
-      //     title: "多功能表格"
-      //   },
-      //   redirect: "/components/tables_page/company",
-      //   component: () => import("@/view/components/tables/tables.vue"),
-      //   children: [
-      //     {
-      //       path: "addCompany",
-      //       name: "添加公司",
-      //       meta: {
-      //         hideInMenu: true,
-      //         title: "添加公司",
-      //         icon: "md-home"
-      //       },
-      //       component: () => import("@/view/components/company/companyAdd.vue")
-      //     },
-      //     {
-      //       path: "depAdd",
-      //       name: "depAdd",
-      //       meta: {
-      //         hideInMenu: true,
-      //         title: "添加部门",
-      //         notCache: true,
-      //         icon: "md-home"
-      //       },
-      //       component: () =>
-      //         import("@/view/components/department/departmentAdd.vue")
-      //     },
-      //     {
-      //       path: "empAdd",
-      //       name: "empAdd",
-      //       meta: {
-      //         hideInMenu: true,
-      //         title: "添加员工",
-      //         notCache: true,
-      //         icon: "md-home"
-      //       },
-      //       component: () => import("@/view/components/employee/empAdd.vue")
-      //     },
-      //     {
-      //       path: "company",
-      //       name: "公司信息",
-      //       meta: {
-      //         // hideInMenu: true, //这个是true 小菜单才会显示，但是大菜单没有了。（解决方案就是 1：改源码 2：改路由嵌套，table组件复用）
-      //         title: "公司信息",
-      //         notCache: true,
-      //         icon: "md-home"
-      //       },
-      //       component: () => import("@/view/components/company/companyMain.vue")
-      //     },
-      //     {
-      //       path: "department",
-      //       name: "department",
-      //       meta: {
-      //         hideInMenu: true,
-      //         title: "部门信息",
-      //         notCache: true,
-      //         icon: "md-home"
-      //       },
-      //       component: () =>
-      //         import("@/view/components/department/departmentMain.vue")
-      //     },
-      //     {
-      //       path: "employee",
-      //       name: "employee",
-      //       meta: {
-      //         hideInMenu: true,
-      //         title: "员工信息",
-      //         notCache: true,
-      //         icon: "md-home"
-      //       },
-      //       component: () =>
-      //         import("@/view/components/employee/employeeMain.vue")
-      //     }
-      //   ]
-      // },
       {
-        path: "company_manngement",
-        name: "company_manngement",
+        path: "company",
+        name: "company",
         meta: {
           icon: "md-trending-up",
           title: "公司管理"
         },
-        component: () => import("@/view/company/companyMain.vue")
+        component: () => import("@/view/basic/companyMain.vue")
       },
       {
         path: "addCompany",
@@ -227,7 +146,67 @@ export default [
           icon: "md-trending-up",
           title: "添加公司"
         },
-        component: () => import("@/view/company/companyAdd.vue")
+        component: () => import("@/view/basic/companyAdd.vue")
+      },
+      {
+        path: "role",
+        name: "role",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "角色管理"
+        },
+        component: () => import("@/view/basic/roleMain.vue")
+      },
+      {
+        path: "addRole",
+        name: "addRole",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加角色"
+        },
+        component: () => import("@/view/basic/roleAdd.vue")
+      },
+      {
+        path: "department",
+        name: "department",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "部门管理"
+        },
+        component: () => import("@/view/basic/departmentMain.vue")
+      },
+      {
+        path: "addDepartment",
+        name: "addDepartment",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加部门"
+        },
+        component: () => import("@/view/basic/departmentAdd.vue")
+      },
+      {
+        path: "employee",
+        name: "employee",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "员工信息"
+        },
+        component: () => import("@/view/basic/employeeMain.vue")
+      },
+      {
+        path: "addEmployee",
+        name: "addEmployee",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加员工"
+        },
+        component: () => import("@/view/basic/employeeAdd.vue")
       },
       {
         path: "addFactory",
@@ -237,7 +216,7 @@ export default [
           icon: "md-trending-up",
           title: "添加工厂"
         },
-        component: () => import("@/view/factory/factoryAdd.vue")
+        component: () => import("@/view/basic/factoryAdd.vue")
       },
       {
         path: "addProduceLine",
@@ -247,7 +226,7 @@ export default [
           icon: "md-trending-up",
           title: "添加产线"
         },
-        component: () => import("@/view/produceLine/produceLineAdd.vue")
+        component: () => import("@/view/basic/produceLineAdd.vue")
       },
       {
         path: "addMouldDesk",
@@ -257,7 +236,7 @@ export default [
           icon: "md-trending-up",
           title: "添加模台"
         },
-        component: () => import("@/view/mouldDesk/mouldDeskAdd.vue")
+        component: () => import("@/view/basic/mouldDeskAdd.vue")
       },
       {
         path: "mouldDesk",
@@ -267,7 +246,7 @@ export default [
           icon: "md-trending-up",
           title: "模台信息"
         },
-        component: () => import("@/view/mouldDesk/mouldDeskMain.vue")
+        component: () => import("@/view/basic/mouldDeskMain.vue")
       },
       {
         path: "addStorageYard",
@@ -277,7 +256,7 @@ export default [
           icon: "md-trending-up",
           title: "添加堆场"
         },
-        component: () => import("@/view/storageYard/storageYardAdd.vue")
+        component: () => import("@/view/basic/storageYardAdd.vue")
       },
       {
         path: "storageYard",
@@ -286,7 +265,7 @@ export default [
           icon: "md-trending-up",
           title: "堆场管理"
         },
-        component: () => import("@/view/storageYard/storageYardMain.vue")
+        component: () => import("@/view/basic/storageYardMain.vue")
       },
       {
         path: "addZoneBit",
@@ -296,7 +275,7 @@ export default [
           icon: "md-trending-up",
           title: "添加区位"
         },
-        component: () => import("@/view/zoneBit/zoneBitAdd.vue")
+        component: () => import("@/view/basic/zoneBitAdd.vue")
       },
       {
         path: "zoneBit",
@@ -306,7 +285,7 @@ export default [
           icon: "md-trending-up",
           title: "区位信息"
         },
-        component: () => import("@/view/zoneBit/zoneBitMain.vue")
+        component: () => import("@/view/basic/zoneBitMain.vue")
       },
       {
         path: "addStorageRack",
@@ -316,7 +295,7 @@ export default [
           icon: "md-trending-up",
           title: "添加货架"
         },
-        component: () => import("@/view/storageRack/storageRackAdd.vue")
+        component: () => import("@/view/basic/storageRackAdd.vue")
       },
       {
         path: "produceType",
@@ -326,7 +305,7 @@ export default [
           icon: "md-trending-up",
           title: "生产类型信息"
         },
-        component: () => import("@/view/produceType/produceTypeMain.vue")
+        component: () => import("@/view/basic/produceTypeMain.vue")
       },
       {
         path: "addProduceType",
@@ -336,7 +315,7 @@ export default [
           icon: "md-trending-up",
           title: "添加生产类型"
         },
-        component: () => import("@/view/produceType/produceTypeAdd.vue")
+        component: () => import("@/view/basic/produceTypeAdd.vue")
       },
       {
         path: "produceCraft",
@@ -346,7 +325,7 @@ export default [
           icon: "md-trending-up",
           title: "生产工艺信息"
         },
-        component: () => import("@/view/produceCraft/produceCraftMain.vue")
+        component: () => import("@/view/basic/produceCraftMain.vue")
       },
       {
         path: "addProduceCraft",
@@ -356,7 +335,7 @@ export default [
           icon: "md-trending-up",
           title: "添加生产工艺"
         },
-        component: () => import("@/view/produceCraft/produceCraftAdd.vue")
+        component: () => import("@/view/basic/produceCraftAdd.vue")
       },
       {
         path: "produceProcess",
@@ -366,7 +345,7 @@ export default [
           icon: "md-trending-up",
           title: "工序维护"
         },
-        component: () => import("@/view/produceProcess/produceProcessMain.vue")
+        component: () => import("@/view/basic/produceProcessMain.vue")
       },
       {
         path: "addProduceProcess",
@@ -376,7 +355,7 @@ export default [
           icon: "md-trending-up",
           title: "添加工序"
         },
-        component: () => import("@/view/produceProcess/produceProcessAdd.vue")
+        component: () => import("@/view/basic/produceProcessAdd.vue")
       },
       {
         path: "storageRack",
@@ -386,7 +365,7 @@ export default [
           icon: "md-trending-up",
           title: "货架信息"
         },
-        component: () => import("@/view/storageRack/storageRackMain.vue")
+        component: () => import("@/view/basic/storageRackMain.vue")
       },
       {
         path: "produceLine",
@@ -396,28 +375,57 @@ export default [
           icon: "md-trending-up",
           title: "产线信息"
         },
-        component: () => import("@/view/produceLine/produceLineMain.vue")
+        component: () => import("@/view/basic/produceLineMain.vue")
       },
       {
-        path: "factory_maintain",
-        name: "factory_maintain",
+        path: "factory",
+        name: "factory",
         meta: {
           icon: "md-trending-up",
           title: "工厂维护"
         },
-        component: () => import("@/view/factory/factoryMain.vue")
+        component: () => import("@/view/basic/factoryMain.vue")
       },
-
       {
-        path: "split_pane_page",
-        name: "split_pane_page",
+        path: "facDepartment",
+        name: "facDepartment",
         meta: {
-          icon: "md-pause",
-          title: "分割窗口"
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工厂部门"
         },
-        component: () => import("@/view/components/split-pane/split-pane.vue")
+        component: () => import("@/view/basic/facDepartmentMain.vue")
       },
-
+      {
+        path: "addFacDepartment",
+        name: "addFacDepartment",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加部门"
+        },
+        component: () => import("@/view/basic/facDepartmentAdd.vue")
+      },
+      {
+        path: "facEmployee",
+        name: "facEmployee",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工厂员工"
+        },
+        component: () => import("@/view/basic/facEmployeeMain.vue")
+      },
+      {
+        path: "addFacEmployee",
+        name: "addFacEmployee",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加员工"
+        },
+        component: () => import("@/view/basic/facEmployeeAdd.vue")
+      },
       {
         path: "markdown_page",
         name: "markdown_page",

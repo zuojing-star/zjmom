@@ -1,9 +1,10 @@
 export default {
   home: "首页",
-  components: "配置管理", /// //////////////////
-  factory_maintain: "工厂维护",
+  basic: "配置管理", /// //////////////////
+  // components: "配置管理", /// /////////
+  factory: "工厂维护",
   storageYard: "堆场管理",
-  company_manngement: "公司管理",
+  company: "公司管理",
   split_pane_page: "类型维护",
   markdown_page: "工厂物料",
   editor_page: "质检工艺",

@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="产线信息" :operation="operation" @jumpTo="jumpTo($event,null,'产线')"/>
-    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
+    <PageTitle pagetitle="部门信息" :operation="operation" @jumpTo="jumpTo($event,[{}],'部门')"/>
+    <TableList :columns="columns" :data="data" checkedSource="company"/>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.company,
+      operation: viewData.pagetitle.department,
       columns: [
         {
           type: "selection",
@@ -41,32 +41,24 @@ export default {
           align: "center"
         },
         {
-          title: "公司333444",
+          title: "名称",
           key: "name"
         },
         {
-          title: "地址333",
+          title: "公司地址",
           key: "address"
         },
         {
-          title: "所有者333",
-          key: "owner"
+          title: "代码",
+          key: "code"
         },
         {
-          title: "责任人",
+          title: "联系人",
           key: "responsible"
         },
         {
-          title: "修改人",
-          key: "modifer"
-        },
-        {
-          title: "创建时间",
-          key: "createdate"
-        },
-        {
-          title: "修改时间",
-          key: "modifydate"
+          title: "联系方式",
+          key: "telphone"
         },
         {
           title: "操作",
@@ -162,7 +154,10 @@ export default {
     //获取公司数据
     async getPccompany() {
       let url = urls.company.getPccompany;
-      let result = await ajax.post(url);
+      let params = {
+        str: 1
+      };
+      let result = await ajax.post(url, params);
       this.getResponse(result, this.companyArray);
     },
 

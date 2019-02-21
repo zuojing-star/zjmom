@@ -16,14 +16,14 @@ export default {
         value: "",
         type: "input",
         requestField: "address",
-        require: false
+        require: true
       },
       {
         text: "联系人",
         value: "",
         type: "input",
         requestField: "responsible",
-        require: false
+        require: true
       },
       {
         text: "联系方式",
@@ -32,6 +32,18 @@ export default {
         requestField: "telphone",
         require: false
       }
+    ],
+    addDepartment: [
+      { text: "部门名称", value: "", type: "input", require: true },
+      { text: "备注", value: "", type: "input" }
+    ],
+    addEmployee: [
+      { text: "姓名", value: "", type: "input", require: true },
+      { text: "账户", value: "", type: "input", require: true },
+      { text: "密码", value: "", type: "input", require: true },
+      { text: "地址", value: "", type: "input" },
+      { text: "联系电话", value: "", type: "input" },
+      { text: "邮箱", value: "", type: "input" }
     ],
     //工厂
     addFactory: [
@@ -108,86 +120,204 @@ export default {
       { text: "是否必检", value: "", type: "input", require: false },
       { text: "质检顺序", value: "", type: "input", require: false },
       { text: "备注", value: "", type: "input", require: false }
+    ],
+    addRole: [
+      { text: "名称", value: "", type: "input", require: true },
+      { text: "编码", value: "", type: "input", require: true },
+      { text: "使用范围", value: "", type: "input", require: true },
+      { text: "备注", value: "", type: "input", require: false }
     ]
   },
   //操作 数据
   pagetitle: {
     company: [
-      { text: "添加公司", path: "/components/addCompany", require: false },
+      { text: "添加公司", path: "/basic/addCompany", require: false },
       {
         text: "部门信息",
-        path: "/components/tables_page/employee",
+        path: "/basic/department",
         require: true
       },
       {
         text: "员工信息",
-        path: "/components/tables_page/department",
+        path: "/basic/employee",
+        require: true
+      }
+    ],
+    department: [
+      { text: "添加部门", path: "/basic/addDepartment" },
+      {
+        text: "返回公司",
+        path: "/basic/company",
+        require: true
+      },
+      {
+        text: "员工信息",
+        path: "/basic/employee",
+        require: true
+      }
+    ],
+    employee: [
+      { text: "添加员工", path: "/basic/addEmployee" },
+      {
+        text: "返回公司",
+        path: "/basic/company",
+        require: true
+      },
+      {
+        text: "返回部门",
+        path: "/basic/department",
         require: true
       }
     ],
     factory: [
-      { text: "新增工厂", path: "/components/addFactory", require: false },
-      { text: "批量删除", path: "/components/addFactory", require: false },
+      { text: "新增工厂", path: "/basic/addFactory", require: false },
+      {
+        text: "批量删除",
+        path: "/basic/addFactory",
+        require: false,
+        border: true //菜单 分割线
+      },
       {
         text: "产线管理",
-        path: "/components/produceLine",
+        path: "/basic/produceLine",
         require: false
       },
       {
         text: "模台管理",
-        path: "/components/mouldDesk",
+        path: "/basic/mouldDesk",
         require: false
       },
       {
         text: "部门管理",
-        path: "/components/produceLine",
+        path: "/basic/facDepartment",
         require: false
       },
       {
         text: "员工管理",
-        path: "/components/produceLine",
+        path: "/basic/facEmployee",
         require: false
       },
       {
         text: "角色维护",
-        path: "/components/produceLine",
-        require: false
+        path: "/basic/role",
+        require: false,
+        border: true
       },
       {
         text: "工序维护",
-        path: "/components/produceLine",
+        path: "/basic/produceProcess",
         require: false
       },
       {
         text: "工艺维护",
-        path: "/components/produceLine",
+        path: "/basic/produceCraft",
         require: false
       },
       {
         text: "类型维护",
-        path: "/components/produceLine",
+        path: "/basic/produceType",
+        require: false
+      }
+    ],
+    produceProcess: [
+      {
+        text: "添加工序",
+        path: "/basic/addProduceProcess",
+        require: false
+      },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: false
+      }
+    ],
+    produceType: [
+      {
+        text: "添加类型",
+        path: "/basic/addProduceType",
+        require: false
+      },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: false
+      }
+    ],
+    produceCraft: [
+      {
+        text: "添加工艺",
+        path: "/basic/addProduceCraft",
+        require: false
+      },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
         require: false
       }
     ],
     produceLine: [
       {
         text: "新增产线",
-        path: "/components/addProduceLine",
+        path: "/basic/addProduceLine",
         require: false
       }
     ],
     mouldDesk: [
       {
         text: "新增模台",
-        path: "/components/addMouldDesk",
+        path: "/basic/addMouldDesk",
         require: false
       }
     ],
     storageYard: [
       {
         text: "新增堆场",
-        path: "/components/addStorageYard",
+        path: "/basic/addStorageYard",
         require: false
+      }
+    ],
+    role: [
+      {
+        text: "新增角色",
+        path: "/basic/addRole",
+        require: false
+      },
+      {
+        text: "批量删除",
+        path: "/basic/addRole",
+        require: false,
+        border: true
+      },
+      {
+        text: "角色授权",
+        path: "/basic/addRole",
+        require: false
+      },
+      {
+        text: "添加人员",
+        path: "/basic/addRole",
+        require: false
+      },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: false
+      }
+    ],
+    facDepartment: [
+      { text: "添加部门", path: "/basic/addFacDepartment" },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: true
+      }
+    ],
+    facEmployee: [
+      { text: "添加员工", path: "/basic/addFacEmployee" },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: true
       }
     ]
   }

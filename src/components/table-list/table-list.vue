@@ -8,7 +8,10 @@
       @on-select="selectOne"
       @on-selection-change="selectChange"
     ></Table>
-    <Page :total="100" class="pagesplit"/>
+    <div class="page-wrap">
+      <Page :total="totalPage" class="pagesplit" @on-change="pageChange"/>
+      <div class="pagetext">共20页/每页10条</div>
+    </div>
   </div>
 </template>
 <script>
@@ -20,9 +23,13 @@ export default {
   props: {
     columns: Array,
     data: Array,
-    checkedSource: String
+    checkedSource: String,
+    totalPage: Number
   },
   methods: {
+    pageChange(page) {
+      this.$emit("pageChange", page);
+    },
     async getPccompany() {
       let url = urls.company.getPccompany;
       let jsondata = await axios.post(url);
@@ -57,13 +64,26 @@ export default {
 };
 </script>
 <style>
+.pagetext {
+  float: left;
+  height: 32px;
+  line-height: 52px;
+  margin-left: 10px;
+}
+.page-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -100px;
+}
 .pagesplit {
+  float: left;
   max-width: 431px;
   margin: 10px auto;
   /* position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   left: 50%;
-  margin-left: -188px; */
+  margin-left: -100px; */
 }
 .page-title {
   display: inline-block;

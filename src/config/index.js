@@ -1,13 +1,13 @@
 export default {
-  title: 'BIM',
+  title: "PCMOM",
   cookieExpires: 1,
   useI18n: true,
   baseUrl: {
-    dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
-    pro: 'https://produce.com'
+    dev: "https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/",
+    pro: "https://produce.com"
   },
-  homeName: 'home'
-}
+  homeName: "home"
+};
 
 /*
   title ：配置显示在浏览器标签的title

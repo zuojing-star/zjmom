@@ -1,6 +1,6 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="公司信息" :operation="operation" @jumpTo="jumpTo($event,companyArray,'公司')"/>
+    <PageTitle pagetitle="员工信息" :operation="operation" @jumpTo="jumpTo($event,[{}],'员工')"/>
     <TableList :columns="columns" :data="data" checkedSource="company"/>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.company,
+      operation: viewData.pagetitle.facEmployee,
       columns: [
         {
           type: "selection",
