@@ -9,8 +9,8 @@
       @on-selection-change="selectChange"
     ></Table>
     <div class="page-wrap">
-      <Page :total="totalPage" class="pagesplit" @on-change="pageChange"/>
-      <div class="pagetext">共20页/每页10条</div>
+      <Page :total="totalPage" class="pagesplit" @on-change="pageChange" :page-size="pagesize"/>
+      <div class="pagetext">共{{Math.ceil(totalPage/pagesize)}}页/每页{{pagesize}}条</div>
     </div>
   </div>
 </template>
@@ -20,6 +20,11 @@ import urls from "@/urls.js";
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      pagesize: 15
+    };
+  },
   props: {
     columns: Array,
     data: Array,
@@ -41,12 +46,18 @@ export default {
       "chooseOneCompany",
       "choosedCompany",
       "choosedCompanyArray",
-      "choosedDepartmentArray"
+      "choosedDepartmentArray",
+      "clearAllArray"
     ]),
     selectChange(selection) {
       switch (this.checkedSource) {
         case "company":
-          this.choosedCompanyArray(selection);
+          console.log("selection:::", selection);
+          if (selection.length == 0) {
+            this.clearAllArray();
+          } else {
+            this.choosedCompanyArray(selection);
+          }
           break;
         case "department":
           this.choosedDepartmentArray(selection);

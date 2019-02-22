@@ -24,7 +24,7 @@ import viewData from "@/view/view-data.js";
 export default {
   //初始化
   mounted() {
-    this.getPccompany(this.page);
+    this.getPccompany();
   },
 
   //mixin
@@ -92,9 +92,7 @@ export default {
                       this.$Modal.confirm({
                         title: "确定删除么？",
                         content: "<p></p>",
-                        onOk: () => {
-                          this.delPccompany(params.row.code);
-                        },
+                        onOk: () => {},
                         onCancel: () => {}
                       });
                     }
@@ -118,7 +116,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.company.delPccompnay,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -139,73 +141,24 @@ export default {
 
   //接口
   methods: {
+    delCallback() {
+      this.getPccompany();
+    },
+
+    getPccompany() {
+      this.getData(
+        urls.company.getPccompany,
+        { str: this.page },
+        this.companyArray,
+        this.page
+      );
+    },
+
     //分页
     pageChange(page) {
-      console.log("分页开始", page);
-      this.getPccompany(page);
-    },
-
-    //删除公司
-    async delPccompany(code) {
-      let url = urls.company.delPccompnay;
-      let data = {
-        str: code
-      };
-      let result = await ajax.post(url, data);
-      this.delResponse(result);
-    },
-
-    //删除公司 回调
-    delResponse(result) {
-      if (result.data.type == 1) {
-        this.getPccompany(this.page);
-        this.$Message.info("删除成功");
-      } else {
-        this.$Message.info("删除失败");
-      }
-    },
-
-    //获取公司数据
-    async getPccompany(page) {
-      let url = urls.company.getPccompany;
-      let params = {
-        str: page
-      };
-      let result = await ajax.post(url, params);
-      this.getResponse(result, this.companyArray, page);
-    },
-
-    //页面跳转
-    empMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: `/components/tables_page/employee`
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    depMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: "/components/tables_page/department"
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    addCompany() {
-      this.$router.push({
-        path: "/components/addCompany"
-      });
+      console.log("page:", page);
+      this.page = page;
+      this.getPccompany();
     }
   }
 };

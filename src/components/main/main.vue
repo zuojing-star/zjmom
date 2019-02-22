@@ -208,16 +208,11 @@ export default {
 </script>
 
 <style>
-/* .content-wrapper-router-view {
-  height: 100%;
-} */
-.ivu-card-bordered {
-  height: 100%;
-}
 .router-view {
-  height: 100%;
+  /* height: 100%; */
 }
-.content-wrapper {
-  height: 100%;
+.table-wrap {
+  padding-bottom: 64px;
+  position: relative;
 }
 </style>

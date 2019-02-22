@@ -13,16 +13,15 @@ import mixin from "@/view/service-mixin.js";
 
 import viewData from "@/view/view-data.js";
 
+import { mapState } from "vuex";
+
 export default {
   mixins: [mixin],
+  computed: mapState(["companyArray"]),
   data() {
     return {
-      data: viewData.add.addDepartment,
-      title: "添加部门",
-      name: "",
-      address: "",
-      responsible: "",
-      telphone: ""
+      data: [],
+      title: "添加部门"
     };
   },
   components: {
@@ -30,71 +29,28 @@ export default {
   },
   methods: {
     addSubmit() {
-      console.log(this.data);
-
-      if (this.validRequireForm(this.data)) {
-        console.log("提交数据");
-        let params = this.getRequestParams(this.data);
-        console.log(params);
-      } else {
-        console.log("不提交数据");
-      }
+      this.addData(urls.department.addPcDepartment);
     },
-    getParams() {
-      let name = this.name;
-      let address = this.address;
-      let telphone = this.telphone;
-      let responsible = this.responsible;
-
-      if (name == "") {
-        this.$Message.info("公司名称必须填写");
-        return;
-      }
-
-      let params = {
-        obj: {
-          name,
-          address,
-          responsible,
-          telphone
-        }
-      };
-      return params;
-    },
-    cleanForm() {
-      this.name = "";
-      this.address = "";
-      this.telphone = "";
-      this.responsible = "";
-    },
-    //处理响应
-    addResponse(result) {
-      if (result.status == 200) {
-        if (result.data.type == 200) {
-          this.$Modal.confirm({
-            title: "添加公司成功",
-            content: "<p>是否继续添加</p>",
-            onOk: () => {
-              this.cleanForm();
-            },
-            onCancel: () => {
-              this.$router.push({ path: "/components/tables_page/company" });
-            }
-          });
-        } else {
-          this.$Message.info("添加公司失败");
-        }
-      } else {
-        this.$Message.info("添加公司失败");
-      }
-    },
-    async addCompany() {
-      let url = urls.company.addPcCompany;
-      let result = await ajax.post(url, this.getParams());
-      this.addResponse(result);
+    _extendViewData() {
+      this.data = this.extendViewData(
+        [
+          {
+            text: "公司代码",
+            value: this.companyArray[0].code,
+            type: "input",
+            requestField: "companyCode",
+            require: true,
+            isHide: true
+          }
+        ],
+        viewData.add.addDepartment
+      );
     }
   },
-  mounted() {}
+
+  mounted() {
+    this._extendViewData();
+  }
 };
 </script>
 

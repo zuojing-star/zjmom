@@ -425,3 +425,25 @@ export const setTitle = (routeItem, vm) => {
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
   window.document.title = resTitle;
 };
+
+export const attributeCount = obj => {
+  var count = 0;
+  for (var i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      count++;
+    }
+  }
+  return count;
+};
+
+export const getReqParams = obj => {
+  console.log("bbb", obj);
+  let params = {};
+
+  if (attributeCount(obj) > 1) {
+    params.obj = obj;
+  } else {
+    params.str = obj.str;
+  }
+  return params;
+};

@@ -43,7 +43,7 @@
           </div>-->
           <Content class="content-wrapper">
             <div class="main-router">
-              <router-view class="main-router" style="height:100%;"/>
+              <router-view class="main-router"/>
             </div>
             <!-- <keep-alive :include="cacheList"> -->
             <!-- </keep-alive> -->

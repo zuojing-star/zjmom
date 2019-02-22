@@ -3,13 +3,21 @@ export default {
   add: {
     //公司
     addCompany: [
-      //text：字段名字   value：字段值 type：输入框的类型 requestField:请求的字段名字 require：必填
+      /*
+        text：string 字段名字
+         value：string 字段值 
+         type：string 输入框的类型 
+         requestField:string 请求的字段名字
+         require：boolean 必填
+         isHide:boolean 是否隐藏
+         */
       {
         text: "公司名字",
         value: "",
         type: "input",
         requestField: "name",
-        require: true
+        require: true,
+        isHide: false
       },
       {
         text: "公司地址",
@@ -34,16 +42,45 @@ export default {
       }
     ],
     addDepartment: [
-      { text: "部门名称", value: "", type: "input", require: true },
-      { text: "备注", value: "", type: "input" }
+      {
+        text: "部门名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "备注",
+        value: "",
+        type: "input",
+        requestField: "desc"
+      }
     ],
     addEmployee: [
-      { text: "姓名", value: "", type: "input", require: true },
-      { text: "账户", value: "", type: "input", require: true },
-      { text: "密码", value: "", type: "input", require: true },
-      { text: "地址", value: "", type: "input" },
-      { text: "联系电话", value: "", type: "input" },
-      { text: "邮箱", value: "", type: "input" }
+      {
+        text: "姓名",
+        value: "",
+        type: "input",
+        requestField: "userName",
+        require: true
+      },
+      {
+        text: "账户",
+        value: "",
+        type: "input",
+        requestField: "userCode",
+        require: true
+      },
+      {
+        text: "密码",
+        value: "",
+        type: "input",
+        requestField: "password",
+        require: true
+      },
+      { text: "地址", value: "", type: "input", requestField: "address" },
+      { text: "联系电话", value: "", type: "input", requestField: "telphone" },
+      { text: "邮箱", value: "", type: "input", requestField: "email" }
     ],
     //工厂
     addFactory: [

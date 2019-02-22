@@ -3,13 +3,13 @@
     <h1 class="add-title">{{title}}</h1>
     <div class="from-wrap">
       <template v-for="(column,index) in columns">
-        <div class="form-line" v-if="column.type=='input'" :key="index">
+        <div class="form-line" v-if="column.type=='input' && !column.isHide" :key="index">
           <label>{{ column.text }}:</label>
           <Input class="add-input" v-model="column.value"/>
           <span v-if="column.require" class="require-column">{{txt1}}</span>
         </div>
 
-        <div class="form-line" :key="index" v-if="column.type=='select'">
+        <div class="form-line" :key="index" v-if="column.type=='select' && !column.isHide">
           <label>{{ column.text }}:</label>
           <Select class="add-select" v-model="column.value">
             <Option
