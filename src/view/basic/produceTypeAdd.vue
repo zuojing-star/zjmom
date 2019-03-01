@@ -22,7 +22,7 @@ export default {
       name: "",
       address: "",
       responsible: "",
-      telphone: ""
+      telephone: ""
     };
   },
   components: {
@@ -41,7 +41,7 @@ export default {
     getParams() {
       let name = this.name;
       let address = this.address;
-      let telphone = this.telphone;
+      let telephone = this.telephone;
       let responsible = this.responsible;
 
       if (name == "") {
@@ -54,7 +54,7 @@ export default {
           name,
           address,
           responsible,
-          telphone
+          telephone
         }
       };
       return params;
@@ -62,7 +62,7 @@ export default {
     cleanForm() {
       this.name = "";
       this.address = "";
-      this.telphone = "";
+      this.telephone = "";
       this.responsible = "";
     },
     //处理响应

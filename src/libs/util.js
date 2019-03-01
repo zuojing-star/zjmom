@@ -34,7 +34,6 @@ const showThisMenuEle = (item, access) => {
 export const getMenuByRouter = (list, access) => {
   let res = [];
   forEach(list, item => {
-    console.log("item:", item);
     //没有 meta  ， 有meta 并且 hideInMenu 是false
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
       let obj = {
@@ -122,14 +121,12 @@ export const showTitle = (item, vm) => {
  * @description 本地存储和获取标签导航列表
  */
 export const setTagNavListInLocalstorage = list => {
-  console.log("setTagNavListInLocalstorage", list);
   localStorage.tagNaveList = JSON.stringify(list);
 };
 /**
  * @returns {Array} 其中的每个元素只包含路由原信息中的name, path, meta三项
  */
 export const getTagNavListFromLocalstorage = () => {
-  console.log("getTagNavListFromLocalstorage");
   const list = localStorage.tagNaveList;
   return list ? JSON.parse(list) : [];
 };
@@ -152,7 +149,6 @@ export const getHomeRoute = (routers, homeName = "home") => {
     }
   }
 
-  console.log("homeRoute", homeRoute);
   return homeRoute;
 };
 
@@ -424,26 +420,4 @@ export const setTitle = (routeItem, vm) => {
   const pageTitle = showTitle(handledRoute, vm);
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
   window.document.title = resTitle;
-};
-
-export const attributeCount = obj => {
-  var count = 0;
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      count++;
-    }
-  }
-  return count;
-};
-
-export const getReqParams = obj => {
-  console.log("bbb", obj);
-  let params = {};
-
-  if (attributeCount(obj) > 1) {
-    params.obj = obj;
-  } else {
-    params.str = obj.str;
-  }
-  return params;
 };

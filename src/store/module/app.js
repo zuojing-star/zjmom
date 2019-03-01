@@ -38,10 +38,6 @@ export default {
   },
   getters: {
     menuList: (state, getters, rootState) => {
-      console.log("当前文件的state:", state);
-      console.log("所有的getters:", getters);
-      console.log("所有的rootState:", rootState);
-
       return getMenuByRouter(routers, rootState.user.access);
     },
 

@@ -151,9 +151,13 @@ export default {
 
       if (this.departmentArray.length > 0) {
         url = urls.employee.getPcPersonListByUserNameD;
-        params = { pageIndex: 1, deptCode: this.departmentArray[0].code };
+        params = {
+          obj: { pageIndex: 1, deptCode: this.departmentArray[0].code }
+        };
       } else {
-        (params = { pageIndex: 1, compCode: this.companyArray[0].code }),
+        (params = {
+          obj: { pageIndex: 1, compCode: this.companyArray[0].code }
+        }),
           (url = urls.employee.getPcPersonListByUserNameC);
       }
 

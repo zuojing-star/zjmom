@@ -18,6 +18,15 @@
               :key="item.value"
             >{{ item.label }}</Option>
           </Select>
+          <span v-if="column.require" class="require-column">{{txt1}}</span>
+        </div>
+
+        <div class="form-line" v-if="column.type=='radio' && !column.isHide" :key="index">
+          <label>{{ column.text }}:</label>
+          <RadioGroup v-model="column.value">
+            <Radio v-for="item in column.radioData" :key="item.value" :label="item.label"></Radio>
+          </RadioGroup>
+          <span v-if="column.require" class="require-column">{{txt1}}</span>
         </div>
       </template>
 
@@ -51,3 +60,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.add-select {
+  margin-right: 20px;
+}
+</style>

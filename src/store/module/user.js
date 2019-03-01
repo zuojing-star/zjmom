@@ -117,6 +117,7 @@ export default {
     getUserInfo({ state, commit }) {
       return new Promise((resolve, reject) => {
         try {
+          console.log(state.token);
           getUserInfo(state.token)
             .then(res => {
               const data = res.data;

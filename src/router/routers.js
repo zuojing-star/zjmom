@@ -298,6 +298,16 @@ export default [
         component: () => import("@/view/basic/storageRackAdd.vue")
       },
       {
+        path: "storageRack",
+        name: "storageRack",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "货架信息"
+        },
+        component: () => import("@/view/basic/storageRackMain.vue")
+      },
+      {
         path: "produceType",
         name: "produceType",
         meta: {
@@ -357,16 +367,7 @@ export default [
         },
         component: () => import("@/view/basic/produceProcessAdd.vue")
       },
-      {
-        path: "storageRack",
-        name: "storageRack",
-        meta: {
-          hideInMenu: true,
-          icon: "md-trending-up",
-          title: "货架信息"
-        },
-        component: () => import("@/view/basic/storageRackMain.vue")
-      },
+
       {
         path: "produceLine",
         name: "produceLine",

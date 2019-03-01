@@ -50,7 +50,7 @@ export default {
         },
         {
           title: "描述",
-          key: "desc"
+          key: "desp"
         },
         {
           title: "操作",

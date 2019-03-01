@@ -1,7 +1,13 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="工厂信息" :operation="operation" @jumpTo="jumpTo($event,null,'工厂')"/>
-    <TableList :columns="columns" :data="data" checkedSource="factory"/>
+    <PageTitle pagetitle="工厂信息" :operation="operation" @jumpTo="jumpTo($event,factoryArray,'工厂')"/>
+    <TableList
+      :columns="columns"
+      :data="data"
+      checkedSource="factory"
+      :totalPage="totalPage"
+      @pageChange="pageChange"
+    />
   </div>
 </template>
 
@@ -22,7 +28,9 @@ export default {
     TableList,
     PageTitle
   },
-
+  mounted() {
+    this.getFacDatas();
+  },
   data() {
     return {
       operation: viewData.pagetitle.factory,
@@ -50,7 +58,7 @@ export default {
         },
         {
           title: "联系方式",
-          key: "telphone"
+          key: "telephone"
         },
         {
           title: "地址",
@@ -84,9 +92,7 @@ export default {
                       this.$Modal.confirm({
                         title: "确定删除么？",
                         content: "<p></p>",
-                        onOk: () => {
-                          this.delPccompany(params.row.code);
-                        },
+                        onOk: () => {},
                         onCancel: () => {}
                       });
                     }
@@ -110,7 +116,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.factory.delFactory,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -123,40 +133,26 @@ export default {
           }
         }
       ],
-      data: [
-        {
-          name: "John Brown",
-          age: 18,
-          address: "New York No. 1 Lake Park"
-        },
-        {
-          name: "Jim Green",
-          age: 24,
-          address: "London No. 1 Lake Park"
-        },
-        {
-          name: "Joe Black",
-          age: 30,
-          address: "Sydney No. 1 Lake Park"
-        },
-        {
-          name: "Jon Snow",
-          age: 26,
-          address: "Ottawa No. 2 Lake Park"
-        }
-      ]
+      data: []
     };
   },
+  computed: mapState(["factoryArray"]),
   methods: {
-    addMessage() {
-      console.log("addMessage", routerPage.FACTORY_ADD);
-      this.$router.push({
-        path: routerPage.FACTORY_ADD
-      });
+    delCallback() {
+      this.getFacDatas();
     },
-    depMsgClick() {},
-    empMsgClick() {}
-  },
-  mounted() {}
+    getFacDatas() {
+      this.getData(
+        urls.factory.getFacDatas,
+        { obj: { pageIndex: this.page } },
+        this.factoryArray,
+        this.page
+      );
+    },
+    pageChange(page) {
+      this.page = page;
+      this.getFacDatas();
+    }
+  }
 };
 </script>

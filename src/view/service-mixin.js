@@ -1,5 +1,4 @@
 import ajax from "@/ajax.js";
-import { getReqParams } from "@/libs/util.js";
 //组件间 共享
 export default {
   data() {
@@ -11,7 +10,7 @@ export default {
   },
 
   methods: {
-    //功能 调用
+    //======= 功能 调用 =======//
     addData(url) {
       if (this.validRequireForm(this.data)) {
         let params = {
@@ -26,11 +25,11 @@ export default {
       let data = {
         str: code
       };
-      console.log("删除员工：", data);
       let result = await ajax.post(url, data);
       this.delResponse(result, callback);
     },
     async updateData() {},
+    //showParent:boolean 是否传递父级数据
     async getData(
       url,
       reqParamsObj,
@@ -39,12 +38,12 @@ export default {
       showParent,
       chooseDeptArray
     ) {
-      let params = getReqParams(reqParamsObj);
-      let result = await ajax.post(url, params);
+      console.log("chooseArray-----:", chooseArray);
+      let result = await ajax.post(url, reqParamsObj);
       this.getResponse(result, chooseArray, page, showParent, chooseDeptArray);
     },
 
-    ////////////////////////////////////
+    //======= 处理 响应 =======//
     delResponse(result, callback) {
       if (result.data.type == 1) {
         callback && callback();
@@ -53,18 +52,12 @@ export default {
         this.$Message.info("删除失败");
       }
     },
-    async add(url, params) {
-      let result = await ajax.post(url, params);
-      this.addResponse(result);
-    },
-
     addResponse(result) {
-      console.log("result:", result);
       if (result.status == 200) {
         if (result.data.type == 1) {
           this.$Modal.confirm({
             title: "添加成功",
-            content: "<p>是否继续添加</p>",
+            content: "<p>添加成功!是否继续添加?</p>",
             onOk: () => {
               this.cleanForm(this.data);
             },
@@ -80,40 +73,84 @@ export default {
         this.$Message.info("添加失败");
       }
     },
-    //处理 获取数据后的 响应
     getResponse(result, array, page, showParent, chooseDeptArray) {
       if (result.status == 200)
         this.renderData(array, result, page, showParent, chooseDeptArray);
       else alert("接口调用失败!");
     },
-    //渲染页面数据
+
+    //
+    async add(url, params) {
+      let result = await ajax.post(url, params);
+      this.addResponse(result);
+    },
+    //渲染页面数据  choosedArray 1级数据 ，chooseDeptArray 2级数据 -> 3级页面
     renderData(choosedArray, result, page, showParent, chooseDeptArray) {
       if (result.data.type == 1) {
-        let tempdata = [];
-
-        if (chooseDeptArray && chooseDeptArray.length > 0) {
-          tempdata = this.setChecked(chooseDeptArray, result);
-        } else if (choosedArray && choosedArray.length > 0) {
-          tempdata = this.setChecked(choosedArray, result);
+        if (result.data.jsonData.length == 0) {
+          this.$Message.info("没有数据!");
         } else {
-          tempdata = result.data.jsonData;
-        }
-        if (showParent) {
-          this.data = tempdata.map(k => {
-            if (chooseDeptArray.length > 0) {
-              k.deptName = chooseDeptArray[0].name;
-              k.deptCode = chooseDeptArray[0].code;
-            }
-            k.compName = choosedArray[0].name;
-            k.compCode = choosedArray[0].code;
-            return k;
-          });
-        } else {
-          this.data = tempdata;
-        }
+          let tempdata = [];
 
-        this.setPage(result.data.size);
-        this.updatePage(page);
+          //设置check
+          if (chooseDeptArray && chooseDeptArray.length > 0) {
+            tempdata = this.setChecked(chooseDeptArray, result);
+          } else if (choosedArray && choosedArray.length > 0) {
+            tempdata = this.setChecked(choosedArray, result);
+          } else {
+            tempdata = result.data.jsonData;
+          }
+
+          //父级传递数据
+          if (showParent) {
+            this.data = tempdata.map(k => {
+              if (chooseDeptArray && chooseDeptArray.length > 0) {
+                console.log("aaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                switch (getParentType(chooseDeptArray[0].code)) {
+                  case "CX":
+                    k.lineName = chooseDeptArray[0].name;
+                    k.lineCode = chooseDeptArray[0].code;
+                    break;
+                  case "BM":
+                    k.deptName = chooseDeptArray[0].name;
+                    k.deptCode = chooseDeptArray[0].code;
+                    break;
+                  case "AREA":
+                    k.areaName = chooseDeptArray[0].name;
+                    k.areaCode = chooseDeptArray[0].code;
+                    break;
+                }
+              }
+
+              function getParentType(sParentCode) {
+                return sParentCode.split("-")[0];
+              }
+
+              if (choosedArray && choosedArray.length > 0) {
+                switch (getParentType(choosedArray[0].code)) {
+                  case "FAC":
+                    k.facName = choosedArray[0].name;
+                    k.facCode = choosedArray[0].code;
+                    break;
+                  case "YARD":
+                    k.yardName = choosedArray[0].name;
+                    k.yardCode = choosedArray[0].code;
+                    break;
+                  default:
+                    k.compName = choosedArray[0].name;
+                    k.compCode = choosedArray[0].code;
+                }
+              }
+
+              return k;
+            });
+          } else {
+            this.data = tempdata;
+          }
+
+          this.setPage(result.data.size);
+          this.updatePage(page);
+        }
       } else {
         console.log(result.data.jsonData);
       }
@@ -130,7 +167,7 @@ export default {
     //保存选中的状态
     setChecked(choosedArray, result) {
       return result.data.jsonData.map(item => {
-        if (item.name == choosedArray[0].name) {
+        if (item.code == choosedArray[0].code) {
           item._checked = true;
         } else {
           item._checked = false;
@@ -142,7 +179,10 @@ export default {
     //表单 必填 验证
     validRequireForm(columns) {
       for (var i = 0; i < columns.length; i++) {
-        if (columns[i].require && columns[i].value == "") {
+        if (
+          columns[i].require &&
+          (!columns[i].value || columns[i].value == "")
+        ) {
           this.$Message.info(`${columns[i].text}必须填写`);
           return false;
         }
@@ -151,18 +191,24 @@ export default {
     },
     //跳转页面
     jumpTo(index, requireArray, errMsg) {
+      console.log("aaaaa", this.operation);
       for (let i = 0; i < this.operation.length; i++) {
         let path = this.operation[i].path;
+
         if (i == index) {
           if (this.operation[i].require) {
+            console.log("ddd");
             if (requireArray.length == 1) {
+              console.log("eee");
               this.jumpPage(path);
             } else {
+              console.log("fff");
               this.$Modal.error({
                 title: `至少选择一个${errMsg}`
               });
             }
           } else {
+            console.log("ggg");
             this.jumpPage(path);
           }
           return;
@@ -185,8 +231,11 @@ export default {
     },
     cleanForm(data) {
       data.forEach(k => {
-        if (!k.isHide) {
+        if (!k.isHide && !k.defaultValue) {
           k.value = "";
+        }
+        if (k.defaultValue && k.tempValue) {
+          k.value = k.tempValue;
         }
       });
     },

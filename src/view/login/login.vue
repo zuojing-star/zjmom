@@ -8,7 +8,7 @@
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">输入任意用户名和密码即可 {{loading_state}}</p>
+          <p class="login-tip">输入任意用户名和密码即可</p>
         </div>
       </Card>
     </div>
@@ -35,9 +35,9 @@
 
 <script>
 import LoginForm from "_c/login-form";
-import { mapActions } from "vuex";
-// import ajax from "@/ajax";
-// import urls from "@/urls";
+import { mapActions, mapState, mapMutations } from "vuex";
+import urls from "@/urls.js";
+import ajax from "@/ajax.js";
 
 export default {
   data() {
@@ -66,34 +66,45 @@ export default {
     //     }
     //   }
     // }
-
+    ...mapMutations(["setUser", "setToken"]),
     ...mapActions(["handleLogin", "getUserInfo"]),
 
-    handleSubmit({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
-          console.log("userInfo:", res);
-          /*
-            {
-              name: "super_admin",
-              user_id: "1",
-              access: Array(2),
-              token: "super_admin",
-              avator: "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png"
-            }
-          */
+    async handleSubmit({ userName, password }) {
+      let url = urls.basic.login;
+      let params = {
+        obj: {
+          userCode: userName,
+          password
+        }
+      };
+      let result = await ajax.post(url, params);
+      if (result.data.type == 1) {
+        let user = result.data.jsonData;
+        this.setUser(user);
+        this.setToken("super_admin");
+        this.$router.push({ name: this.$config.homeName });
+      } else {
+        this.$Message.info(result.data.jsonData);
+      }
 
-          this.$router.push({
-            name: this.$config.homeName
-          });
-        });
-      });
-    }
-  },
-  computed: {
-    loading_state() {
-      console.log(this.$store.state.abcd);
-      return this.$store.state.abcd;
+      // this.handleLogin({ userName, password }).then(res => {
+      //   this.getUserInfo().then(res => {
+      //     console.log("userInfo:", res);
+      //     /*
+      //       {
+      //         name: "super_admin",
+      //         user_id: "1",
+      //         access: Array(2),
+      //         token: "super_admin",
+      //         avator: "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png"
+      //       }
+      //     */
+
+      //     this.$router.push({
+      //       name: this.$config.homeName
+      //     });
+      //   });
+      // });
     }
   }
 };

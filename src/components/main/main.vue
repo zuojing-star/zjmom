@@ -28,6 +28,7 @@
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avator="userAvator"/>
+          <div class="userinfo">{{user_.userName}}</div>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -65,6 +66,8 @@ import routers from "@/router/routers";
 import minLogo from "@/assets/images/logo-min.jpg";
 import maxLogo from "@/assets/images/logo.jpg";
 import "./main.less";
+import { mapState } from "vuex";
+
 export default {
   name: "Main",
   components: {
@@ -84,6 +87,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["user_", "canAddCompany"]),
     ...mapGetters(["errorCount"]),
     tagNavList() {
       return this.$store.state.app.tagNavList;
@@ -167,7 +171,6 @@ export default {
   },
   watch: {
     $route(newRoute) {
-      console.log("watch");
       const { name, query, params, meta } = newRoute;
       this.addTag({
         route: { name, query, params, meta },
@@ -179,7 +182,7 @@ export default {
     }
   },
   mounted() {
-    console.log("main");
+    // console.log("canAddCompany", this.user._user);
     /**
      * @description 初始化设置面包屑导航和标签导航
      * @zj 设置 tagNavList 到 state ，并且保存到 localStorage
@@ -208,6 +211,9 @@ export default {
 </script>
 
 <style>
+.userinfo {
+  float: left !important;
+}
 .router-view {
   /* height: 100%; */
 }

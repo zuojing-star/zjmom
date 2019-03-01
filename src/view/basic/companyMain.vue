@@ -13,7 +13,7 @@
 
 <script>
 import TableList from "@/components/table-list/table-list.vue";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import urls from "@/urls.js";
 import ajax from "@/ajax.js";
 import "@/assets/styles/common-main.css";
@@ -39,6 +39,7 @@ export default {
   //数据
   data() {
     return {
+      hasPage: true,
       page: 1,
       totalPage: 0,
       operation: viewData.pagetitle.company,
@@ -66,7 +67,7 @@ export default {
         },
         {
           title: "联系方式",
-          key: "telphone"
+          key: "telephone"
         },
         {
           title: "操作",
@@ -86,16 +87,7 @@ export default {
                     marginRight: "5px"
                   },
                   on: {
-                    click: () => {
-                      console.log(params);
-
-                      this.$Modal.confirm({
-                        title: "确定删除么？",
-                        content: "<p></p>",
-                        onOk: () => {},
-                        onCancel: () => {}
-                      });
-                    }
+                    click: () => {}
                   }
                 },
                 "修改"
@@ -107,11 +99,8 @@ export default {
                     type: "error",
                     size: "small"
                   },
-
                   on: {
                     click: () => {
-                      console.log(params);
-
                       this.$Modal.confirm({
                         title: "确定删除么？",
                         content: "<p></p>",
@@ -141,6 +130,7 @@ export default {
 
   //接口
   methods: {
+    ...mapMutations(["clearState"]),
     delCallback() {
       this.getPccompany();
     },
@@ -148,7 +138,7 @@ export default {
     getPccompany() {
       this.getData(
         urls.company.getPccompany,
-        { str: this.page },
+        { obj: { pageIndex: this.page } },
         this.companyArray,
         this.page
       );

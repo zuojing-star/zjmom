@@ -58,7 +58,7 @@ export default {
         },
         {
           title: "联系方式",
-          key: "telphone"
+          key: "telephone"
         },
         {
           title: "操作",

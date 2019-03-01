@@ -367,7 +367,6 @@ export default {
   },
   computed: {
     loading_state() {
-      console.log("tables:", this.$store.state.abcd);
       return this.$store.state.abcd;
     }
   },

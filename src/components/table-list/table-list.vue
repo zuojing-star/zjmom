@@ -8,7 +8,7 @@
       @on-select="selectOne"
       @on-selection-change="selectChange"
     ></Table>
-    <div class="page-wrap">
+    <div class="page-wrap" v-if="!hidePage">
       <Page :total="totalPage" class="pagesplit" @on-change="pageChange" :page-size="pagesize"/>
       <div class="pagetext">共{{Math.ceil(totalPage/pagesize)}}页/每页{{pagesize}}条</div>
     </div>
@@ -29,7 +29,8 @@ export default {
     columns: Array,
     data: Array,
     checkedSource: String,
-    totalPage: Number
+    totalPage: Number,
+    hidePage: Boolean //是否分页
   },
   methods: {
     pageChange(page) {
@@ -42,27 +43,9 @@ export default {
         this.Pccompany = jsondata.data.data;
       }
     },
-    ...mapMutations([
-      "chooseOneCompany",
-      "choosedCompany",
-      "choosedCompanyArray",
-      "choosedDepartmentArray",
-      "clearAllArray"
-    ]),
+    ...mapMutations(["chooseOneCompany", "updateArrayState"]),
     selectChange(selection) {
-      switch (this.checkedSource) {
-        case "company":
-          console.log("selection:::", selection);
-          if (selection.length == 0) {
-            this.clearAllArray();
-          } else {
-            this.choosedCompanyArray(selection);
-          }
-          break;
-        case "department":
-          this.choosedDepartmentArray(selection);
-          break;
-      }
+      this.updateArrayState(selection);
     },
     selectOne(selection, row) {
       // console.log("选中的一行", row);

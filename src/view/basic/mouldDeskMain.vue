@@ -1,7 +1,11 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="模台信息" :operation="operation" @jumpTo="jumpTo($event,null,'模台')"/>
-    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
+    <PageTitle
+      pagetitle="模台信息"
+      :operation="operation"
+      @jumpTo="jumpTo($event,mouldDeskArray,'模台')"
+    />
+    <TableList :columns="columns" :data="data" checkedSource="productLine" :hidePage="hidePage"/>
   </div>
 </template>
 
@@ -16,11 +20,6 @@ import PageTitle from "_c/page-title/page-title.vue";
 import viewData from "@/view/view-data.js";
 
 export default {
-  //初始化
-  mounted() {
-    this.getPccompany();
-  },
-
   //mixin
   mixins: [mixin],
 
@@ -33,6 +32,7 @@ export default {
   //数据
   data() {
     return {
+      hidePage: true,
       operation: viewData.pagetitle.mouldDesk,
       columns: [
         {
@@ -88,9 +88,7 @@ export default {
                       this.$Modal.confirm({
                         title: "确定删除么？",
                         content: "<p></p>",
-                        onOk: () => {
-                          this.delPccompany(params.row.code);
-                        },
+                        onOk: () => {},
                         onCancel: () => {}
                       });
                     }
@@ -114,7 +112,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.mouldDesk.delMouldDesk,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -131,69 +133,48 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["companyArray"]),
+  computed: mapState(["mouldDeskArray", "factoryArray", "produceLineArray"]),
 
   //接口
   methods: {
-    //删除公司
-    async delPccompany(code) {
-      let url = urls.company.delPccompnay;
-      let data = {
-        str: code
-      };
-      let result = await ajax.post(url, data);
-      this.delResponse(result);
+    delCallback() {
+      this.getMouldDesk();
     },
 
-    //删除公司 回调
-    delResponse(result) {
-      if (result.data.type == 200) {
-        this.getPccompany();
-        this.$Message.info("删除成功");
-      } else {
-        this.$Message.info("删除失败");
-      }
+    getMouldDesk() {
+      console.log("factoryArray:", this.factoryArray);
+      console.log("produceLineArray:", this.produceLineArray);
+
+      this.getData(
+        urls.mouldDesk.getMouldDesk,
+        {
+          obj: {
+            pageIndex: this.page,
+            facCode: this.factoryArray && this.factoryArray[0].code,
+            lineCode:
+              (this.produceLineArray.length > 0 &&
+                this.produceLineArray[0].code) ||
+              ""
+          }
+        },
+        this.factoryArray,
+        this.page,
+        true,
+        this.produceLineArray
+      );
     },
 
-    //获取公司数据
-    async getPccompany() {
-      let url = urls.company.getPccompany;
-      let result = await ajax.post(url);
-      this.getResponse(result, this.companyArray);
-    },
-
-    //页面跳转
-    empMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: `/components/tables_page/employee`
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    depMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: "/components/tables_page/department"
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    addCompany() {
-      this.$router.push({
-        path: "/components/addCompany"
-      });
+    //分页
+    pageChange(page) {
+      this.page = page;
+      this.getMouldDesk();
     }
+  },
+  //初始化
+  mounted() {
+    console.log("produceLineArray2:", this.produceLineArray);
+
+    this.getMouldDesk();
   }
 };
 </script>

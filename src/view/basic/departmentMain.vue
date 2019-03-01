@@ -1,6 +1,10 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="部门信息" :operation="operation" @jumpTo="jumpTo($event,companyArray,'部门')"/>
+    <PageTitle
+      pagetitle="部门信息"
+      :operation="operation"
+      @jumpTo="jumpTo($event,departmentArray,'部门')"
+    />
     <TableList
       :columns="columns"
       :data="data"
@@ -144,7 +148,7 @@ export default {
     getDepartment() {
       this.getData(
         urls.department.getPcDepartmentListByName,
-        { pageIndex: this.page, compCode: this.companyArray[0].code },
+        { obj: { pageIndex: this.page, compCode: this.companyArray[0].code } },
         this.companyArray,
         this.page,
         true,

@@ -1,7 +1,11 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="堆场管理" :operation="operation" @jumpTo="jumpTo($event,null,'堆场')"/>
-    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
+    <PageTitle
+      pagetitle="堆场管理"
+      :operation="operation"
+      @jumpTo="jumpTo($event,storageYardArray,'堆场')"
+    />
+    <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ import viewData from "@/view/view-data.js";
 export default {
   //初始化
   mounted() {
-    this.getPccompany();
+    this.getStorageYard();
   },
 
   //mixin
@@ -54,7 +58,7 @@ export default {
         },
         {
           title: "联系方式",
-          key: "telphone"
+          key: "telephone"
         },
         {
           title: "地址",
@@ -62,7 +66,7 @@ export default {
         },
         {
           title: "容量",
-          key: "totalVo"
+          key: "totalvo"
         },
         {
           title: "操作",
@@ -114,7 +118,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.storageYard.delStorageYard,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -131,68 +139,27 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["companyArray"]),
+  computed: mapState(["storageYardArray"]),
 
   //接口
   methods: {
-    //删除公司
-    async delPccompany(code) {
-      let url = urls.company.delPccompnay;
-      let data = {
-        str: code
-      };
-      let result = await ajax.post(url, data);
-      this.delResponse(result);
+    delCallback() {
+      this.getStorageYard();
     },
 
-    //删除公司 回调
-    delResponse(result) {
-      if (result.data.type == 200) {
-        this.getPccompany();
-        this.$Message.info("删除成功");
-      } else {
-        this.$Message.info("删除失败");
-      }
+    getStorageYard() {
+      this.getData(
+        urls.storageYard.getStorageYard,
+        { obj: { pageIndex: this.page } },
+        this.storageYardArray,
+        this.page
+      );
     },
 
-    //获取公司数据
-    async getPccompany() {
-      let url = urls.company.getPccompany;
-      let result = await ajax.post(url);
-      this.getResponse(result, this.companyArray);
-    },
-
-    //页面跳转
-    empMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: `/components/tables_page/employee`
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    depMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: "/components/tables_page/department"
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    addCompany() {
-      this.$router.push({
-        path: "/components/addCompany"
-      });
+    //分页
+    pageChange(page) {
+      this.page = page;
+      this.getStorageYard();
     }
   }
 };

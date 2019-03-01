@@ -11,7 +11,7 @@
       <Input
         type="password"
         v-model="form.password"
-        placeholder="请输入密码"
+        placeholder="请输入密码2"
         style="width:100% !important;"
       >
         <span slot="prepend">
