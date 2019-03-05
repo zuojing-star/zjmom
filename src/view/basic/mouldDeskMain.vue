@@ -142,9 +142,6 @@ export default {
     },
 
     getMouldDesk() {
-      console.log("factoryArray:", this.factoryArray);
-      console.log("produceLineArray:", this.produceLineArray);
-
       this.getData(
         urls.mouldDesk.getMouldDesk,
         {
@@ -172,8 +169,6 @@ export default {
   },
   //初始化
   mounted() {
-    console.log("produceLineArray2:", this.produceLineArray);
-
     this.getMouldDesk();
   }
 };

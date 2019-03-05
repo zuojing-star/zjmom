@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <PageTitle pagetitle="工艺信息" :operation="operation" @jumpTo="jumpTo($event,null,'工艺')"/>
-    <TableList :columns="columns" :data="data" checkedSource="productLine"/>
+    <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import viewData from "@/view/view-data.js";
 export default {
   //初始化
   mounted() {
-    this.getPccompany();
+    this.getProduceCraft();
   },
 
   //mixin
@@ -49,15 +49,15 @@ export default {
           key: "code"
         },
         {
-          title: "是否必检",
-          key: "notNull"
+          title: "工厂名称",
+          key: "facName"
         },
         {
-          title: "质检顺序",
-          key: "zjIndex"
+          title: "工厂编码",
+          key: "facCode"
         },
         {
-          title: "备注",
+          title: "描述",
           key: "desp"
         },
         {
@@ -110,7 +110,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.produceCraft.delProduceCraftByCodes,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -127,68 +131,25 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["companyArray"]),
+  computed: mapState(["factoryArray"]),
 
   //接口
   methods: {
-    //删除公司
-    async delPccompany(code) {
-      let url = urls.company.delPccompnay;
-      let data = {
-        str: code
-      };
-      let result = await ajax.post(url, data);
-      this.delResponse(result);
+    getProduceCraft() {
+      this.getData(
+        urls.produceCraft.getProduceCraft,
+        { obj: { pageIndex: this.page, facCode: this.factoryArray[0].code } },
+        this.factoryArray,
+        this.page,
+        true
+      );
     },
-
-    //删除公司 回调
-    delResponse(result) {
-      if (result.data.type == 200) {
-        this.getPccompany();
-        this.$Message.info("删除成功");
-      } else {
-        this.$Message.info("删除失败");
-      }
+    delCallback() {
+      this.getProduceCraft();
     },
-
-    //获取公司数据
-    async getPccompany() {
-      let url = urls.company.getPccompany;
-      let result = await ajax.post(url);
-      this.getResponse(result, this.companyArray);
-    },
-
-    //页面跳转
-    empMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: `/components/tables_page/employee`
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    depMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: "/components/tables_page/department"
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    addCompany() {
-      this.$router.push({
-        path: "/components/addCompany"
-      });
+    //分页
+    pageChange() {
+      this.getProduceCraft();
     }
   }
 };

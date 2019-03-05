@@ -428,6 +428,16 @@ export default [
         component: () => import("@/view/basic/facEmployeeAdd.vue")
       },
       {
+        path: "roleAuth",
+        name: "roleAuth",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "角色授权"
+        },
+        component: () => import("@/view/basic/roleAuth.vue")
+      },
+      {
         path: "markdown_page",
         name: "markdown_page",
         meta: {

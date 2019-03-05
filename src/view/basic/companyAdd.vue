@@ -28,8 +28,7 @@ export default {
     addSubmit() {
       this.addData(urls.company.addPcCompany);
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 

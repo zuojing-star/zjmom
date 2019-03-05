@@ -38,9 +38,11 @@ export default {
       showParent,
       chooseDeptArray
     ) {
-      console.log("chooseArray-----:", chooseArray);
       let result = await ajax.post(url, reqParamsObj);
       this.getResponse(result, chooseArray, page, showParent, chooseDeptArray);
+    },
+    async getDataWithoutResponse(url, reqParamsObj) {
+      return await ajax.post(url, reqParamsObj);
     },
 
     //======= 处理 响应 =======//
@@ -89,6 +91,7 @@ export default {
       if (result.data.type == 1) {
         if (result.data.jsonData.length == 0) {
           this.$Message.info("没有数据!");
+          this.data = [];
         } else {
           let tempdata = [];
 
@@ -105,7 +108,6 @@ export default {
           if (showParent) {
             this.data = tempdata.map(k => {
               if (chooseDeptArray && chooseDeptArray.length > 0) {
-                console.log("aaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                 switch (getParentType(chooseDeptArray[0].code)) {
                   case "CX":
                     k.lineName = chooseDeptArray[0].name;
@@ -191,24 +193,19 @@ export default {
     },
     //跳转页面
     jumpTo(index, requireArray, errMsg) {
-      console.log("aaaaa", this.operation);
       for (let i = 0; i < this.operation.length; i++) {
         let path = this.operation[i].path;
 
         if (i == index) {
           if (this.operation[i].require) {
-            console.log("ddd");
             if (requireArray.length == 1) {
-              console.log("eee");
               this.jumpPage(path);
             } else {
-              console.log("fff");
               this.$Modal.error({
                 title: `至少选择一个${errMsg}`
               });
             }
           } else {
-            console.log("ggg");
             this.jumpPage(path);
           }
           return;
@@ -241,6 +238,32 @@ export default {
     },
     extendViewData(extArray, viewData) {
       return extArray.concat(viewData);
+    },
+    //填充数据
+    fillViewData(
+      viewData,
+      whichFieldFromRequestfiled,
+      whichDataFiledInObjectToFilled,
+      filldata
+    ) {
+      let oFiled = viewData.find(o => {
+        return o.requestField == whichFieldFromRequestfiled;
+      });
+      console.log("oFiled", oFiled);
+      let produceLines = filldata.map(k => {
+        return {
+          value: k.code,
+          label: k.name
+        };
+      });
+      produceLines.unshift({
+        value: "all",
+        label: "全工厂"
+      });
+
+      oFiled[whichDataFiledInObjectToFilled] = produceLines;
+
+      return viewData;
     }
   }
 };

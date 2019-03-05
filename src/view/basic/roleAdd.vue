@@ -12,89 +12,59 @@ import Form from "_c/form/form.vue";
 import mixin from "@/view/service-mixin.js";
 
 import viewData from "@/view/view-data.js";
-
+import { mapState } from "vuex";
 export default {
   mixins: [mixin],
   data() {
     return {
-      data: viewData.add.addRole,
-      title: "添加角色",
-      name: "",
-      address: "",
-      responsible: "",
-      telephone: ""
+      data: [],
+      title: "添加角色"
     };
   },
   components: {
     Form
   },
+  computed: mapState(["factoryArray", "produceLineArray"]),
   methods: {
     addSubmit() {
-      console.log(this.data);
-
-      if (this.validRequireForm(this.data)) {
-        console.log("提交数据");
-        let params = this.getRequestParams(this.data);
-        console.log(params);
-      } else {
-        console.log("不提交数据");
-      }
+      this.addData(urls.role.addRole);
     },
-    getParams() {
-      let name = this.name;
-      let address = this.address;
-      let telephone = this.telephone;
-      let responsible = this.responsible;
-
-      if (name == "") {
-        this.$Message.info("公司名称必须填写");
-        return;
-      }
-
-      let params = {
-        obj: {
-          name,
-          address,
-          responsible,
-          telephone
+    async getProduceLineData(factoryCode) {
+      let res = await this.getDataWithoutResponse(
+        urls.productLine.getProductLine,
+        {
+          obj: {
+            pageIndex: 0,
+            facCode: this.factoryArray && this.factoryArray[0].code
+          }
         }
-      };
-      return params;
+      );
+      return res.data.jsonData;
     },
-    cleanForm() {
-      this.name = "";
-      this.address = "";
-      this.telephone = "";
-      this.responsible = "";
+    addSubmit() {
+      this.addData(urls.role.addRole);
     },
-    //处理响应
-    addResponse(result) {
-      if (result.status == 200) {
-        if (result.data.type == 200) {
-          this.$Modal.confirm({
-            title: "添加公司成功",
-            content: "<p>是否继续添加</p>",
-            onOk: () => {
-              this.cleanForm();
-            },
-            onCancel: () => {
-              this.$router.push({ path: "/components/tables_page/company" });
-            }
-          });
-        } else {
-          this.$Message.info("添加公司失败");
-        }
-      } else {
-        this.$Message.info("添加公司失败");
-      }
-    },
-    async addCompany() {
-      let url = urls.company.addPcCompany;
-      let result = await ajax.post(url, this.getParams());
-      this.addResponse(result);
+    async _fillViewData() {
+      let data = await this.getProduceLineData();
+
+      this.data = this.extendViewData(
+        [
+          {
+            text: "工厂代码",
+            value: this.factoryArray[0].code,
+            type: "input",
+            requestField: "facCode",
+            require: true,
+            isHide: true
+          }
+        ],
+        this.fillViewData(viewData.add.addRole, "scope", "selectData", data)
+      );
     }
   },
-  mounted() {}
+  async mounted() {
+    this._fillViewData();
+  }
 };
 </script>
 

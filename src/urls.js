@@ -34,7 +34,11 @@ export default {
   factory: {
     getFacDatas: `${env}/basic/PcFactory/getFacDatas`,
     addFactory: `${env}/basic/PcFactory/save`,
-    delFactory: `${env}/basic/PcFactory/deleteObj`
+    delFactory: `${env}/basic/PcFactory/deleteObj`,
+    addFacDept: `${env}/basic/PcFactory/saveDep`,
+    addFacEmp: `${env}/basic/PcFactory/saveUser`,
+    getDeptsOfFac: `${env}/basic/PcFactory/getDeptsOfFac`,
+    getPersonsOfFac: `${env}/basic/PcFactory/getPersonsOfFac`
   },
   //产线
   productLine: {
@@ -65,5 +69,29 @@ export default {
     getStorageRack: `${env}/basic/PcFramedata/getFrameDatas`,
     delStorageRack: `${env}/basic/PcFramedata/deleteObj`,
     addStorageRack: `${env}/basic/PcFramedata/save`
+  },
+  //角色
+  role: {
+    getRole: `${env}/basic/PcRole/getRoleDatas`,
+    delRole: `${env}`,
+    addRole: `${env}/basic/PcRole/createRoleInfo`
+  },
+  //角色授权
+  roleAuth: {
+    addAuth: `${env}/basic/PcRolemenu/createMenuKey`
+  },
+  //工序
+  produceProcess: {
+    getProduceProcess: `${env}/basic/PcProcedure/getPcProcedureList`,
+    getProduceProcessByCode: `${env}/basic/PcProcedure/getPcProcedureByCode`,
+    addProduceProcess: `${env}/basic/PcProcedure/addPcProcedure`,
+    delPcProcessByCodes: `${env}/basic/PcProcedure/delPcProcedureByCodes`
+  },
+  //工艺
+  produceCraft: {
+    getProduceCraft: `${env}/basic/PcProcess/getPcProcessList`,
+    getProduceCraftByCode: `${env}/basic/PcProcess/getPcProcessByCode`,
+    addProduceCraft: `${env}/basic/PcProcess/addPcProcess`,
+    delProduceCraftByCodes: `${env}/basic/PcProcess/delPcProcessByCodes`
   }
 };

@@ -19,7 +19,8 @@ export default new Vuex.Store({
     mouldDeskArray: [], //模台
     produceLineArray: [], //产线
     storageYardArray: [], //堆场
-    zoneBitArray: [] //区位
+    zoneBitArray: [], //区位
+    roleArray: [] //角色
   },
   mutations: {
     setUser(state, user) {
@@ -36,12 +37,12 @@ export default new Vuex.Store({
       }
     },
     updateArrayState(state, array) {
+      console.log("add state", array);
       if (array.length == 0) {
         // this.commit("clearAllArray");
         switch (state.tempCode) {
           case "GS":
             state.companyArray = [];
-
             break;
           case "BM":
             state.departmentArray = [];
@@ -61,6 +62,10 @@ export default new Vuex.Store({
             break;
           case "AREA":
             state.zoneBitArray = [];
+            state.tempCode = "";
+            break;
+          case "JS":
+            state.roleArray = [];
             state.tempCode = "";
             break;
         }
@@ -94,6 +99,10 @@ export default new Vuex.Store({
             break;
           case "AREA":
             state.zoneBitArray = array;
+            state.tempCode = code;
+            break;
+          case "JS":
+            state.roleArray = array;
             state.tempCode = code;
             break;
         }

@@ -5,13 +5,7 @@
       :operation="operation"
       @jumpTo="jumpTo($event,departmentArray,'部门')"
     />
-    <TableList
-      :columns="columns"
-      :data="data"
-      checkedSource="department"
-      :totalPage="totalPage"
-      @pageChange="pageChange"
-    />
+    <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
 

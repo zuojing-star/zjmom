@@ -1,13 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <PageTitle pagetitle="员工信息" :operation="operation" @jumpTo="jumpTo($event,[{}],'员工')"/>
-    <TableList
-      :columns="columns"
-      :data="data"
-      checkedSource="employee"
-      :totalPage="totalPage"
-      @pageChange="pageChange"
-    />
+    <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
 

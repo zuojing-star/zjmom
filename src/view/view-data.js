@@ -417,23 +417,69 @@ export default {
     ],
     //工艺
     addProduceCraft: [
-      { text: "名称", value: "", type: "input", require: true },
-      { text: "是否必检", value: "", type: "input", require: false },
-      { text: "质检顺序", value: "", type: "input", require: false },
-      { text: "备注", value: "", type: "input", require: false }
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "备注",
+        value: "",
+        type: "input",
+        requestField: "desp",
+        require: false
+      }
     ],
     //工序
     addProduceProcess: [
-      { text: "名称", value: "", type: "input", require: true },
-      { text: "是否必检", value: "", type: "input", require: false },
-      { text: "质检顺序", value: "", type: "input", require: false },
-      { text: "备注", value: "", type: "input", require: false }
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "备注",
+        value: "",
+        type: "input",
+        requestField: "desp",
+        require: false
+      }
     ],
     addRole: [
-      { text: "名称", value: "", type: "input", require: true },
-      { text: "编码", value: "", type: "input", require: true },
-      { text: "使用范围", value: "", type: "input", require: true },
-      { text: "备注", value: "", type: "input", require: false }
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "编码",
+        value: "",
+        type: "input",
+        requestField: "code",
+        require: true
+      },
+      {
+        text: "使用范围",
+        value: "all",
+        type: "select",
+        requestField: "scope",
+        defaultValue: true,
+        selectData: [],
+        require: true
+      },
+      {
+        text: "备注",
+        value: "",
+        type: "input",
+        requestField: "desp",
+        require: false
+      }
     ]
   },
   //操作 数据
@@ -486,7 +532,7 @@ export default {
       {
         text: "批量删除",
         path: "/basic/addFactory",
-        require: false,
+        require: true,
         border: true
       },
       {
@@ -503,33 +549,33 @@ export default {
       {
         text: "部门管理",
         path: "/basic/facDepartment",
-        require: false
+        require: true
       },
       {
         text: "员工管理",
         path: "/basic/facEmployee",
-        require: false
+        require: true
       },
       {
         text: "角色维护",
         path: "/basic/role",
-        require: false,
+        require: true,
         border: true
       },
       {
         text: "工序维护",
         path: "/basic/produceProcess",
-        require: false
+        require: true
       },
       {
         text: "工艺维护",
         path: "/basic/produceCraft",
-        require: false
+        require: true
       },
       {
         text: "类型维护",
         path: "/basic/produceType",
-        require: false
+        require: true
       }
     ],
     produceProcess: [
@@ -647,8 +693,8 @@ export default {
       },
       {
         text: "角色授权",
-        path: "/basic/addRole",
-        require: false
+        path: "/basic/roleAuth",
+        require: true
       },
       {
         text: "添加人员",
@@ -664,6 +710,11 @@ export default {
     facDepartment: [
       { text: "添加部门", path: "/basic/addFacDepartment" },
       {
+        text: "员工信息",
+        path: "/basic/facEmployee",
+        require: true
+      },
+      {
         text: "返回工厂",
         path: "/basic/factory",
         require: true
@@ -671,6 +722,11 @@ export default {
     ],
     facEmployee: [
       { text: "添加员工", path: "/basic/addFacEmployee" },
+      {
+        text: "返回部门",
+        path: "/basic/facDepartment",
+        require: true
+      },
       {
         text: "返回工厂",
         path: "/basic/factory",

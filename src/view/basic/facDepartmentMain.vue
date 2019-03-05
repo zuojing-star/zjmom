@@ -1,7 +1,11 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="部门信息" :operation="operation" @jumpTo="jumpTo($event,[{}],'部门')"/>
-    <TableList :columns="columns" :data="data" checkedSource="company"/>
+    <PageTitle
+      pagetitle="部门信息"
+      :operation="operation"
+      @jumpTo="jumpTo($event,departmentArray,'部门')"
+    />
+    <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ import viewData from "@/view/view-data.js";
 export default {
   //初始化
   mounted() {
-    this.getPccompany();
+    this.getFacDepartment();
   },
 
   //mixin
@@ -41,24 +45,24 @@ export default {
           align: "center"
         },
         {
-          title: "名称",
-          key: "name"
+          title: "工厂名称",
+          key: "facName"
         },
         {
-          title: "公司地址",
-          key: "address"
+          title: "工厂代码",
+          key: "facCode"
         },
         {
-          title: "代码",
+          title: "部门代码",
           key: "code"
         },
         {
-          title: "联系人",
-          key: "responsible"
+          title: "部门名称",
+          key: "name"
         },
         {
-          title: "联系方式",
-          key: "telephone"
+          title: "维护人",
+          key: "owner"
         },
         {
           title: "操作",
@@ -78,18 +82,7 @@ export default {
                     marginRight: "5px"
                   },
                   on: {
-                    click: () => {
-                      console.log(params);
-
-                      this.$Modal.confirm({
-                        title: "确定删除么？",
-                        content: "<p></p>",
-                        onOk: () => {
-                          this.delPccompany(params.row.code);
-                        },
-                        onCancel: () => {}
-                      });
-                    }
+                    click: () => {}
                   }
                 },
                 "修改"
@@ -110,7 +103,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.department.delPcDepartment,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });
@@ -127,68 +124,26 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["companyArray"]),
+  computed: mapState(["factoryArray", "departmentArray"]),
 
   //接口
   methods: {
-    //删除公司
-    async delPccompany(code) {
-      let url = urls.company.delPccompnay;
-      let data = {
-        str: code
-      };
-      let result = await ajax.post(url, data);
-      this.delResponse(result);
+    getFacDepartment() {
+      this.getData(
+        urls.factory.getDeptsOfFac,
+        { obj: { pageIndex: this.page, facCode: this.factoryArray[0].code } },
+        this.factoryArray,
+        this.page,
+        true,
+        this.departmentArray
+      );
     },
-
-    //删除公司 回调
-    delResponse(result) {
-      if (result.data.type == 200) {
-        this.getPccompany();
-        this.$Message.info("删除成功");
-      } else {
-        this.$Message.info("删除失败");
-      }
+    delCallback() {
+      this.getFacDepartment();
     },
-
-    //获取公司数据
-    async getPccompany() {
-      let url = urls.company.getPccompany;
-      let result = await ajax.post(url);
-      this.getResponse(result, this.companyArray);
-    },
-
-    //页面跳转
-    empMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: `/components/tables_page/employee`
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    depMsgClick() {
-      let companyArray = this.companyArray;
-
-      if (companyArray.length == 1) {
-        this.$router.push({
-          path: "/components/tables_page/department"
-        });
-      } else {
-        this.$Modal.error({
-          title: "至少选择一个公司"
-        });
-      }
-    },
-    addCompany() {
-      this.$router.push({
-        path: "/components/addCompany"
-      });
+    //分页
+    pageChange() {
+      this.getFacDepartment();
     }
   }
 };
