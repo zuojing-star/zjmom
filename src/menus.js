@@ -23,17 +23,17 @@ export default [
     parent: ""
   },
   {
-    name: "|--- 公司管理",
+    name: "--- 公司管理",
     code: "compManage",
     parent: "配置管理"
   },
   {
-    name: "|--- 工厂管理",
+    name: "--- 工厂管理",
     code: "facManage",
     parent: "配置管理"
   },
   {
-    name: "|--- 堆场管理",
+    name: "--- 堆场管理",
     code: "yardManage",
     parent: "配置管理"
   }

@@ -28,7 +28,7 @@
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avator="userAvator"/>
-          <div class="userinfo">{{user_.userName}}</div>
+          <div class="userinfo">{{loginScopeName}} / {{user_.userName}}</div>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -68,6 +68,8 @@ import maxLogo from "@/assets/images/logo.jpg";
 import "./main.less";
 import { mapState } from "vuex";
 
+console.log("routers:::", routers);
+
 export default {
   name: "Main",
   components: {
@@ -87,7 +89,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user_", "canAddCompany"]),
+    ...mapState(["user_", "loginScopeName", "menus"]),
     ...mapGetters(["errorCount"]),
     tagNavList() {
       return this.$store.state.app.tagNavList;
@@ -110,7 +112,13 @@ export default {
       return list;
     },
     menuList() {
-      return this.$store.getters.menuList;
+      console.log("menuList:111111", this.$store.getters.menuList);
+      console.log("menus", this.menus);
+
+      let menus = this.$store.getters.menuList;
+      let authMenus = this.menus;
+
+      return this.authMenus(menus, authMenus);
     },
     local() {
       return this.$store.state.app.local;
@@ -132,6 +140,20 @@ export default {
       "closeTag"
     ]),
     ...mapActions(["handleLogin", "getUnreadMessageCount"]),
+    authMenus(menus, authMenus) {
+      let arr = [];
+
+      for (let i = 0; i < menus.length; i++) {
+        for (let ii = 0; ii < authMenus.length; ii++) {
+          if (authMenus[ii].name == menus[i].menuCode) {
+            arr.push(menus[i]);
+            break;
+          }
+        }
+      }
+
+      return arr;
+    },
     turnToPage(route) {
       let { name, params, query } = {};
       if (typeof route === "string") name = route;
@@ -182,7 +204,8 @@ export default {
     }
   },
   mounted() {
-    // console.log("canAddCompany", this.user._user);
+    console.log("this.user_:", this.user_);
+
     /**
      * @description 初始化设置面包屑导航和标签导航
      * @zj 设置 tagNavList 到 state ，并且保存到 localStorage
@@ -213,6 +236,7 @@ export default {
 <style>
 .userinfo {
   float: left !important;
+  margin-right: 10px;
 }
 .router-view {
   /* height: 100%; */

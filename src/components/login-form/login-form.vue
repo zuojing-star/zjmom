@@ -1,7 +1,12 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
     <FormItem prop="userName" style="width:100%;">
-      <Input v-model="form.userName" placeholder="请输入用户名" style="width:100% !important;">
+      <Input
+        v-model="form.userName"
+        @on-blur="usernameBlur"
+        placeholder="请输入用户名"
+        style="width:100% !important;"
+      >
         <span slot="prepend">
           <Icon :size="16" type="ios-person"></Icon>
         </span>
@@ -11,7 +16,7 @@
       <Input
         type="password"
         v-model="form.password"
-        placeholder="请输入密码2"
+        placeholder="请输入密码"
         style="width:100% !important;"
       >
         <span slot="prepend">
@@ -19,13 +24,40 @@
         </span>
       </Input>
     </FormItem>
+    <FormItem prop="login_type">
+      <Select
+        :disabled="isAdmin"
+        v-model="workAreaModel"
+        placeholder="选择工作区域"
+        @on-change="selectchange"
+      >
+        <Option v-for="item in workArea" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>
+    </FormItem>
+    <FormItem prop="login_factory">
+      <Select
+        v-show="hasFactorySelect"
+        placeholder="选择所属"
+        v-model="workAreaChoosed"
+        @on-change="selectchange2"
+      >
+        <Option v-for="item in factorys" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>
+    </FormItem>
     <FormItem>
       <Button @click="handleSubmit" type="primary" long>登录</Button>
     </FormItem>
   </Form>
 </template>
 <script>
+import { mapState } from "vuex";
+import urls from "@/urls.js";
+import mixin from "@/view/service-mixin.js";
+import ajax from "@/ajax.js";
+import { mapMutations } from "vuex";
+
 export default {
+  mixins: [mixin],
   name: "LoginForm",
   props: {
     userNameRules: {
@@ -43,8 +75,23 @@ export default {
   },
   data() {
     return {
+      isAdmin: false,
+      hasFactorySelect: false,
+      factorys: [],
+      workAreaModel: "",
+      workAreaChoosed: "",
+      workArea: [
+        {
+          value: "comp",
+          label: " 集团公司 / 总包"
+        },
+        {
+          value: "fac",
+          label: "独立工厂 / 外协"
+        }
+      ],
       form: {
-        userName: "super_admin",
+        userName: "",
         password: ""
       }
     };
@@ -58,12 +105,68 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(["setScopeName"]),
+    usernameBlur() {
+      if (this.form.userName == "admin") {
+        this.isAdmin = true;
+        console.log(this.isAdmin);
+      } else {
+        this.isAdmin = false;
+        console.log(this.isAdmin);
+      }
+    },
+    async getCompanys() {
+      let companys = await ajax.post(urls.basic.getCompany, {
+        obj: { pageIndex: 0 }
+      });
+      this.factorys = companys.data.jsonData.map(k => {
+        return {
+          value: k.code,
+          label: k.name
+        };
+      });
+    },
+    async getFacDatas() {
+      let factorys = await ajax.post(urls.basic.getFactory, {
+        obj: { pageIndex: 0 }
+      });
+      this.factorys = factorys.data.jsonData.map(k => {
+        return {
+          value: k.code,
+          label: k.name
+        };
+      });
+    },
+    showFactorySelect() {
+      this.hasFactorySelect = true;
+    },
+    hideFactorySelect() {
+      this.hasFactorySelect = false;
+    },
+    selectchange2(code) {
+      let scopeObj = this.factorys.find(k => {
+        return k.value == code;
+      });
+      this.setScopeName(scopeObj.label);
+    },
+    selectchange(value) {
+      if (value == "fac") {
+        this.showFactorySelect();
+        this.getFacDatas();
+      } else {
+        this.getCompanys();
+        this.showFactorySelect();
+      }
+    },
     handleSubmit() {
+      console.log("this.form.userCode:", this.form.userName);
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$emit("on-success-valid", {
-            userName: this.form.userName,
-            password: this.form.password
+            userCode: this.form.userName,
+            password: this.form.password,
+            scopeType: this.workAreaModel,
+            scopeCode: this.workAreaChoosed
           });
         }
       });

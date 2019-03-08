@@ -438,9 +438,21 @@ export default [
         component: () => import("@/view/basic/roleAuth.vue")
       },
       {
+        path: "roleEmpAuth",
+        name: "roleEmpAuth",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "添加人员"
+        },
+        component: () => import("@/view/basic/roleEmpAuth.vue")
+      },
+
+      {
         path: "markdown_page",
         name: "markdown_page",
         meta: {
+          hideInMenu: true,
           icon: "logo-markdown",
           title: "Markdown编辑器"
         },
@@ -450,6 +462,7 @@ export default [
         path: "editor_page",
         name: "editor_page",
         meta: {
+          hideInMenu: true,
           icon: "ios-create",
           title: "富文本编辑器"
         },
@@ -459,6 +472,7 @@ export default [
         path: "b",
         name: "b",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "生产工序"
         },
@@ -468,6 +482,7 @@ export default [
         path: "c",
         name: "c",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "功能菜单"
         },
@@ -477,6 +492,7 @@ export default [
         path: "d",
         name: "d",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "操作角色"
         },
@@ -486,6 +502,7 @@ export default [
         path: "e",
         name: "e",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "菜单授权"
         },
@@ -495,6 +512,7 @@ export default [
         path: "f",
         name: "f",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "堆场管理"
         },
@@ -504,6 +522,7 @@ export default [
         path: "g",
         name: "g",
         meta: {
+          hideInMenu: true,
           icon: "md-pause",
           title: "编码维护"
         },
@@ -525,6 +544,7 @@ export default [
     path: "/update",
     name: "update",
     meta: {
+      hideInMenu: true,
       icon: "md-cloud-upload",
       title: "市场营销"
     },
@@ -554,6 +574,7 @@ export default [
     path: "/excel",
     name: "excel",
     meta: {
+      hideInMenu: true,
       icon: "ios-stats",
       title: "项目配置"
     },
@@ -658,6 +679,7 @@ export default [
     path: "/multilevel",
     name: "multilevel",
     meta: {
+      hideInMenu: true,
       icon: "md-menu",
       title: "多级菜单"
     },

@@ -15,7 +15,6 @@
 import TableList from "@/components/table-list/table-list.vue";
 import { mapState } from "vuex";
 import urls from "@/urls.js";
-import ajax from "@/ajax.js";
 import mixin from "@/view/service-mixin.js";
 import "@/assets/styles/common-main.css";
 import routerPage from "@/view/router-page.js";

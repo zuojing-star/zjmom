@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <div style="padding-bottom:10px;">
-      <div style="display:inline-block;margin-right:20px;">角色菜单授权</div>
+      <div style="display:inline-block;margin-right:20px;">人员</div>
       <Button type="info" @click="addSubmit" style="margin-right:10px;" :disabled="addButtonUse">添加</Button>
       <Button
         type="info"
@@ -11,7 +11,6 @@
       >修改</Button>
       <Button type="info" @click="backRole">返回角色</Button>
     </div>
-
     <Table
       border
       ref="selection"
@@ -31,9 +30,6 @@ import "@/assets/styles/common-main.css";
 import mixin from "@/view/service-mixin.js";
 import PageTitle from "_c/page-title/page-title.vue";
 import viewData from "@/view/view-data.js";
-import menus from "@/menus.js";
-
-let localMenus = menus.concat();
 
 export default {
   //mixin
@@ -48,10 +44,12 @@ export default {
   //数据
   data() {
     return {
+      users: [],
       selectMenus: [],
       updateButtonUse: false,
       addButtonUse: false,
       hidePage: true,
+      operation: viewData.pagetitle.facEmployee,
       columns: [
         {
           type: "selection",
@@ -59,33 +57,49 @@ export default {
           align: "center"
         },
         {
-          title: "菜单名称",
-          key: "name"
+          title: "姓名",
+          key: "userName"
         },
         {
-          title: "父级",
-          key: "parent"
+          title: "账号",
+          key: "userCode"
         },
         {
-          title: "菜单码",
-          key: "code"
+          title: "电话",
+          key: "telephone"
+        },
+        {
+          title: "地址",
+          key: "address"
+        },
+        {
+          title: "邮箱",
+          key: "email"
+        },
+        {
+          title: "工厂编码",
+          key: "facCode"
+        },
+        {
+          title: "部门编码",
+          key: "deptCode"
         }
       ]
     };
   },
 
   //计算属性
-  computed: mapState(["roleArray", "factoryArray"]),
+  computed: mapState(["factoryArray", "roleArray", "departmentArray"]),
 
   //接口
   methods: {
     async updateSubmit() {
-      console.log("this.selectMenus:", this.selectMenus);
+      console.log("this.users:", this.users);
       let arr = [];
 
-      this.selectMenus.forEach(k => {
+      this.users.forEach(k => {
         if (k._checked) {
-          arr.push({ menuCode: k.code });
+          arr.push({ userCode: k.userCode });
         }
       });
 
@@ -96,7 +110,7 @@ export default {
         },
         list: arr
       };
-      let url = urls.roleAuth.updateAuth;
+      let url = urls.roleEmpAuth.updateEmpAuth;
 
       let result = await ajax.post(url, params);
 
@@ -111,44 +125,34 @@ export default {
         this.$Message.error("授权失败!");
       }
     },
-    setButtonShow(menuCode) {
-      if (menuCode.length == 0) {
-        this.addButtonUse = false;
-        this.updateButtonUse = true;
-      } else {
-        this.addButtonUse = true;
-        this.updateButtonUse = false;
-      }
-    },
-    async getSelectCode() {
-      return await ajax.post(urls.roleAuth.selectCode, {
-        obj: { roleCode: this.roleArray[0].code }
-      });
-    },
     selectChange(selection) {
-      this.selectMenus = selection.map(k => {
+      this.users = selection.map(k => {
         let tempK = k;
         tempK._checked = true;
         return tempK;
       });
+      console.log("selectChange2", this.users);
     },
     async addSubmit() {
-      if (this.selectMenus.length == 0) {
+      if (this.users.length == 0) {
         this.$Message.error("至少选择一个菜单!");
         return;
       }
+
       let params = {
         obj: {
           roleCode: this.roleArray[0].code,
           facCode: this.factoryArray[0].code
         },
-        list: this.selectMenus.map(k => {
-          return {
-            menuCode: k.code
-          };
+        list: this.users.map(k => {
+          if (k._checked) {
+            return {
+              userCode: k.userCode
+            };
+          }
         })
       };
-      let url = urls.roleAuth.addAuth;
+      let url = urls.roleEmpAuth.addEmpAuth;
       let result = await ajax.post(url, params);
 
       if (result.data.type == 1) {
@@ -161,47 +165,63 @@ export default {
         this.$Message.error("添加失败!");
       }
     },
-    backRole() {
-      this.$router.back(-1);
+    setButtonShow(codes) {
+      if (codes.length == 0) {
+        this.addButtonUse = false;
+        this.updateButtonUse = true;
+      } else {
+        this.addButtonUse = true;
+        this.updateButtonUse = false;
+      }
     },
-    showRoleMenus(selectCode) {
-      console.log(localMenus, selectCode);
-      localMenus.forEach(k => {
-        k._checked = false;
+    async getFacEmp() {
+      let result = await ajax.post(urls.factory.getPersonsOfFac, {
+        obj: {
+          pageIndex: 0,
+          facCode: this.factoryArray[0].code,
+          deptCode:
+            (this.departmentArray.length > 0 && this.departmentArray[0].code) ||
+            ""
+        }
       });
+      let users = result.data.jsonData;
+      let usersAuth = await this.findUsersAuth();
+      this.setButtonShow(usersAuth);
 
-      for (let i = 0; i < selectCode.length; i++) {
-        for (let ii = 0; ii < localMenus.length; ii++) {
-          if (localMenus[ii].code == selectCode[i]) {
-            localMenus[ii]._checked = true;
+      for (let i = 0; i < usersAuth.length; i++) {
+        for (let ii = 0; ii < users.length; ii++) {
+          if (users[ii].userCode == usersAuth[i]) {
+            users[ii]._checked = true;
             break;
           }
         }
       }
-      console.log("修改后的菜单：", localMenus);
+
+      console.log("已经授权的人员:", usersAuth);
+      console.log("总人员:", users);
+
+      this.data = users;
+      this.users = users;
+    },
+    delCallback() {
+      this.getFacEmp();
+    },
+    backRole() {
+      this.$router.back(-1);
+    },
+    async findUsersAuth() {
+      let result = await ajax.post(urls.roleEmpAuth.selectUserCode, {
+        obj: {
+          roleCode: this.roleArray[0].code,
+          facCode: this.factoryArray[0].code
+        }
+      });
+      return result.data.jsonData;
     }
   },
-
   //初始化
-  async mounted() {
-    let result = await this.getSelectCode();
-    let selectCode = result.data.jsonData;
-    this.setButtonShow(selectCode);
-
-    console.log(selectCode.length);
-    if (selectCode.length > 0) {
-      console.log("有菜单");
-
-      this.showRoleMenus(selectCode);
-      this.data = localMenus;
-      this.selectMenus = localMenus;
-    } else {
-      console.log("没有菜单。。。。", localMenus);
-      localMenus.forEach(k => {
-        k._checked = false;
-      });
-      this.data = localMenus;
-    }
+  mounted() {
+    this.getFacEmp();
   }
 };
 </script>

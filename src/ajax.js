@@ -5,6 +5,7 @@ const TIME_OUT_MS = 5000;
 
 const obj = {
   post(url, data) {
+    console.log("ajax", url, data);
     return axios({
       method: "post",
       url,

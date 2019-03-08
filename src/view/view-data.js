@@ -55,7 +55,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp"
       }
     ],
@@ -309,7 +309,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -326,7 +326,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -381,7 +381,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -405,15 +405,27 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
     ],
     //生产类型
     addProduceType: [
-      { text: "名称", value: "", type: "input", require: true },
-      { text: "备注", value: "", type: "input", require: false }
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "备注",
+        value: "",
+        type: "textarea",
+        requestField: "desp",
+        require: false
+      }
     ],
     //工艺
     addProduceCraft: [
@@ -427,7 +439,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -444,7 +456,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -476,7 +488,7 @@ export default {
       {
         text: "备注",
         value: "",
-        type: "input",
+        type: "textarea",
         requestField: "desp",
         require: false
       }
@@ -585,6 +597,11 @@ export default {
         require: false
       },
       {
+        text: "人员授权",
+        path: "/basic/employee",
+        require: true
+      },
+      {
         text: "返回工厂",
         path: "/basic/factory",
         require: false
@@ -649,7 +666,7 @@ export default {
       {
         text: "新增区位",
         path: "/basic/addZoneBit",
-        require: true
+        require: false
       },
       {
         text: "货架管理",
@@ -698,8 +715,8 @@ export default {
       },
       {
         text: "添加人员",
-        path: "/basic/addRole",
-        require: false
+        path: "/basic/roleEmpAuth",
+        require: true
       },
       {
         text: "返回工厂",
@@ -733,91 +750,5 @@ export default {
         require: true
       }
     ]
-  },
-  tableColumns: [
-    {
-      type: "selection",
-      width: 60,
-      align: "center"
-    },
-    {
-      title: "名称",
-      key: "name"
-    },
-    {
-      title: "公司地址",
-      key: "address"
-    },
-    {
-      title: "代码",
-      key: "code"
-    },
-    {
-      title: "联系人",
-      key: "responsible"
-    },
-    {
-      title: "联系方式",
-      key: "telephone"
-    },
-    {
-      title: "操作",
-      key: "action",
-      width: 150,
-      align: "center",
-      render: (h, params) => {
-        return h("div", [
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$Modal.confirm({
-                    title: "确定删除么？",
-                    content: "<p></p>",
-                    onOk: () => {},
-                    onCancel: () => {}
-                  });
-                }
-              }
-            },
-            "修改"
-          ),
-          h(
-            "Button",
-            {
-              props: {
-                type: "error",
-                size: "small"
-              },
-              on: {
-                click: () => {
-                  this.$Modal.confirm({
-                    title: "确定删除么？",
-                    content: "<p></p>",
-                    onOk: () => {
-                      this.delData(
-                        urls.company.delPccompnay,
-                        params.row.code,
-                        this.delCallback
-                      );
-                    },
-                    onCancel: () => {}
-                  });
-                }
-              }
-            },
-            "删除"
-          )
-        ]);
-      }
-    }
-  ]
+  }
 };

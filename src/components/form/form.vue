@@ -9,6 +9,12 @@
           <span v-if="column.require" class="require-column">{{txt1}}</span>
         </div>
 
+        <div class="form-line" v-if="column.type=='textarea' && !column.isHide" :key="index">
+          <label>{{ column.text }}:</label>
+          <Input class="add-input" v-model="column.value" type="textarea"/>
+          <span v-if="column.require" class="require-column">{{txt1}}</span>
+        </div>
+
         <div class="form-line" :key="index" v-if="column.type=='select' && !column.isHide">
           <label>{{ column.text }}:</label>
           <Select class="add-select" v-model="column.value">

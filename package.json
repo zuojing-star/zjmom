@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "clipboard": "^2.0.0",
     "codemirror": "^5.38.0",
     "countup": "^1.8.2",
@@ -26,6 +27,7 @@
     "qs": "^6.6.0",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
+    "supervisor": "^0.12.0",
     "tree-table-vue": "^1.1.0",
     "v-org-tree": "^1.0.6",
     "vue": "^2.5.10",

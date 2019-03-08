@@ -1,18 +1,22 @@
 const host = "http://192.168.18.110:9001";
 const zhaojunhaoHost = "http://192.168.18.103:9001";
+const zjhost = "http://localhost:3000";
 
 let env = host;
 
 export default {
   //登录
   basic: {
-    login: `${env}/basic/PcUser/Login`
+    login: `${env}/basic/Login/momLogin`,
+    login222: `${env}/basic/Login/getFacsForLogin`,
+    getFactory: `${env}/basic/Login/getFacsForLogin`,
+    getCompany: `${env}/basic/Login/getCompsForLogin`
   },
+
   //公司
   company: {
-    // getPccompany: `${env}/basic/PcCompany/getPcCompany`,
     getPccompany: `${env}/basic/PcCompany/getPcCompany`,
-    delPccompnay: `${env}/basic/PcCompany/delPcCompanyByCode`, // code=0000002
+    delPccompnay: `${env}/basic/PcCompany/delPcCompanyByCode`,
     addPcCompany: `${env}/basic/PcCompany/addPcCompany`
   },
   //部门
@@ -20,23 +24,23 @@ export default {
     getPcDepartment: `${env}/basic/PcDepartment/getPcDepartment`,
     delPcDepartment: `${env}/basic/PcDepartment/delPcDepartmentByCode`,
     addPcDepartment: `${env}/basic/PcDepartment/addPcDepartment`,
-    getPcDepartmentListByName: `${env}/basic/PcDepartment/getPcDepartmentListByName` //{obj:{pageIndex:1,companyCode:""}}  公司查部门
+    getPcDepartmentListByName: `${env}/basic/PcDepartment/getPcDepartmentListByName`
   },
   //员工
   employee: {
-    getPcEmployee: `${env}/basic/PcPerson/selectPerByDept`, // 部门下的员工 dept='部门1'  dept=name
-    delPcPerson: `${env}/basic/PcUser/delPcUserByUserCode`, //删除员工
+    getPcEmployee: `${env}/basic/PcPerson/selectPerByDept`,
+    delPcPerson: `${env}/basic/PcUser/delPcUserByUserCode`,
     addPcPerson: `${env}/basic/PcUser/addPcUser`,
-    getPcPersonListByUserNameC: `${env}/basic/PcUser/getPcUserListByUserNameC`, //
-    getPcPersonListByUserNameD: `${env}/basic/PcUser/getPcUserListByUserNameD` //部门 查
+    getPcPersonListByUserNameC: `${env}/basic/PcUser/getPcUserListByUserNameC`,
+    getPcPersonListByUserNameD: `${env}/basic/PcUser/getPcUserListByUserNameD`
   },
   //工厂
   factory: {
     getFacDatas: `${env}/basic/PcFactory/getFacDatas`,
-    addFactory: `${env}/basic/PcFactory/save`,
+    addFactory: `${env}/basic/PcFactory/createFacInfo`,
     delFactory: `${env}/basic/PcFactory/deleteObj`,
-    addFacDept: `${env}/basic/PcFactory/saveDep`,
-    addFacEmp: `${env}/basic/PcFactory/saveUser`,
+    addFacDept: `${env}/basic/PcFactory/createDeptInfoOfFac`,
+    addFacEmp: `${env}/basic/PcFactory/createPersonInfoOfFac`,
     getDeptsOfFac: `${env}/basic/PcFactory/getDeptsOfFac`,
     getPersonsOfFac: `${env}/basic/PcFactory/getPersonsOfFac`
   },
@@ -44,41 +48,49 @@ export default {
   productLine: {
     getProductLine: `${env}/basic/PcFacline/getLineDatas`,
     delProductLine: `${env}/basic/PcFacline/deleteObj`,
-    addProductLine: `${env}/basic/PcFacline/save`
+    addProductLine: `${env}/basic/PcFacline/createLineInfo`
   },
   //模台
   mouldDesk: {
     getMouldDesk: `${env}/basic/PcFacflat/getFlatDatas`,
     delMouldDesk: `${env}/basic/PcFacflat/deleteObj`,
-    addMouldDesk: `${env}/basic/PcFacflat/save`
+    addMouldDesk: `${env}/basic/PcFacflat/createFlatInfo`
   },
   //堆场
   storageYard: {
     getStorageYard: `${env}/basic/PcYarddata/getYardDatas`,
     delStorageYard: `${env}/basic/PcYarddata/deleteObj`,
-    addStorageYard: `${env}/basic/PcYarddata/save`
+    addStorageYard: `${env}/basic/PcYarddata/createYardInfo`
   },
   //区位
   zoneBit: {
     getZoneBit: `${env}/basic/PcAreadata/getAreaDatas`,
     delZoneBit: `${env}/basic/PcAreadata/deleteObj`,
-    addZoneBit: `${env}/basic/PcAreadata/save`
+    addZoneBit: `${env}/basic/PcAreadata/createAreaInfo`
   },
   //货架
   storageRack: {
     getStorageRack: `${env}/basic/PcFramedata/getFrameDatas`,
     delStorageRack: `${env}/basic/PcFramedata/deleteObj`,
-    addStorageRack: `${env}/basic/PcFramedata/save`
+    addStorageRack: `${env}/basic/PcFramedata/createFrameInfo`
   },
   //角色
   role: {
-    getRole: `${env}/basic/PcRole/getRoleDatas`,
-    delRole: `${env}`,
+    getRole: `${env}/basic/PcRole/getRolesByFac`,
+    delRole: `${env}/basic/PcRole/deleteObj`,
     addRole: `${env}/basic/PcRole/createRoleInfo`
   },
-  //角色授权
+  //角色菜单授权
   roleAuth: {
-    addAuth: `${env}/basic/PcRolemenu/createMenuKey`
+    addAuth: `${env}/basic/PcRolemenu/createMenuKey`,
+    selectCode: `${env}/basic/PcRolemenu/getKeyMenus`, //查询
+    updateAuth: `${env}/basic/PcRolemenu/updateRoleUsers`
+  },
+  //角色人员授权
+  roleEmpAuth: {
+    addEmpAuth: `${env}/basic/PcRoleuser/createRoleUsers`,
+    updateEmpAuth: `${env}/basic/PcRoleuser/updateRoleUsers`,
+    selectUserCode: `${env}/basic/PcRoleuser/getUsersOfRCode`
   },
   //工序
   produceProcess: {
@@ -93,5 +105,11 @@ export default {
     getProduceCraftByCode: `${env}/basic/PcProcess/getPcProcessByCode`,
     addProduceCraft: `${env}/basic/PcProcess/addPcProcess`,
     delProduceCraftByCodes: `${env}/basic/PcProcess/delPcProcessByCodes`
+  },
+  //类型
+  produceType: {
+    getProduceType: `${env}/basic/PcSctype/getPcSctypeList`,
+    addProduceType: `${env}/basic/PcSctype/addPcSctype`,
+    delAllProduceType: `${env}/basic/PcSctype/delPcSctypeByCodes`
   }
 };

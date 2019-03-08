@@ -8,10 +8,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user_: "",
-    canAddCompany: false,
-    choosedCompany: null, // 选择的公司
+    user_: "", //用户
+    menus: [], //授权菜单
 
+    loginScopeName: "", //login scope
     tempCode: "", //
     companyArray: [],
     departmentArray: [],
@@ -20,14 +20,18 @@ export default new Vuex.Store({
     produceLineArray: [], //产线
     storageYardArray: [], //堆场
     zoneBitArray: [], //区位
-    roleArray: [] //角色
+    roleArray: [], //角色
+    produceProcessArray: [] //工序
   },
   mutations: {
+    setScopeName(state, name) {
+      state.loginScopeName = name;
+    },
+    setMenus(state, menus) {
+      state.menus = menus;
+    },
     setUser(state, user) {
       state.user_ = user;
-    },
-    chooseOneCompany(state) {
-      state.canAddCompany = true;
     },
     clearState(state, flag) {
       switch (flag) {
@@ -39,7 +43,6 @@ export default new Vuex.Store({
     updateArrayState(state, array) {
       console.log("add state", array);
       if (array.length == 0) {
-        // this.commit("clearAllArray");
         switch (state.tempCode) {
           case "GS":
             state.companyArray = [];
@@ -66,6 +69,10 @@ export default new Vuex.Store({
             break;
           case "JS":
             state.roleArray = [];
+            state.tempCode = "";
+            break;
+          case "GX":
+            state.produceProcessArray = [];
             state.tempCode = "";
             break;
         }
@@ -105,21 +112,16 @@ export default new Vuex.Store({
             state.roleArray = array;
             state.tempCode = code;
             break;
+          case "GX":
+            state.produceProcessArray = array;
+            state.tempCode = code;
+            break;
         }
       }
 
       function getParentType(sParentCode) {
         return sParentCode.split("-")[0];
       }
-    },
-    choosedCompany(state, company) {
-      state.choosedCompany = company;
-    },
-    clearAllArray(state) {
-      state.departmentArray = [];
-      state.companyArray = [];
-      state.factoryArray = [];
-      state.produceLineArray = [];
     }
   },
   actions: {

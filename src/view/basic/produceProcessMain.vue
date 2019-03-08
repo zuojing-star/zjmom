@@ -1,6 +1,10 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
-    <PageTitle pagetitle="工序信息" :operation="operation" @jumpTo="jumpTo($event,factoryArray,'工序')"/>
+    <PageTitle
+      pagetitle="工序信息"
+      :operation="operation"
+      @jumpTo="jumpTo($event,produceProcessArray,'工序')"
+    />
     <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
 </template>
@@ -129,7 +133,7 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["factoryArray"]),
+  computed: mapState(["factoryArray", "produceProcessArray"]),
 
   //接口
   methods: {
@@ -139,7 +143,8 @@ export default {
         { obj: { pageIndex: this.page, facCode: this.factoryArray[0].code } },
         this.factoryArray,
         this.page,
-        true
+        true,
+        this.produceProcessArray
       );
     },
     delCallback() {

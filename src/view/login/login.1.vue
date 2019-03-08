@@ -7,8 +7,9 @@
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
-          <login-form @on-success-valid="handleSubmit"></login-form>
+          <!-- <login-form @on-success-valid="handleSubmit"></login-form> -->
           <!-- <p class="login-tip">输入任意用户名和密码即可</p> -->
+          <div @click="handleSubmit">ddddddddddddd</div>
         </div>
       </Card>
     </div>
@@ -34,11 +35,12 @@
 </template>
 
 <script>
-import LoginForm from "_c/login-form";
+// import LoginForm from "_c/login-form";
 import { mapActions, mapState, mapMutations } from "vuex";
 import urls from "@/urls.js";
-import ajax from "@/ajax.js";
-// import axios from "axios";
+// import ajax from "@/ajax.js";
+import axios from "axios";
+import $ from "jquery";
 
 export default {
   data() {
@@ -48,7 +50,7 @@ export default {
     };
   },
   components: {
-    LoginForm
+    // LoginForm
   },
   methods: {
     // async gotoLogin() {
@@ -67,68 +69,84 @@ export default {
     //     }
     //   }
     // }
-    ...mapMutations(["setUser", "setToken", "setMenus", "setScopeName"]),
+    ...mapMutations(["setUser", "setToken"]),
     ...mapActions(["handleLogin", "getUserInfo"]),
-    async handleSubmit({ userCode, password, scopeType, scopeCode }) {
+    validForm({ userCode, password, scopeType, scopeCode }) {
       if (!userCode) {
-        this.$Message.error("用户名必须填写!");
-        return;
       }
-      if (!password) {
-        this.$Message.error("密码必须填写!");
-        return;
-      }
-      if (!scopeType && userCode != "admin") {
-        this.$Message.error("工作区域必须填写!");
-        return;
-      }
-      if (!scopeCode && userCode != "admin") {
-        this.$Message.error("所属必须填写!");
-        return;
-      }
+    },
+
+    async handleSubmit({ userCode, password, scopeType, scopeCode }) {
+      // if (!userCode) {
+      //   this.$Message.error("用户名必须填写!");
+      //   return;
+      // }
+      // if (!password) {
+      //   this.$Message.error("密码必须填写!");
+      //   return;
+      // }
+      // if (!scopeType) {
+      //   this.$Message.error("工作区域必须填写!");
+      //   return;
+      // }
+      // if (!scopeCode) {
+      //   this.$Message.error("所属必须填写!");
+      //   return;
+      // }
 
       let url = urls.basic.login;
-      let params = {};
+      let params = {
+        obj: {
+          userCode,
+          password,
+          scopeType,
+          scopeCode
+        }
+      };
+      console.log("login url....", url);
 
-      if (userCode == "admin") {
-        params = {
-          obj: {
-            userCode,
-            password,
-            scopeType: "pcmomadmin",
-            scopeCode: "pcmomadmin"
-          }
-        };
-        this.setScopeName("pcmomadmin");
-      } else {
-        params = {
-          obj: {
-            userCode,
-            password,
-            scopeType,
-            scopeCode
-          }
-        };
-      }
+      $.ajax({
+        type: "POST",
+        url,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(params),
+        success: function(message) {
+          console.log(message);
+        },
+        error: function(message) {
+          $("#request-process-patent").html("提交数据失败！");
+        }
+      });
 
-      let result = await ajax.post(url, params);
+      // console.log("login start....", url);
+      // let result = await axios({
+      //   method: "post",
+      //   url,
+      //   data: {
+      //     obj: {
+      //       userCode: "111",
+      //       pageIndex: 0,
+      //       password: "admin",
+      //       token: "admin"
+      //     }
+      //   },
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   }
+      // });
 
-      if (result.data.type == 1) {
-        let user = result.data.jsonData.user;
-        let menus = result.data.jsonData.menus;
+      // let result = await ajax.post(url, params);
 
-        console.log("user:", user);
-        console.log("menus:", menus);
+      //console.log("login start333....", result);
 
-        this.setUser(user);
-        this.setMenus(menus);
-        this.setToken("super_admin");
-        this.$router.push({ name: this.$config.homeName });
-      } else if (result.data.type == 3) {
-        this.$Message.error("用户不存在或用户未授权!");
-      } else {
-        this.$Message.error("服务器出错!");
-      }
+      // if (result.data.type == 1) {
+      //   let user = result.data.jsonData;
+      //   this.setUser(user);
+      //   this.setToken("super_admin");
+      //   this.$router.push({ name: this.$config.homeName });
+      // } else {
+      //   this.$Message.info(result.data.jsonData);
+      // }
 
       // this.handleLogin({ userName, password }).then(res => {
       //   this.getUserInfo().then(res => {

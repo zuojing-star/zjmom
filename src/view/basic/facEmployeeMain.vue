@@ -147,8 +147,12 @@ export default {
         {
           obj: {
             pageIndex: this.page,
-            facCode: this.factoryArray[0].code,
-            deptCode: this.departmentArray[0].code || ""
+            facCode:
+              (this.factoryArray.length > 0 && this.factoryArray[0].code) || "",
+            deptCode:
+              (this.departmentArray.length > 0 &&
+                this.departmentArray[0].code) ||
+              ""
           }
         },
         this.factoryArray,

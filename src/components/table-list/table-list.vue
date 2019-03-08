@@ -43,7 +43,7 @@ export default {
         this.Pccompany = jsondata.data.data;
       }
     },
-    ...mapMutations(["chooseOneCompany", "updateArrayState"]),
+    ...mapMutations(["updateArrayState"]),
     selectChange(selection) {
       this.updateArrayState(selection);
     },
@@ -51,8 +51,6 @@ export default {
       // console.log("选中的一行", row);
       // console.log("选中的数组", selection);
       // console.log("selectOne", this.$refs.selection);
-      // this.chooseOneCompany();
-      // this.$store.commit("chooseOneCompany");
     }
   }
 };

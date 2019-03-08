@@ -114,7 +114,11 @@ export default {
                         title: "确定删除么？",
                         content: "<p></p>",
                         onOk: () => {
-                          this.delPccompany(params.row.code);
+                          this.delData(
+                            urls.role.delRole,
+                            params.row.code,
+                            this.delCallback
+                          );
                         },
                         onCancel: () => {}
                       });

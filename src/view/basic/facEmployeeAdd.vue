@@ -34,15 +34,19 @@ export default {
         [
           {
             text: "部门代码",
-            value: this.departmentArray[0].code,
+            value:
+              (this.departmentArray.length > 0 &&
+                this.departmentArray[0].code) ||
+              "",
             type: "input",
             requestField: "deptCode",
-            require: true,
+            require: false,
             isHide: true
           },
           {
             text: "工厂代码",
-            value: this.factoryArray[0].code,
+            value:
+              (this.factoryArray.length > 0 && this.factoryArray[0].code) || "",
             type: "input",
             requestField: "facCode",
             require: true,
@@ -51,9 +55,11 @@ export default {
         ],
         viewData.add.addEmployee
       );
+      console.log("data", this.data);
     }
   },
   mounted() {
+    console.log(" this.factoryArray[0].code::", this.factoryArray[0].code);
     this._extendViewData();
   }
 };
