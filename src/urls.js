@@ -95,7 +95,7 @@ export default {
   // 物料
   supplies: {
     addSupplies: `${env}/basic/PcMaterial/createWLInfo`,
-    getSupplies: `${env}/basic/PcMaterial/getMaterialDatas`,
+    getSupplies: `${env}/basic/PcMaterial/getMaterials`,
     delSupplies: `${env}/basic/PcMaterial/deleteObj`
   },
   //工序
