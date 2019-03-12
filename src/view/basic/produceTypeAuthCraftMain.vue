@@ -1,7 +1,7 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <div style="padding-bottom:10px;">
-      <div style="display:inline-block;margin-right:20px;">人员</div>
+      <div style="display:inline-block;margin-right:20px;">类型工艺授权</div>
       <Button type="info" @click="addSubmit" style="margin-right:10px;" :disabled="addButtonUse">添加</Button>
       <Button
         type="info"
@@ -9,13 +9,15 @@
         style="margin-right:10px;"
         :disabled="updateButtonUse"
       >修改</Button>
-      <Button type="info" @click="backRole">返回角色</Button>
+      <Button type="info" @click="backRole">返回工序</Button>
     </div>
+
     <Table
       border
       ref="selection"
       :columns="columns"
       :data="data"
+      :hidePage="hidePage"
       @on-selection-change="selectChange"
     ></Table>
   </div>
@@ -44,12 +46,13 @@ export default {
   //数据
   data() {
     return {
+      hidePage: true,
       users: [],
-      selectMenus: [],
       updateButtonUse: false,
       addButtonUse: false,
-      hidePage: true,
-      operation: viewData.pagetitle.facEmployee,
+      page: 1,
+      totalPage: 0,
+      operation: viewData.pagetitle.employee,
       columns: [
         {
           type: "selection",
@@ -57,60 +60,53 @@ export default {
           align: "center"
         },
         {
-          title: "姓名",
-          key: "userName"
+          title: "名称",
+          key: "name"
         },
         {
-          title: "账号",
-          key: "userCode"
+          title: "代码",
+          key: "code"
         },
         {
-          title: "电话",
-          key: "telephone"
-        },
-        {
-          title: "地址",
-          key: "address"
-        },
-        {
-          title: "邮箱",
-          key: "email"
-        },
-        {
-          title: "工厂编码",
-          key: "facCode"
-        },
-        {
-          title: "部门编码",
-          key: "deptCode"
+          title: "描述",
+          key: "desp"
         }
       ]
     };
   },
 
   //计算属性
-  computed: mapState(["factoryArray", "roleArray", "departmentArray"]),
+  computed: mapState([
+    "companyArray",
+    "departmentArray",
+    "factoryArray",
+    "produceTypeArray",
+    "produceCraftArray"
+  ]),
 
   //接口
   methods: {
+    backRole() {
+      this.$router.back(-1);
+    },
     async updateSubmit() {
-      console.log("this.users:", this.users);
       let arr = [];
+
+      console.log("this.users:", this.users);
 
       this.users.forEach(k => {
         if (k._checked) {
-          arr.push({ userCode: k.userCode });
+          arr.push({ gyCode: k.code });
         }
       });
-
       let params = {
         obj: {
-          roleCode: this.roleArray[0].code,
+          typeCode: this.produceTypeArray[0].code,
           facCode: this.factoryArray[0].code
         },
         list: arr
       };
-      let url = urls.roleEmpAuth.updateEmpAuth;
+      let url = urls.produceType.updateSCTypeAndGYs;
 
       let result = await ajax.post(url, params);
 
@@ -131,28 +127,26 @@ export default {
         tempK._checked = true;
         return tempK;
       });
-      console.log("selectChange2", this.users);
     },
     async addSubmit() {
       if (this.users.length == 0) {
-        this.$Message.error("至少选择一个菜单!");
+        this.$Message.error("至少选择一个人员!");
         return;
       }
 
       let params = {
         obj: {
-          roleCode: this.roleArray[0].code,
+          typeCode: this.produceTypeArray[0].code,
           facCode: this.factoryArray[0].code
         },
         list: this.users.map(k => {
-          if (k._checked) {
-            return {
-              userCode: k.userCode
-            };
-          }
+          k.gyCode = k.code;
+          return k;
         })
       };
-      let url = urls.roleEmpAuth.addEmpAuth;
+      console.log("params", params);
+
+      let url = urls.produceType.createSCTypeAndGYs;
       let result = await ajax.post(url, params);
 
       if (result.data.type == 1) {
@@ -165,6 +159,22 @@ export default {
         this.$Message.error("添加失败!");
       }
     },
+    async findUsersAuth() {
+      let url = urls.produceType.getGYsOfSCType;
+      let params = {
+        obj: {
+          typeCode: this.produceTypeArray[0].code,
+          facCode: this.factoryArray[0].code
+        }
+      };
+
+      console.log("url:", url);
+      console.log("params:", params);
+
+      let result = await ajax.post(url, params);
+
+      return result.data.jsonData;
+    },
     setButtonShow(codes) {
       if (codes.length == 0) {
         this.addButtonUse = false;
@@ -174,23 +184,22 @@ export default {
         this.updateButtonUse = false;
       }
     },
-    async getFacEmp() {
-      let result = await ajax.post(urls.factory.getPersonsOfFac, {
-        obj: {
-          pageIndex: 0,
-          facCode: this.factoryArray[0].code,
-          deptCode:
-            (this.departmentArray.length > 0 && this.departmentArray[0].code) ||
-            ""
-        }
-      });
+    async getEmployee() {
+      let url = urls.produceType.getAllGYDatas;
+      let params = {
+        obj: { pageIndex: 0, facCode: this.factoryArray[0].code }
+      };
+
+      let result = await ajax.post(url, params);
+
       let users = result.data.jsonData;
       let usersAuth = await this.findUsersAuth();
+
       this.setButtonShow(usersAuth);
 
       for (let i = 0; i < usersAuth.length; i++) {
         for (let ii = 0; ii < users.length; ii++) {
-          if (users[ii].userCode == usersAuth[i].userCode) {
+          if (users[ii].code == usersAuth[i].gyCode) {
             users[ii]._checked = true;
             break;
           }
@@ -204,24 +213,17 @@ export default {
       this.users = users;
     },
     delCallback() {
-      this.getFacEmp();
+      // this.getEmployee();
     },
-    backRole() {
-      this.$router.back(-1);
-    },
-    async findUsersAuth() {
-      let result = await ajax.post(urls.roleEmpAuth.selectUserCode, {
-        obj: {
-          roleCode: this.roleArray[0].code,
-          facCode: this.factoryArray[0].code
-        }
-      });
-      return result.data.jsonData;
+    //分页
+    pageChange() {
+      // this.getEmployee();
     }
   },
   //初始化
   mounted() {
-    this.getFacEmp();
+    // console.log("gx:", this.produceProcessArray);
+    this.getEmployee();
   }
 };
 </script>

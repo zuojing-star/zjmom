@@ -1,9 +1,9 @@
 <template>
   <div class="main-company-wrap ivu-card ivu-card-bordered ivu-card-body">
     <PageTitle
-      pagetitle="工艺信息"
+      pagetitle="物料码库"
       :operation="operation"
-      @jumpTo="jumpTo($event,produceCraftArray,'工艺')"
+      @jumpTo="jumpTo($event,produceLineArray,'物料')"
     />
     <TableList :columns="columns" :data="data" :totalPage="totalPage" @pageChange="pageChange"/>
   </div>
@@ -22,7 +22,7 @@ import viewData from "@/view/view-data.js";
 export default {
   //初始化
   mounted() {
-    this.getProduceCraft();
+    this.getSupplies();
   },
 
   //mixin
@@ -33,11 +33,10 @@ export default {
     TableList,
     PageTitle
   },
-
   //数据
   data() {
     return {
-      operation: viewData.pagetitle.produceCraft,
+      operation: viewData.pagetitle.supplies,
       columns: [
         {
           type: "selection",
@@ -50,19 +49,27 @@ export default {
         },
         {
           title: "代码",
-          key: "code"
+          key: "cusCode"
         },
         {
-          title: "工厂名称",
-          key: "facName"
+          title: "类别",
+          key: "typeName"
         },
         {
-          title: "工厂编码",
-          key: "facCode"
+          title: "规格",
+          key: "mSpec"
         },
         {
-          title: "描述",
-          key: "desp"
+          title: "经验参数",
+          key: "mArg"
+        },
+        {
+          title: "计量单位",
+          key: "mUOM"
+        },
+        {
+          title: "统计单位",
+          key: "totalUOM"
         },
         {
           title: "操作",
@@ -88,9 +95,7 @@ export default {
                       this.$Modal.confirm({
                         title: "确定删除么？",
                         content: "<p></p>",
-                        onOk: () => {
-                          this.delPccompany(params.row.code);
-                        },
+                        onOk: () => {},
                         onCancel: () => {}
                       });
                     }
@@ -108,20 +113,11 @@ export default {
 
                   on: {
                     click: () => {
-                      console.log(params);
-
-                      this.$Modal.confirm({
-                        title: "确定删除么？",
-                        content: "<p></p>",
-                        onOk: () => {
-                          this.delData(
-                            urls.produceCraft.delProduceCraftByCodes,
-                            params.row.code,
-                            this.delCallback
-                          );
-                        },
-                        onCancel: () => {}
-                      });
+                      this.delData(
+                        urls.supplies.delSupplies,
+                        params.row.code,
+                        this.delCallback
+                      );
                     }
                   }
                 },
@@ -135,26 +131,33 @@ export default {
   },
 
   //计算属性
-  computed: mapState(["factoryArray", "produceCraftArray"]),
+  computed: mapState(["factoryArray", "produceLineArray"]),
 
   //接口
   methods: {
-    getProduceCraft() {
+    delCallback() {
+      this.getSupplies();
+    },
+
+    getSupplies() {
       this.getData(
-        urls.produceCraft.getProduceCraft,
-        { obj: { pageIndex: this.page, facCode: this.factoryArray[0].code } },
+        urls.supplies.getSupplies,
+        {
+          obj: {
+            pageIndex: this.page,
+            facCode: this.factoryArray && this.factoryArray[0].code
+          }
+        },
         this.factoryArray,
-        this.page,
-        true,
-        this.produceCraftArray
+        this.page
       );
     },
-    delCallback() {
-      this.getProduceCraft();
-    },
+
     //分页
-    pageChange() {
-      this.getProduceCraft();
+    pageChange(page) {
+      console.log("page:", page);
+      this.page = page;
+      this.getSupplies();
     }
   }
 };

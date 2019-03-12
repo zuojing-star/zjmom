@@ -122,7 +122,10 @@ export default {
     },
     async getSelectCode() {
       return await ajax.post(urls.roleAuth.selectCode, {
-        obj: { roleCode: this.roleArray[0].code }
+        obj: {
+          roleCode: this.roleArray[0].code,
+          facCode: this.factoryArray[0].code
+        }
       });
     },
     selectChange(selection) {
@@ -165,14 +168,14 @@ export default {
       this.$router.back(-1);
     },
     showRoleMenus(selectCode) {
-      console.log(localMenus, selectCode);
+      console.log("111111", localMenus, selectCode);
       localMenus.forEach(k => {
         k._checked = false;
       });
 
       for (let i = 0; i < selectCode.length; i++) {
         for (let ii = 0; ii < localMenus.length; ii++) {
-          if (localMenus[ii].code == selectCode[i]) {
+          if (localMenus[ii].code == selectCode[i].menuCode) {
             localMenus[ii]._checked = true;
             break;
           }

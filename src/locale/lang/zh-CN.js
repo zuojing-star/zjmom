@@ -2,7 +2,7 @@ export default {
   home: "首页",
   basic: "配置管理", /// //////////////////
   // components: "配置管理", /// /////////
-  factory: "工厂维护",
+  factory: "工厂管理",
   storageYard: "堆场管理",
   company: "公司管理",
   split_pane_page: "类型维护",

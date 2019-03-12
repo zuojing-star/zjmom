@@ -383,7 +383,7 @@ export default [
         name: "factory",
         meta: {
           icon: "md-trending-up",
-          title: "工厂维护"
+          title: "工厂管理"
         },
         component: () => import("@/view/basic/factoryMain.vue")
       },
@@ -447,7 +447,56 @@ export default [
         },
         component: () => import("@/view/basic/roleEmpAuth.vue")
       },
-
+      {
+        path: "supplies",
+        name: "supplies",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "物料码库"
+        },
+        component: () => import("@/view/basic/suppliesMain.vue")
+      },
+      {
+        path: "addSupplies",
+        name: "addSupplies",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "新增物料"
+        },
+        component: () => import("@/view/basic/suppliesAdd.vue")
+      },
+      {
+        path: "produceProcessEmp",
+        name: "produceProcessEmp",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工序人员授权"
+        },
+        component: () => import("@/view/basic/produceProcesspEmpMain.vue")
+      },
+      {
+        path: "produceCraftEmp",
+        name: "produceCraftEmp",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工艺人员授权"
+        },
+        component: () => import("@/view/basic/produceCraftEmpMain.vue")
+      },
+      {
+        path: "produceTypeAuthCraft",
+        name: "produceTypeAuthCraft",
+        meta: {
+          hideInMenu: true,
+          icon: "md-trending-up",
+          title: "工艺人员授权"
+        },
+        component: () => import("@/view/basic/produceTypeAuthCraftMain.vue")
+      },
       {
         path: "markdown_page",
         name: "markdown_page",

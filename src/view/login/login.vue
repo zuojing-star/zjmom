@@ -78,7 +78,7 @@ export default {
         this.$Message.error("密码必须填写!");
         return;
       }
-      if (!scopeType && userCode != "admin") {
+      if (!scopeType || scopeType == "") {
         this.$Message.error("工作区域必须填写!");
         return;
       }
@@ -88,28 +88,14 @@ export default {
       }
 
       let url = urls.basic.login;
-      let params = {};
-
-      if (userCode == "admin") {
-        params = {
-          obj: {
-            userCode,
-            password,
-            scopeType: "pcmomadmin",
-            scopeCode: "pcmomadmin"
-          }
-        };
-        this.setScopeName("pcmomadmin");
-      } else {
-        params = {
-          obj: {
-            userCode,
-            password,
-            scopeType,
-            scopeCode
-          }
-        };
-      }
+      let params = {
+        obj: {
+          userCode,
+          password,
+          scopeType,
+          scopeCode
+        }
+      };
 
       let result = await ajax.post(url, params);
 
@@ -185,7 +171,7 @@ body {
   font-size: 18px;
 }
 .login-con {
-  top: 66%;
+  top: 55%;
   height: 455px;
 }
 </style>

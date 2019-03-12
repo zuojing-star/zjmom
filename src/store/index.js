@@ -21,7 +21,9 @@ export default new Vuex.Store({
     storageYardArray: [], //堆场
     zoneBitArray: [], //区位
     roleArray: [], //角色
-    produceProcessArray: [] //工序
+    produceProcessArray: [], //工序
+    produceCraftArray: [], //工艺
+    produceTypeArray: [] //类型
   },
   mutations: {
     setScopeName(state, name) {
@@ -75,14 +77,24 @@ export default new Vuex.Store({
             state.produceProcessArray = [];
             state.tempCode = "";
             break;
+          case "GY":
+            state.produceCraftArray = [];
+            state.tempCode = "";
+            break;
+          case "SCT":
+            state.produceTypeArray = [];
+            state.tempCode = "";
+            break;
         }
       } else {
-        if (!array[0].code) {
+        if (!array[0].code && !array[0].userCode) {
           state.tempCode = "";
           return;
         }
 
-        let code = getParentType(array[0].code);
+        let _code = array[0].code || array[0].userCode;
+
+        let code = getParentType(_code);
         switch (code) {
           case "GS":
             state.companyArray = array;
@@ -114,6 +126,14 @@ export default new Vuex.Store({
             break;
           case "GX":
             state.produceProcessArray = array;
+            state.tempCode = code;
+            break;
+          case "GY":
+            state.produceCraftArray = array;
+            state.tempCode = code;
+            break;
+          case "SCT":
+            state.produceTypeArray = array;
             state.tempCode = code;
             break;
         }

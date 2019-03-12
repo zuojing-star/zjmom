@@ -68,6 +68,8 @@ export default {
               this.$router.back(-1);
             }
           });
+        } else if (result.data.type == 3) {
+          this.$Message.error("编码重复!");
         } else {
           this.$Message.info("添加失败");
         }
@@ -249,7 +251,7 @@ export default {
       let oFiled = viewData.find(o => {
         return o.requestField == whichFieldFromRequestfiled;
       });
-      console.log("oFiled", oFiled);
+
       let produceLines = filldata.map(k => {
         return {
           value: k.code,

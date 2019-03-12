@@ -1,12 +1,7 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
     <FormItem prop="userName" style="width:100%;">
-      <Input
-        v-model="form.userName"
-        @on-blur="usernameBlur"
-        placeholder="请输入用户名"
-        style="width:100% !important;"
-      >
+      <Input v-model="form.userName" placeholder="请输入用户名" style="width:100% !important;">
         <span slot="prepend">
           <Icon :size="16" type="ios-person"></Icon>
         </span>
@@ -25,12 +20,7 @@
       </Input>
     </FormItem>
     <FormItem prop="login_type">
-      <Select
-        :disabled="isAdmin"
-        v-model="workAreaModel"
-        placeholder="选择工作区域"
-        @on-change="selectchange"
-      >
+      <Select v-model="workAreaModel" placeholder="选择工作区域" @on-change="selectchange">
         <Option v-for="item in workArea" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
     </FormItem>
@@ -75,15 +65,18 @@ export default {
   },
   data() {
     return {
-      isAdmin: false,
       hasFactorySelect: false,
       factorys: [],
       workAreaModel: "",
       workAreaChoosed: "",
       workArea: [
         {
+          value: "pcmomadmin",
+          label: "超级管理员"
+        },
+        {
           value: "comp",
-          label: " 集团公司 / 总包"
+          label: "集团公司 / 总包"
         },
         {
           value: "fac",
@@ -106,15 +99,6 @@ export default {
   },
   methods: {
     ...mapMutations(["setScopeName"]),
-    usernameBlur() {
-      if (this.form.userName == "admin") {
-        this.isAdmin = true;
-        console.log(this.isAdmin);
-      } else {
-        this.isAdmin = false;
-        console.log(this.isAdmin);
-      }
-    },
     async getCompanys() {
       let companys = await ajax.post(urls.basic.getCompany, {
         obj: { pageIndex: 0 }
@@ -150,11 +134,13 @@ export default {
       this.setScopeName(scopeObj.label);
     },
     selectchange(value) {
-      if (value == "fac") {
-        this.showFactorySelect();
-        this.getFacDatas();
-      } else {
+      if (value == "pcmomadmin") {
+        this.hideFactorySelect();
+      } else if (value == "comp") {
         this.getCompanys();
+        this.showFactorySelect();
+      } else {
+        this.getFacDatas();
         this.showFactorySelect();
       }
     },

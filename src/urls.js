@@ -92,24 +92,48 @@ export default {
     updateEmpAuth: `${env}/basic/PcRoleuser/updateRoleUsers`,
     selectUserCode: `${env}/basic/PcRoleuser/getUsersOfRCode`
   },
+  // 物料
+  supplies: {
+    addSupplies: `${env}/basic/PcMaterial/createWLInfo`,
+    getSupplies: `${env}/basic/PcMaterial/getMaterialDatas`,
+    delSupplies: `${env}/basic/PcMaterial/deleteObj`
+  },
   //工序
   produceProcess: {
     getProduceProcess: `${env}/basic/PcProcedure/getPcProcedureList`,
     getProduceProcessByCode: `${env}/basic/PcProcedure/getPcProcedureByCode`,
     addProduceProcess: `${env}/basic/PcProcedure/addPcProcedure`,
-    delPcProcessByCodes: `${env}/basic/PcProcedure/delPcProcedureByCodes`
+    delPcProcessByCodes: `${env}/basic/PcProcedure/delPcProcedureByCodes`,
+    getUsersOfFac: `${env}/basic/PcProcess/getUsersOfFac`,
+    getUsersOfGX: `${env}/basic/PcProcedure/getUsersOfGX`,
+    createGXUsers: `${env}/basic/PcProcedure/createGXUsers`,
+    updateGXUsers: `${env}/basic/PcProcedure/updateGXUsers`
   },
   //工艺
   produceCraft: {
     getProduceCraft: `${env}/basic/PcProcess/getPcProcessList`,
     getProduceCraftByCode: `${env}/basic/PcProcess/getPcProcessByCode`,
-    addProduceCraft: `${env}/basic/PcProcess/addPcProcess`,
-    delProduceCraftByCodes: `${env}/basic/PcProcess/delPcProcessByCodes`
+    addProduceCraft: `${env}/basic/PcProcess/createProcessInfo`,
+    delProduceCraftByCodes: `${env}/basic/PcProcess/delPcProcessByCodes`,
+
+    getProcessDatas: `${env}/basic/PcProcess/getProcessDatas`,
+    createProcessInfo: `${env}/basic/PcProcess/createProcessInfo`,
+    getUsersOfFac: `${env}/basic/PcProcess/getUsersOfFac`,
+    getUsersOfGY: `${env}/basic/PcProcess/getUsersOfGY`,
+    createGYUsers: `${env}/basic/PcProcess/createGYUsers`,
+    updateGYUsers: `${env}/basic/PcProcess/updateGYUsers`
   },
-  //类型
+  //生产类型
   produceType: {
     getProduceType: `${env}/basic/PcSctype/getPcSctypeList`,
     addProduceType: `${env}/basic/PcSctype/addPcSctype`,
-    delAllProduceType: `${env}/basic/PcSctype/delPcSctypeByCodes`
+    delAllProduceType: `${env}/basic/PcSctype/delPcSctypeByCodes`,
+
+    getSCTypeDatas: `${env}/basic/PcSctype/getSCTypeDatas`,
+    getAllGYDatas: `${env}/basic/PcProcess/getAllGYDatas`,
+    getGYsOfSCType: `${env}/basic/PcScTypeGy/getGYsOfSCType`,
+    createSCTypeAndGYs: `${env}/basic/PcScTypeGy/createSCTypeAndGYs`,
+    updateSCTypeAndGYs: `${env}/basic/PcScTypeGy/updateSCTypeAndGYs`,
+    createSCTypeInfo: `${env}/basic/PcSctype/createSCTypeInfo`
   }
 };

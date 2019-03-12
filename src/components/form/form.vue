@@ -1,7 +1,7 @@
 <template>
-  <div class="add-wrap ivu-card ivu-card-bordered ivu-card-body">
+  <div class="add-wrap ivu-card ivu-card-bordered ivu-card-body" style="padding-top:10px;">
     <h1 class="add-title">{{title}}</h1>
-    <div class="from-wrap">
+    <div class="from-wrap" >
       <template v-for="(column,index) in columns">
         <div class="form-line" v-if="column.type=='input' && !column.isHide" :key="index">
           <label>{{ column.text }}:</label>
@@ -36,7 +36,7 @@
         </div>
       </template>
 
-      <div class="form-line submit-wrap">
+      <div class="submit-wrap" style="margin-left:90px;margin-bottom:10px;">
         <Button type="primary" class="btn-submit" @click="$emit('addSubmit')">{{txt2}}</Button>
         <Button type="warning" class="btn-submit" @click="backPage">{{txt3}}</Button>
       </div>
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       txt1: "必填",
-      txt2: "确定",
+      txt2: "保存",
       txt3: "取消"
     };
   },

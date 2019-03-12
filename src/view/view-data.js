@@ -492,6 +492,81 @@ export default {
         requestField: "desp",
         require: false
       }
+    ],
+    addSupplies: [
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "编码",
+        value: "",
+        type: "input",
+        requestField: "cusCode",
+        require: true
+      },
+      {
+        text: "生产类型",
+        value: "",
+        type: "input",
+        requestField: "mscName",
+        require: true
+      },
+      {
+        text: "类别",
+        value: "",
+        type: "select",
+        selectData: [
+          {
+            value: "lb1",
+            label: "类别1"
+          },
+          {
+            value: "lb2",
+            label: "类别2"
+          }
+        ],
+        requestField: "typeName",
+        require: false
+      },
+      {
+        text: "规格",
+        value: "",
+        type: "input",
+        requestField: "mSpec",
+        require: false
+      },
+      {
+        text: "经验参数",
+        value: "",
+        type: "input",
+        requestField: "mArg",
+        require: true
+      },
+      {
+        text: "计量单位",
+        value: "",
+        type: "input",
+        requestField: "mUOM",
+        require: false
+      },
+      {
+        text: "统计单位",
+        value: "",
+        type: "input",
+        requestField: "totalUOM",
+        require: false
+      },
+      {
+        text: "辅助说明",
+        value: "",
+        type: "textarea",
+        requestField: "desc",
+        require: false
+      }
     ]
   },
   //操作 数据
@@ -571,6 +646,11 @@ export default {
       {
         text: "角色维护",
         path: "/basic/role",
+        require: true
+      },
+      {
+        text: "物料码库",
+        path: "/basic/supplies",
         require: true,
         border: true
       },
@@ -598,7 +678,7 @@ export default {
       },
       {
         text: "人员授权",
-        path: "/basic/employee",
+        path: "/basic/produceProcessEmp",
         require: true
       },
       {
@@ -614,6 +694,11 @@ export default {
         require: false
       },
       {
+        text: "授权工艺",
+        path: "/basic/produceTypeAuthCraft",
+        require: true
+      },
+      {
         text: "返回工厂",
         path: "/basic/factory",
         require: false
@@ -624,6 +709,11 @@ export default {
         text: "添加工艺",
         path: "/basic/addProduceCraft",
         require: false
+      },
+      {
+        text: "工艺人员授权",
+        path: "/basic/produceCraftEmp",
+        require: true
       },
       {
         text: "返回工厂",
@@ -743,6 +833,22 @@ export default {
         text: "返回部门",
         path: "/basic/facDepartment",
         require: true
+      },
+      {
+        text: "返回工厂",
+        path: "/basic/factory",
+        require: true
+      }
+    ],
+    supplies: [
+      { text: "添加物料", path: "/basic/addSupplies" },
+      {
+        text: "导入物料",
+        path: "这里是一个按钮，直接导入物料信息"
+      },
+      {
+        text: "打印物料",
+        path: "这里是一个按钮，直接导入物料信息"
       },
       {
         text: "返回工厂",

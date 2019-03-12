@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     addSubmit() {
-      this.addData(urls.produceType.addProduceType);
+      this.addData(urls.produceType.createSCTypeInfo);
     },
     _extendViewData() {
       this.data = this.extendViewData(
