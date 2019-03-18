@@ -2,18 +2,24 @@ export default {
   home: "首页",
   basic: "配置管理", /// //////////////////
   // components: "配置管理", /// /////////
+
   factory: "工厂管理",
   storageYard: "堆场管理",
   company: "公司管理",
+
+  project: "项目辖区",
+  projManage: "项目管理",
+  // projMember: "项目成员",
+  projDocument: "项目文档",
+  manageRecord: "管理记录",
+  statisticAnalysis: "统计分析",
+  materialPrint: "资料打印",
+  costAnalysis: "成本统计",
+
   split_pane_page: "类型维护",
   markdown_page: "工厂物料",
   editor_page: "质检工艺",
-  b: "生产工序",
-  c: "功能菜单",
-  d: "操作角色",
-  e: "菜单授权",
 
-  g: "编码维护",
   update: "市场营销", /// //////////////////
   update_table_page: "项目信息",
   update_paste_page: "信息价格",

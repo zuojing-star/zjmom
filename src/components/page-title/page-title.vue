@@ -15,7 +15,7 @@
       </DropdownMenu>
     </Dropdown>
 
-    <Input :placeholder="`搜索`" style="width: auto"/>
+    <Input :placeholder="`搜索`" style="width: auto !important;"/>
     <Button type="info">{{txt2}}</Button>
   </div>
 </template>

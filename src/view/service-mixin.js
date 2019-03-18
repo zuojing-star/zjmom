@@ -110,39 +110,61 @@ export default {
           if (showParent) {
             this.data = tempdata.map(k => {
               if (chooseDeptArray && chooseDeptArray.length > 0) {
-                switch (getParentType(chooseDeptArray[0].code)) {
+                console.log("chooseDeptArray:", chooseDeptArray);
+                switch (
+                  getParentType(
+                    chooseDeptArray[0].code || choosedArray[0].projCode
+                  )
+                ) {
                   case "CX":
                     k.lineName = chooseDeptArray[0].name;
-                    k.lineCode = chooseDeptArray[0].code;
+                    k.lineCode =
+                      chooseDeptArray[0].code || choosedArray[0].projCode;
                     break;
                   case "BM":
                     k.deptName = chooseDeptArray[0].name;
-                    k.deptCode = chooseDeptArray[0].code;
+                    k.deptCode =
+                      chooseDeptArray[0].code || choosedArray[0].projCode;
                     break;
                   case "AREA":
                     k.areaName = chooseDeptArray[0].name;
-                    k.areaCode = chooseDeptArray[0].code;
+                    k.areaCode =
+                      chooseDeptArray[0].code || choosedArray[0].projCode;
                     break;
                 }
               }
 
               function getParentType(sParentCode) {
+                console.log("sParentCode:", sParentCode);
                 return sParentCode.split("-")[0];
               }
 
               if (choosedArray && choosedArray.length > 0) {
-                switch (getParentType(choosedArray[0].code)) {
+                console.log("choosedArray------:", choosedArray);
+                switch (
+                  getParentType(
+                    choosedArray[0].code || choosedArray[0].projCode
+                  )
+                ) {
+                  case "GS":
+                    k.compName = choosedArray[0].name;
+                    k.compCode =
+                      choosedArray[0].code || choosedArray[0].projCode;
+                    break;
                   case "FAC":
                     k.facName = choosedArray[0].name;
-                    k.facCode = choosedArray[0].code;
+                    k.facCode =
+                      choosedArray[0].code || choosedArray[0].projCode;
                     break;
                   case "YARD":
                     k.yardName = choosedArray[0].name;
-                    k.yardCode = choosedArray[0].code;
+                    k.yardCode =
+                      choosedArray[0].code || choosedArray[0].projCode;
                     break;
                   default:
-                    k.compName = choosedArray[0].name;
-                    k.compCode = choosedArray[0].code;
+                    k.projName = choosedArray[0].name;
+                    k.projCode =
+                      choosedArray[0].code || choosedArray[0].projCode;
                 }
               }
 
@@ -151,6 +173,27 @@ export default {
           } else {
             this.data = tempdata;
           }
+
+          //处理时间默认值
+          this.data = tempdata.map(k => {
+            if (k.planEnd) {
+              if (k.planEnd == "2000-01-01 00:00:00.0") {
+                k.planEnd = "";
+              } else {
+                k.planEnd = k.planEnd.substring(0, 10);
+              }
+            }
+
+            if (k.planStart) {
+              if (k.planStart == "2000-01-01 00:00:00.0") {
+                k.planStart = "";
+              } else {
+                k.planStart = k.planStart.substring(0, 10);
+              }
+            }
+
+            return k;
+          });
 
           this.setPage(result.data.size);
           this.updatePage(page);
@@ -219,6 +262,9 @@ export default {
       this.$router.push({
         path
       });
+    },
+    goBack() {
+      this.$router.back(-1);
     },
     //获取请求参数
     getRequestParams(data) {

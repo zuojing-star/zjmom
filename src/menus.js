@@ -36,5 +36,15 @@ export default [
     name: "--- 堆场管理",
     code: "yardManage",
     parent: "配置管理"
+  },
+  {
+    name: "项目辖区",
+    code: "project",
+    parent: ""
+  },
+  {
+    name: "--- 项目管理",
+    code: "projManage",
+    parent: "项目辖区"
   }
 ];

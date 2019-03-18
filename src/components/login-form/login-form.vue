@@ -136,6 +136,7 @@ export default {
     selectchange(value) {
       if (value == "pcmomadmin") {
         this.hideFactorySelect();
+        this.workAreaChoosed = value;
       } else if (value == "comp") {
         this.getCompanys();
         this.showFactorySelect();
@@ -145,7 +146,6 @@ export default {
       }
     },
     handleSubmit() {
-      console.log("this.form.userCode:", this.form.userName);
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$emit("on-success-valid", {

@@ -567,6 +567,175 @@ export default {
         requestField: "desc",
         require: false
       }
+    ],
+    addProject: [
+      {
+        text: "名称",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "编码",
+        value: "",
+        type: "input",
+        requestField: "projCode",
+        require: true
+      },
+      {
+        text: "总面积",
+        value: "",
+        type: "input",
+        requestField: "totalVo",
+        require: true
+      },
+      {
+        text: "总体量",
+        value: "",
+        type: "input",
+        requestField: "totalArea",
+        require: false
+      },
+      {
+        text: "项目经理",
+        value: "",
+        type: "input",
+        requestField: "manager",
+        require: true
+      },
+      {
+        text: "联系方式",
+        value: "",
+        type: "input",
+        requestField: "telephone",
+        require: true
+      },
+      {
+        text: "项目地址",
+        value: "",
+        type: "input",
+        requestField: "address",
+        require: true
+      },
+      {
+        text: "开工时间",
+        value: "2000-01-01 00:00:00",
+        type: "datepicker",
+        requestField: "planStart",
+        require: false
+      },
+      {
+        text: "完工时间",
+        value: "2000-01-01 00:00:00", //默认值
+        type: "datepicker",
+        requestField: "planEnd",
+        require: false
+      },
+      {
+        text: "描述",
+        value: "",
+        type: "input",
+        requestField: "desp",
+        require: false
+      }
+    ],
+    addLouDong: [
+      {
+        text: "编号",
+        value: "",
+        type: "select",
+        selectData: [
+          {
+            value: "1#",
+            label: "1#"
+          },
+          {
+            value: "2#",
+            label: "2#"
+          },
+          {
+            value: "3#",
+            label: "3#"
+          }
+        ],
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "显示名称",
+        value: "",
+        type: "input",
+        requestField: "showName",
+        require: true
+      },
+      {
+        text: "显示序号",
+        value: "",
+        type: "input",
+        requestField: "sortIndex",
+        require: true
+      },
+      {
+        text: "总体量",
+        value: "",
+        type: "input",
+        requestField: "totalVo",
+        require: false
+      }
+    ],
+    addFloor: [
+      {
+        text: "编号",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "显示名称",
+        value: "",
+        type: "input",
+        requestField: "showName",
+        require: true
+      },
+      {
+        text: "总体量",
+        value: "",
+        type: "input",
+        requestField: "totalVo",
+        require: false
+      },
+      {
+        text: "楼层位置",
+        value: "",
+        type: "input",
+        requestField: "lcIndex",
+        require: true
+      }
+    ],
+    contractBuild: [
+      {
+        text: "编号",
+        value: "",
+        type: "input",
+        requestField: "name",
+        require: true
+      },
+      {
+        text: "总体量",
+        value: "",
+        type: "input",
+        requestField: "totalVo",
+        require: false
+      },
+      {
+        text: "描述",
+        value: "",
+        type: "input",
+        requestField: "desp",
+        require: false
+      }
     ]
   },
   //操作 数据
@@ -853,6 +1022,61 @@ export default {
       {
         text: "返回工厂",
         path: "/basic/factory",
+        require: true
+      }
+    ],
+    //项目管理
+    projectManage: [
+      { text: "添加项目", path: "/project/addProjManage" },
+      {
+        text: "楼栋维护",
+        path: "/project/louDong",
+        require: true
+      },
+      {
+        text: "项目成员",
+        path: "/project/projMember"
+      },
+      {
+        text: "文件夹集",
+        path: "/basic/factory",
+        require: true
+      },
+      {
+        text: "项目资料",
+        path: "/basic/factory",
+        require: true
+      },
+      {
+        text: "项目成本",
+        path: "/basic/factory",
+        require: true
+      },
+      {
+        text: "合同构件类型",
+        path: "/project/contractBuild",
+        require: true
+      },
+      {
+        text: "关联生产类型",
+        path: "/project/productionTypeRelevance",
+        require: true
+      }
+    ],
+    louDong: [
+      { text: "添加楼栋", path: "/project/addLouDong" },
+      {
+        text: "楼层维护",
+        path: "/project/floor",
+        require: true
+      }
+    ],
+    floor: [{ text: "添加楼层", path: "/project/addFloor" }],
+    contractBuild: [
+      { text: "添加合同", path: "/project/addContractBuild" },
+      {
+        text: "类型关联",
+        path: "/project/contractRelevanceType",
         require: true
       }
     ]

@@ -38,7 +38,7 @@ import LoginForm from "_c/login-form";
 import { mapActions, mapState, mapMutations } from "vuex";
 import urls from "@/urls.js";
 import ajax from "@/ajax.js";
-// import axios from "axios";
+import { $getToken, $setToken } from "@/libs/util.js";
 
 export default {
   data() {
@@ -70,6 +70,8 @@ export default {
     ...mapMutations(["setUser", "setToken", "setMenus", "setScopeName"]),
     ...mapActions(["handleLogin", "getUserInfo"]),
     async handleSubmit({ userCode, password, scopeType, scopeCode }) {
+      console.log("scopeCode:", scopeCode);
+
       if (!userCode) {
         this.$Message.error("用户名必须填写!");
         return;
@@ -105,6 +107,8 @@ export default {
 
         console.log("user:", user);
         console.log("menus:", menus);
+
+        $setToken(user.tokenId);
 
         this.setUser(user);
         this.setMenus(menus);

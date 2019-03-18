@@ -1,18 +1,24 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
-import router from './router'
-import store from './store'
-import iView from 'iview'
-import i18n from '@/locale'
-import config from '@/config'
-import { directive as clickOutside } from 'v-click-outside-x'
-import './index.less'
-import '@/assets/icons/iconfont.css'
-import TreeTable from 'tree-table-vue'
-import VOrgTree from 'v-org-tree'
-import 'v-org-tree/dist/v-org-tree.css'
+import Vue from "vue";
+import App from "./App";
+import router from "./router";
+import store from "./store";
+import iView from "iview";
+import i18n from "@/locale";
+import config from "@/config";
+import { directive as clickOutside } from "v-click-outside-x";
+import "./index.less";
+import "@/assets/icons/iconfont.css";
+import TreeTable from "tree-table-vue";
+import VOrgTree from "v-org-tree";
+import "v-org-tree/dist/v-org-tree.css";
+
+//treetable demo
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-default/index.css";
+Vue.use(ElementUI);
+
 // 实际打包时应该不引入mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== "production") require("@/mock");

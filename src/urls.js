@@ -1,10 +1,49 @@
 const host = "http://192.168.18.110:9001";
-const zhaojunhaoHost = "http://192.168.18.103:9001";
+const zhaojunhaoHost = "http://192.168.18.105:9001";
 const zjhost = "http://localhost:3000";
 
 let env = host;
 
 export default {
+  //合同
+  contractBuild: {
+    add: `${host}/project/PcProjandhttype/createHTTypeInfo`,
+    get: `${host}/project/PcProjandhttype/getHTTypeDatas`,
+    getKeySCTypes: `${env}/project/PcHttypeandsctype/getKeySCTypes`,
+    createHTTAndSCT: `${env}/project/PcHttypeandsctype/createHTTAndSCT`,
+    updateHTTAndSCT: `${env}/project/PcHttypeandsctype/updateHTTAndSCT`
+  },
+  //关联生产类型
+  relevanceType: {
+    get: `${host}/project/PcProjandsctype/getSCTForChoose`,
+    getRelevanceType: `${host}/project/PcProjandsctype/getProjSCTypes`,
+    createProjSCType: `${host}/project/PcProjandsctype/createProjSCType`
+  },
+  //项目
+  project: {
+    add: `${host}/Project/Project/createFacProjectInfo`,
+    get: `${host}/Project/Project/getFacProjects`,
+    del: `${host}/Project/Project/delProject`
+  },
+  //项目成员
+  projMember: {
+    get: `${host}/project/PcProjandusers/getUsersOfFac`,
+    getAuth: `${host}/project/PcProjandusers/getUsersOfProj`,
+    save: `${host}/project/PcProjandusers/createProjMenbers`,
+    update: `${host}/project/PcProjandusers/updateProjMenbers`
+  },
+  //楼栋
+  louDong: {
+    add: `${host}/Project/Building/createLouInfo`,
+    get: `${host}/Project/Building/getlouDatas`,
+    del: `${host}/Project/Building/delLouDong`
+  },
+  //楼层
+  floor: {
+    add: `${host}/Project/Floor/createLCInfo`,
+    get: `${host}/Project/Floor/getlcDatas`,
+    del: `${host}/Project/Floor/delFloor`
+  },
   //登录
   basic: {
     login: `${env}/basic/Login/momLogin`,
@@ -82,9 +121,9 @@ export default {
   },
   //角色菜单授权
   roleAuth: {
-    addAuth: `${env}/basic/PcRolemenu/createMenuKey`,
+    addAuth: `${env}/basic/PcRolemenu/createRoleMenus`,
     selectCode: `${env}/basic/PcRolemenu/getKeyMenus`, //查询
-    updateAuth: `${env}/basic/PcRolemenu/updateRoleUsers`
+    updateAuth: `${env}/basic/PcRolemenu/updateRoleMenus`
   },
   //角色人员授权
   roleEmpAuth: {

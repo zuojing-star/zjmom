@@ -1,7 +1,7 @@
 <template>
   <div class="add-wrap ivu-card ivu-card-bordered ivu-card-body" style="padding-top:10px;">
     <h1 class="add-title">{{title}}</h1>
-    <div class="from-wrap" >
+    <div class="from-wrap">
       <template v-for="(column,index) in columns">
         <div class="form-line" v-if="column.type=='input' && !column.isHide" :key="index">
           <label>{{ column.text }}:</label>
@@ -34,6 +34,12 @@
           </RadioGroup>
           <span v-if="column.require" class="require-column">{{txt1}}</span>
         </div>
+
+        <div class="form-line" v-if="column.type=='datepicker' && !column.isHide" :key="index">
+          <label>{{ column.text }}:</label>
+          <DatePicker type="date" @on-change="dateChange($event,column.requestField)"></DatePicker>
+          <span v-if="column.require" class="require-column">{{txt1}}</span>
+        </div>
       </template>
 
       <div class="submit-wrap" style="margin-left:90px;margin-bottom:10px;">
@@ -60,6 +66,9 @@ export default {
     };
   },
   methods: {
+    dateChange(value, howKey) {
+      this.$emit("dateChange", { value, howKey });
+    },
     backPage() {
       this.$router.back(-1);
     }
@@ -70,5 +79,9 @@ export default {
 <style>
 .add-select {
   margin-right: 20px;
+}
+
+.ivu-input {
+  width: 436px;
 }
 </style>

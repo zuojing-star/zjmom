@@ -421,3 +421,10 @@ export const setTitle = (routeItem, vm) => {
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
   window.document.title = resTitle;
 };
+
+export const $getToken = () => {
+  return localStorage.getItem("tokenId");
+};
+export const $setToken = value => {
+  localStorage.setItem("tokenId", value);
+};

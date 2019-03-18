@@ -45,6 +45,7 @@ export default {
     },
     ...mapMutations(["updateArrayState"]),
     selectChange(selection) {
+      console.log("selection:", selection);
       this.updateArrayState(selection);
     },
     selectOne(selection, row) {

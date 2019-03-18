@@ -23,7 +23,11 @@ export default new Vuex.Store({
     roleArray: [], //角色
     produceProcessArray: [], //工序
     produceCraftArray: [], //工艺
-    produceTypeArray: [] //类型
+    produceTypeArray: [], //类型
+
+    projectArray: [], //项目
+    louDongArray: [], //楼栋
+    HTTArray: [] //合同
   },
   mutations: {
     setScopeName(state, name) {
@@ -43,7 +47,8 @@ export default new Vuex.Store({
       }
     },
     updateArrayState(state, array) {
-      console.log("add state", array);
+      console.log("add state", state);
+      console.log("array", array);
       if (array.length == 0) {
         switch (state.tempCode) {
           case "GS":
@@ -85,14 +90,26 @@ export default new Vuex.Store({
             state.produceTypeArray = [];
             state.tempCode = "";
             break;
+          case "lou":
+            state.louDongArray = [];
+            state.tempCode = "";
+            break;
+          case "HTT":
+            state.HTTArray = [];
+            state.tempCode = "";
+            break;
+          default:
+            state.projectArray = [];
+            state.tempCode = "";
+            break;
         }
       } else {
-        if (!array[0].code && !array[0].userCode) {
+        if (!array[0].code && !array[0].userCode && !array[0].projCode) {
           state.tempCode = "";
           return;
         }
 
-        let _code = array[0].code || array[0].userCode;
+        let _code = array[0].code || array[0].userCode || array[0].projCode;
 
         let code = getParentType(_code);
         switch (code) {
@@ -134,6 +151,18 @@ export default new Vuex.Store({
             break;
           case "SCT":
             state.produceTypeArray = array;
+            state.tempCode = code;
+            break;
+          case "lou":
+            state.louDongArray = array;
+            state.tempCode = code;
+            break;
+          case "HTT":
+            state.HTTArray = array;
+            state.tempCode = code;
+            break;
+          default:
+            state.projectArray = array;
             state.tempCode = code;
             break;
         }

@@ -169,6 +169,7 @@ export default {
     },
     showRoleMenus(selectCode) {
       console.log("111111", localMenus, selectCode);
+
       localMenus.forEach(k => {
         k._checked = false;
       });
@@ -181,6 +182,7 @@ export default {
           }
         }
       }
+
       console.log("修改后的菜单：", localMenus);
     }
   },
