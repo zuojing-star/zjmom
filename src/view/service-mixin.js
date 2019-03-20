@@ -3,6 +3,7 @@ import ajax from "@/ajax.js";
 export default {
   data() {
     return {
+      lastCode: "",
       page: 1,
       totalPage: 0,
       data: []
@@ -22,24 +23,32 @@ export default {
       }
     },
     async delData(url, code, callback) {
-      let data = {
-        str: code
+      let params = {
+        code
       };
-      let result = await ajax.post(url, data);
+      let result = await ajax.post(url, params);
       this.delResponse(result, callback);
     },
     async updateData() {},
-    //showParent:boolean 是否传递父级数据
-    async getData(
+    //isShowParent:boolean 是否传递父级数据
+    async getData({
       url,
-      reqParamsObj,
-      chooseArray,
+      params,
       page,
-      showParent,
-      chooseDeptArray
-    ) {
-      let result = await ajax.post(url, reqParamsObj);
-      this.getResponse(result, chooseArray, page, showParent, chooseDeptArray);
+      isShowParent,
+      firstParentArray,
+      secondParentArray
+    }) {
+      let result = await ajax.post(url, params);
+      if (result.status == 200)
+        this.renderData({
+          page,
+          result,
+          isShowParent,
+          firstParentArray,
+          secondParentArray
+        });
+      else alert("接口调用失败!");
     },
     async getDataWithoutResponse(url, reqParamsObj) {
       return await ajax.post(url, reqParamsObj);
@@ -77,11 +86,6 @@ export default {
         this.$Message.info("添加失败");
       }
     },
-    getResponse(result, array, page, showParent, chooseDeptArray) {
-      if (result.status == 200)
-        this.renderData(array, result, page, showParent, chooseDeptArray);
-      else alert("接口调用失败!");
-    },
 
     //
     async add(url, params) {
@@ -89,7 +93,13 @@ export default {
       this.addResponse(result);
     },
     //渲染页面数据  choosedArray 1级数据 ，chooseDeptArray 2级数据 -> 3级页面
-    renderData(choosedArray, result, page, showParent, chooseDeptArray) {
+    renderData({
+      page,
+      result,
+      isShowParent,
+      firstParentArray,
+      secondParentArray
+    }) {
       if (result.data.type == 1) {
         if (result.data.jsonData.length == 0) {
           this.$Message.info("没有数据!");
@@ -98,73 +108,70 @@ export default {
           let tempdata = [];
 
           //设置check
-          if (chooseDeptArray && chooseDeptArray.length > 0) {
-            tempdata = this.setChecked(chooseDeptArray, result);
-          } else if (choosedArray && choosedArray.length > 0) {
-            tempdata = this.setChecked(choosedArray, result);
+          if (secondParentArray && secondParentArray.length > 0) {
+            tempdata = this.setChecked(secondParentArray, result);
+          } else if (firstParentArray && firstParentArray.length > 0) {
+            tempdata = this.setChecked(firstParentArray, result);
           } else {
             tempdata = result.data.jsonData;
           }
 
           //父级传递数据
-          if (showParent) {
+          if (isShowParent) {
             this.data = tempdata.map(k => {
-              if (chooseDeptArray && chooseDeptArray.length > 0) {
-                console.log("chooseDeptArray:", chooseDeptArray);
+              if (secondParentArray && secondParentArray.length > 0) {
                 switch (
                   getParentType(
-                    chooseDeptArray[0].code || choosedArray[0].projCode
+                    secondParentArray[0].code || firstParentArray[0].projCode
                   )
                 ) {
                   case "CX":
-                    k.lineName = chooseDeptArray[0].name;
+                    k.lineName = secondParentArray[0].name;
                     k.lineCode =
-                      chooseDeptArray[0].code || choosedArray[0].projCode;
+                      secondParentArray[0].code || firstParentArray[0].projCode;
                     break;
                   case "BM":
-                    k.deptName = chooseDeptArray[0].name;
+                    k.deptName = secondParentArray[0].name;
                     k.deptCode =
-                      chooseDeptArray[0].code || choosedArray[0].projCode;
+                      secondParentArray[0].code || firstParentArray[0].projCode;
                     break;
                   case "AREA":
-                    k.areaName = chooseDeptArray[0].name;
+                    k.areaName = secondParentArray[0].name;
                     k.areaCode =
-                      chooseDeptArray[0].code || choosedArray[0].projCode;
+                      secondParentArray[0].code || firstParentArray[0].projCode;
                     break;
                 }
               }
 
               function getParentType(sParentCode) {
-                console.log("sParentCode:", sParentCode);
                 return sParentCode.split("-")[0];
               }
 
-              if (choosedArray && choosedArray.length > 0) {
-                console.log("choosedArray------:", choosedArray);
+              if (firstParentArray && firstParentArray.length > 0) {
                 switch (
                   getParentType(
-                    choosedArray[0].code || choosedArray[0].projCode
+                    firstParentArray[0].code || firstParentArray[0].projCode
                   )
                 ) {
                   case "GS":
-                    k.compName = choosedArray[0].name;
+                    k.compName = firstParentArray[0].name;
                     k.compCode =
-                      choosedArray[0].code || choosedArray[0].projCode;
+                      firstParentArray[0].code || firstParentArray[0].projCode;
                     break;
                   case "FAC":
-                    k.facName = choosedArray[0].name;
+                    k.facName = firstParentArray[0].name;
                     k.facCode =
-                      choosedArray[0].code || choosedArray[0].projCode;
+                      firstParentArray[0].code || firstParentArray[0].projCode;
                     break;
                   case "YARD":
-                    k.yardName = choosedArray[0].name;
+                    k.yardName = firstParentArray[0].name;
                     k.yardCode =
-                      choosedArray[0].code || choosedArray[0].projCode;
+                      firstParentArray[0].code || firstParentArray[0].projCode;
                     break;
                   default:
-                    k.projName = choosedArray[0].name;
+                    k.projName = firstParentArray[0].name;
                     k.projCode =
-                      choosedArray[0].code || choosedArray[0].projCode;
+                      firstParentArray[0].code || firstParentArray[0].projCode;
                 }
               }
 
@@ -195,7 +202,7 @@ export default {
             return k;
           });
 
-          this.setPage(result.data.size);
+          this.setPage(result.data.pageAll);
           this.updatePage(page);
         }
       } else {

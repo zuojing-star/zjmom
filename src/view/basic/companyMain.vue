@@ -14,17 +14,23 @@
 <script>
 import TableList from "@/components/table-list/table-list.vue";
 import { mapState, mapMutations } from "vuex";
-import urls from "@/urls.js";
+import api from "@/api.js";
 import ajax from "@/ajax.js";
 import "@/assets/styles/common-main.css";
 import mixin from "@/view/service-mixin.js";
 import PageTitle from "_c/page-title/page-title.vue";
 import viewData from "@/view/view-data.js";
 
+let url_get = api.company.get,
+  url_del = api.company.del,
+  params_get = null;
+
 export default {
   //初始化
   mounted() {
-    this.getPccompany();
+    params_get = { pageIndex: this.page, lastCode: this.lastCode };
+
+    this.getList();
   },
 
   //mixin
@@ -39,9 +45,6 @@ export default {
   //数据
   data() {
     return {
-      hasPage: true,
-      page: 1,
-      totalPage: 0,
       operation: viewData.pagetitle.company,
       columns: [
         {
@@ -106,7 +109,7 @@ export default {
                         content: "<p></p>",
                         onOk: () => {
                           this.delData(
-                            urls.company.delPccompnay,
+                            url_del,
                             params.row.code,
                             this.delCallback
                           );
@@ -132,23 +135,22 @@ export default {
   methods: {
     ...mapMutations(["clearState"]),
     delCallback() {
-      this.getPccompany();
+      this.getList();
     },
 
-    getPccompany() {
-      this.getData(
-        urls.company.getPccompany,
-        { obj: { pageIndex: this.page } },
-        this.companyArray,
-        this.page
-      );
+    getList() {
+      this.getData({
+        url: url_get,
+        params: params_get,
+        page: this.page,
+        firstParentArray: this.companyArray
+      });
     },
 
     //分页
     pageChange(page) {
-      console.log("page:", page);
       this.page = page;
-      this.getPccompany();
+      this.getList();
     }
   }
 };

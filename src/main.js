@@ -16,7 +16,7 @@ import "v-org-tree/dist/v-org-tree.css";
 
 //treetable demo
 import ElementUI from "element-ui";
-import "element-ui/lib/theme-default/index.css";
+import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
 
 // 实际打包时应该不引入mock

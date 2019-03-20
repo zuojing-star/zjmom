@@ -89,36 +89,39 @@ export default {
         return;
       }
 
-      let url = urls.basic.login;
-      let params = {
-        obj: {
-          userCode,
-          password,
-          scopeType,
-          scopeCode
-        }
-      };
+      this.setToken("super_admin");
+      this.$router.push({ name: this.$config.homeName });
 
-      let result = await ajax.post(url, params);
+      // let url = urls.basic.login;
+      // let params = {
+      //   obj: {
+      //     userCode,
+      //     password,
+      //     scopeType,
+      //     scopeCode
+      //   }
+      // };
 
-      if (result.data.type == 1) {
-        let user = result.data.jsonData.user;
-        let menus = result.data.jsonData.menus;
+      // let result = await ajax.post(url, params);
 
-        console.log("user:", user);
-        console.log("menus:", menus);
+      // if (result.data.type == 1) {
+      //   let user = result.data.jsonData.user;
+      //   let menus = result.data.jsonData.menus;
 
-        $setToken(user.tokenId);
+      //   console.log("user:", user);
+      //   console.log("menus:", menus);
 
-        this.setUser(user);
-        this.setMenus(menus);
-        this.setToken("super_admin");
-        this.$router.push({ name: this.$config.homeName });
-      } else if (result.data.type == 3) {
-        this.$Message.error("用户不存在或用户未授权!");
-      } else {
-        this.$Message.error("服务器出错!");
-      }
+      //   $setToken(user.tokenId);
+
+      //   this.setUser(user);
+      //   this.setMenus(menus);
+      //   this.setToken("super_admin");
+      //   this.$router.push({ name: this.$config.homeName });
+      // } else if (result.data.type == 3) {
+      //   this.$Message.error("用户不存在或用户未授权!");
+      // } else {
+      //   this.$Message.error("服务器出错!");
+      // }
 
       // this.handleLogin({ userName, password }).then(res => {
       //   this.getUserInfo().then(res => {

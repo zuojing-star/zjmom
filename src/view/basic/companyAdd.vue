@@ -2,17 +2,14 @@
   <Form :title="title" :columns="data" @addSubmit="addSubmit"/>
 </template>
 <script>
-import urls from "@/urls.js";
+import api from "@/api.js";
 import ajax from "@/ajax.js";
-
+import Form from "_c/form/form.vue";
+import mixin from "@/view/service-mixin.js";
+import viewData from "@/view/view-data.js";
 import "@/assets/styles/common-add.css";
 
-import Form from "_c/form/form.vue";
-
-import mixin from "@/view/service-mixin.js";
-
-import viewData from "@/view/view-data.js";
-
+let url_add = api.company.add;
 export default {
   mixins: [mixin],
   data() {
@@ -26,7 +23,7 @@ export default {
   },
   methods: {
     addSubmit() {
-      this.addData(urls.company.addPcCompany);
+      this.addData(url_add);
     }
   }
 };

@@ -1,6 +1,12 @@
 const zjhost = "http://localhost:3000";
 
 export default {
+  //公司
+  company: {
+    add: `${zjhost}/basic/company/add`,
+    get: `${zjhost}/basic/company/get`,
+    del: `${zjhost}/basic/company/del`
+  },
   //工厂
   factory: {
     getFacDatas: `${zjhost}/basic/PcFactory/getFacDatas`,

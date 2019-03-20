@@ -115,10 +115,11 @@ export default {
       console.log("menuList:111111", this.$store.getters.menuList);
       console.log("menus", this.menus);
 
-      let menus = this.$store.getters.menuList;
-      let authMenus = this.menus;
+      return this.$store.getters.menuList;
 
-      return this.authMenus(menus, authMenus);
+      // let menus = this.$store.getters.menuList;
+      // let authMenus = this.menus;
+      // return this.authMenus(menus, authMenus);
     },
     local() {
       return this.$store.state.app.local;
